@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-06 19:45:47
- * @LastEditTime: 2019-08-22 15:04:29
+ * @LastEditTime: 2019-09-05 11:14:05
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -78,8 +78,8 @@ export default {
 
   methods: {
     getData (page) {
-      api.getHotSongList(this.category, 'hot', 18, page).then(res => {
-        const result = res.data.data
+      api.getHotSongList(this.category, 18, page).then(res => {
+        const result = res.data.playlists
         result.forEach((item, index) => {
           this.purifyResult.push({
             name: item.name,

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-31 20:55:29
- * @LastEditTime: 2019-08-28 11:49:52
+ * @LastEditTime: 2019-09-05 13:36:08
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -172,7 +172,7 @@ export default {
 
         if (existCookie) {
           api.getUsetSongList(uid).then(res => {
-            const result = res.data.data
+            const result = res.data.playlist
             // console.log(result);
             result.forEach(item => {
               this.userSongList.push({

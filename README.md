@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: WuLianN
  * @Date: 2019-07-22 12:44:21
- * @LastEditTime: 2019-09-04 17:18:20
+ * @LastEditTime: 2019-09-05 16:56:56
  * @LastEditors: Please set LastEditors
  -->
 ![](https://github.com/WuLianN/music-player/blob/master/src/assets/logo/cover.png)
@@ -64,7 +64,7 @@
 
   
 ##  :heart: 感谢
-* 感谢[NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)提供api
+* 感谢[Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)提供api
 * 感谢帮助我解惑的各位大佬
 
 
@@ -103,6 +103,12 @@
 <br>
 
 
+## :key: 项目数据来源 :point_down:
+
+:warning: 运行[Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)获得api
+
+<br>
+
 ## :key: Project setup
 ```
 npm install
@@ -112,6 +118,10 @@ npm install
 ```
 npm run serve
 ```
+
+
+<br>
+
 
 ## :mask: 坑
 ```

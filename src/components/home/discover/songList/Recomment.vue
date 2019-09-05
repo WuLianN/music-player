@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-03 19:33:12
- * @LastEditTime: 2019-09-03 20:29:02
+ * @LastEditTime: 2019-09-05 12:25:53
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -82,6 +82,7 @@
 
 <script>
 import api from "@/api/index";
+import { songListCat1 } from "@/api/config/songList"
 import { vw2px } from "@/util/transform";
 import BScroll from "better-scroll";
 import { mapGetters } from "vuex";
@@ -135,9 +136,8 @@ export default {
 
   methods: {
     getData(page) {
-      api.getRecommentList(18, page).then(res => {
-        const result = res.data.result;
-        // console.log(result);
+      api.getHotSongList(songListCat1, 18, page).then(res => {
+        const result = res.data.playlists;
         result.forEach((item, index) => {
           if (index > 2) {
             this.purifyResult.push({
@@ -146,7 +146,7 @@ export default {
               playCount: item.playCount,
               avatarUrl: item.creator.avatarUrl,
               nickname: item.creator.nickname,
-              description: item.copywriter,
+              description: item.description,
               shareCount: item.shareCount,
               tags: item.tags,
               id: item.id,
@@ -162,7 +162,7 @@ export default {
               playCount: item.playCount,
               avatarUrl: item.creator.avatarUrl,
               nickname: item.creator.nickname,
-              description: item.copywriter,
+              description: item.description,
               shareCount: item.shareCount,
               tags: item.tags,
               id: item.id,
@@ -189,8 +189,8 @@ export default {
     },
 
     getMoreData(page) {
-      api.getRecommentList(18, page).then(res => {
-        const result = res.data.result;
+      api.getHotSongList(songListCat1, 18, page).then(res => {
+        const result = res.data.playlists;
         result.forEach((item, index) => {
           this.purifyResult.push({
             name: item.name,
@@ -198,7 +198,7 @@ export default {
             playCount: item.playCount,
             avatarUrl: item.creator.avatarUrl,
             nickname: item.creator.nickname,
-            description: item.copywriter,
+            description: item.description,
             shareCount: item.shareCount,
             tags: item.tags,
             id: item.id,

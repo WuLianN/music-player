@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-05 14:12:25
- * @LastEditTime: 2019-08-22 15:03:19
+ * @LastEditTime: 2019-09-05 12:23:55
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -44,7 +44,8 @@ export default {
       purifyResult: [],
       page: 0,
       scroll: null,
-      isLoadingMore: false
+      isLoadingMore: false,
+      lasttime: ''
     }
   },
 
@@ -54,19 +55,19 @@ export default {
     })
   },
 
-  // computed: {
-  //   ...mapGetters(["getIsLoadingMore"])
-  // },
+  computed: {
+    ...mapGetters(["getIsLoadingMore"])
+  },
 
-  // watch: {
-  //   getIsLoadingMore(isChange) {
-  //     if (isChange) {
-  //       this.isLoadingMore = true;
-  //     } else {
-  //       this.isLoadingMore = false;
-  //     }
-  //   }
-  // },
+  watch: {
+    getIsLoadingMore(isChange) {
+      if (isChange) {
+        this.isLoadingMore = true;
+      } else {
+        this.isLoadingMore = false;
+      }
+    }
+  },
 
   created () {
     this.getData()
@@ -74,8 +75,11 @@ export default {
 
   methods: {
     getData () {
-      api.getHighQualityList('全部', 'hot', 18).then(res => {
-        const result = res.data.data
+      api.getHighQualityList('全部', 18, this.lasttime).then(res => {
+        const result = res.data.playlists
+
+        // lasttime 分页
+        this.lasttime = res.data.lasttime
         result.forEach((item, index) => {
           this.purifyResult.push({
             name: item.name,
@@ -90,16 +94,15 @@ export default {
             trackCount: item.trackCount,
             commentCount: item.commentCount,
             api: 'WY',
-            type: 'songList'
+            type: 'songList',
           })
         })
       })
     },
 
     getScrollData () {
-      // this.page++;
-      // let page = this.page * 18;
-      // this.getData();
+     
+      this.getData();
     },
 
     getScrollTop: _.throttle(
@@ -118,18 +121,6 @@ export default {
     },
 
     initScroll () {
-      //   this.scroll = new BScroll(this.$refs.scroll, {
-      //     scrollY: true,
-      //     scrollBar: false,
-      //     click: true,
-      //     tap: true,
-      //     pullUpLoad: {
-      //       threshold: 1
-      //     }
-      //   });
-
-      //   this.scroll.on("pullingUp", this.getScrollTop);
-      // }
       if (!this.scroll) {
         this.scroll = new BScroll(this.$refs.scroll, {
           scrollY: true,

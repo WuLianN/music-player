@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-01 14:45:41
- * @LastEditTime: 2019-08-27 00:03:41
+ * @LastEditTime: 2019-09-05 13:23:29
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -36,8 +36,8 @@ export default {
       const artist = this.$store.getters.getWYartist
       const artistID = artist.artistID
       api.getSingerSongList(artistID).then(res => {
-        const result = res.data.data
-
+        const result = res.data.hotSongs
+      
         const obj = {}
         const purifyData = result.reduce((cur, next) => {
           obj[next.al.name] ? '' : (obj[next.al.name] = true && cur.push(next))

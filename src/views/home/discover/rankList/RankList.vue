@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-02 13:11:38
- * @LastEditTime: 2019-08-27 11:48:28
+ * @LastEditTime: 2019-09-05 15:46:36
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -22,9 +22,9 @@
           <div class="official-type-info">
             <div
               class="official-type-title"
-              v-for="(i, index) in item.someSongs"
+              v-for="(i, index) in item.tracks"
               :key="index"
-            >{{index + 1}}. {{ i.name }} - {{ i.singer}}</div>
+            >{{index + 1}}. {{ i.first }} - {{ i.second}}</div>
           </div>
         </div>
       </div>
@@ -61,74 +61,61 @@
 </template>
 
 <script>
-import api from '@/api/index'
-import getSongList from '@/api/config/search/keywords/getSongList'
-import Header from '@/components/public/Header'
+import api from "@/api/index";
+import Header from "@/components/public/Header";
 export default {
-  data () {
+  data() {
     return {
+      rankListDetail: [],
       offcial: [],
       recomment: [],
       global: [],
-      leftTitle: '排行榜',
-      home: 'home'
-    }
+      leftTitle: "排行榜",
+      home: "home"
+    };
   },
 
   components: {
     Header
   },
 
-  created () {
-    this.getOfficial()
-    this.getRecomment()
-    this.getGlobal()
+  created() {
+    // this.getOfficial();
+    // this.getRecomment();
+    // this.getGlobal();
+
+    this.getRankListDetail();
   },
 
   methods: {
-    onClickLeft () {
-      this.$router.push({ name: 'home' })
+    onClickLeft() {
+      this.$router.push({ name: "home" });
     },
 
-    // 获取 “官方榜” 歌单
-    getOfficial () {
-      this.$axios
-        .all([
-          getSongList.getSoaringSongs(),
-          getSongList.getLastestSongs(),
-          getSongList.getHotSongs(),
-          getSongList.getOriginalSongs()
-        ])
-        .then(
-          this.$axios.spread((soaring, lastest, hot, original) => {
-            const result = []
-            result.push(soaring.data.data.playlists[0])
-            result.push(lastest.data.data.playlists[0])
-            result.push(hot.data.data.playlists[0])
-            result.push(original.data.data.playlists[0])
+    // 获取"所有榜单内容摘要" 
+    getRankListDetail() {
+      api.getRankListDetail().then(res => {
+        const result = res.data.list;
+        result.forEach(item => {
+          this.rankListDetail.push({
+            updateFrequency: item.updateFrequency,
+            coverImgUrl: item.coverImgUrl,
+            id: item.id,
+            tracks: item.tracks,
+            description: item.description,
+            type: "songList",
+            api: "WY",
 
-            result.forEach(item => {
-              this.offcial.push({
-                coverImgUrl: item.coverImgUrl,
-                playCount: item.playCount,
-                trackCount: item.trackCount,
-                id: item.id,
-                nickname: item.creator.nickname,
-                description: item.description,
-                shareCount: '分享',
-                commentCount: '评论',
-                avatarUrl: require('../../../../assets/home/neteaseLogo.png'),
-                type: 'songList'
-              })
-            })
-            // console.log(result)
-            this.getSomeSongs(this.offcial)
-          })
-        )
+          });
+        });
+
+        // 获取 “官方榜” 歌单
+        this.offcial = this.rankListDetail.slice(0,4)
+      });
     },
 
     // 获取 “推荐榜” 歌单
-    getRecomment () {
+    getRecomment() {
       this.$axios
         .all([
           getSongList.getYOLOsongs(),
@@ -141,13 +128,13 @@ export default {
         .then(
           this.$axios.spread(
             (YOLO, rap, electronica, ACG, englishSongs, TikTok) => {
-              const result = []
-              result.push(YOLO.data.data.playlists[0])
-              result.push(rap.data.data.playlists[0])
-              result.push(electronica.data.data.playlists[0])
-              result.push(ACG.data.data.playlists[0])
-              result.push(englishSongs.data.data.playlists[0])
-              result.push(TikTok.data.data.playlists[0])
+              const result = [];
+              result.push(YOLO.data.data.playlists[0]);
+              result.push(rap.data.data.playlists[0]);
+              result.push(electronica.data.data.playlists[0]);
+              result.push(ACG.data.data.playlists[0]);
+              result.push(englishSongs.data.data.playlists[0]);
+              result.push(TikTok.data.data.playlists[0]);
 
               result.forEach(item => {
                 this.recomment.push({
@@ -158,21 +145,21 @@ export default {
                   nickname: item.creator.nickname,
                   description: item.description,
                   name: item.name,
-                  avatarUrl: require('../../../../assets/home/neteaseLogo.png'),
-                  shareCount: '分享',
-                  commentCount: '评论',
-                  type: 'songList'
-                })
-              })
+                  avatarUrl: require("../../../../assets/home/neteaseLogo.png"),
+                  shareCount: "分享",
+                  commentCount: "评论",
+                  type: "songList"
+                });
+              });
 
               // console.log(result);
             }
           )
-        )
+        );
     },
 
     // 获取 “全球榜” 歌单
-    getGlobal () {
+    getGlobal() {
       this.$axios
         .all([
           getSongList.getBillboard(),
@@ -185,13 +172,13 @@ export default {
         .then(
           this.$axios.spread(
             (Billboard, UK, Beatport, Oricon, iTunes, Qboard) => {
-              const result = []
-              result.push(Billboard.data.data.playlists[0])
-              result.push(UK.data.data.playlists[0])
-              result.push(Beatport.data.data.playlists[0])
-              result.push(Oricon.data.data.playlists[0])
-              result.push(iTunes.data.data.playlists[0])
-              result.push(Qboard.data.data.playlists[0])
+              const result = [];
+              result.push(Billboard.data.data.playlists[0]);
+              result.push(UK.data.data.playlists[0]);
+              result.push(Beatport.data.data.playlists[0]);
+              result.push(Oricon.data.data.playlists[0]);
+              result.push(iTunes.data.data.playlists[0]);
+              result.push(Qboard.data.data.playlists[0]);
 
               result.forEach(item => {
                 this.global.push({
@@ -203,39 +190,27 @@ export default {
                   description: item.description,
                   name: item.name,
                   avatarUrl: item.coverImgUrl,
-                  shareCount: '分享',
-                  commentCount: '评论',
-                  type: 'songList'
-                })
-              })
+                  shareCount: "分享",
+                  commentCount: "评论",
+                  type: "songList"
+                });
+              });
 
               // console.log(result);
             }
           )
-        )
+        );
     },
 
-    getSomeSongs (songList) {
-      songList.forEach(item => {
-        api.getSongList(item.id, 1).then(res => {
-          const result = res.data.data
-          const target = result.slice(0, 3)
-
-          this.$set(item, 'someSongs', target)
-          this.$set(item, 'api', 'WY')
-        })
-      })
-    },
-
-    goSongListDetail (item) {
-      this.$store.commit('setSongList', item)
+    goSongListDetail(item) {
+      this.$store.commit("setSongList", item);
       this.$router.push({
-        name: 'songListDetail',
-        params: { rankList: 'rankList' }
-      })
+        name: "songListDetail",
+        params: { rankList: "rankList" }
+      });
     }
   }
-}
+};
 </script>
 
 <style scoped>

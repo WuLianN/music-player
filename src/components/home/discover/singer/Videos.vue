@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-28 19:57:29
- * @LastEditTime: 2019-08-26 23:59:51
+ * @LastEditTime: 2019-09-05 13:26:26
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -43,7 +43,7 @@ export default {
       api
         .getSingerMV(artistID)
         .then(res => {
-          const result = res.data.data
+          const result = res.data.mvs
           this.mv = []
 
           result.forEach(item => {

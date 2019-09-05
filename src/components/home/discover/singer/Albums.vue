@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-27 19:49:37
- * @LastEditTime: 2019-08-27 00:00:51
+ * @LastEditTime: 2019-09-05 13:25:30
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -44,7 +44,7 @@ export default {
       const artistID = artist.artistID
 
       api.getSingerAlbum(artistID).then(res => {
-        const result = res.data.data
+        const result = res.data.hotAlbums
 
         result.forEach(item => {
           const formatTime = formatDate(item.publishTime)

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-12 10:29:31
- * @LastEditTime: 2019-08-28 00:47:02
+ * @LastEditTime: 2019-09-05 13:31:51
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -70,10 +70,9 @@ export default {
       const uid = this.uid
       api.getUsetSongList(uid).then(res => {
         this.isLogin = false
-        // console.log(res);
 
-        const result = res.data.data
-
+        const result = res.data.playlist
+    
         result.forEach((item, index) => {
           if (index === 0) {
             this.userInfo = {

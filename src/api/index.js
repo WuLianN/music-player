@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-07 13:43:40
- * @LastEditTime: 2019-09-03 21:30:18
+ * @LastEditTime: 2019-09-05 16:27:11
  * @LastEditors: Please set LastEditors
  */
 import axios from 'axios'
@@ -22,12 +22,12 @@ import {
   singerInfo,
   singerRankList,
   songListComment,
-  songInfo,
   album,
   userSongList,
   mvTop,
   mvUrl,
-  lastestSongs
+  rankList,
+  rankListDetail
 } from './source'
 
 export default {
@@ -143,36 +143,36 @@ export default {
      * @description: 热门歌单
      * @param categoryType 歌单分类
      * @param orderType 分别对应最新和最热
-     * @param pageSize 获取条数
-     * @param page 分页
+     * @param limit 获取条数
+     * @param offset 分页
      * @return:
      */
 
-  getHotSongList(categoryType, orderType, pageSize, page) {
+  getHotSongList(cat, limit, offset, order = 'hot') {
     return axios.get(hotSongList, {
       params: {
-        categoryType,
-        orderType,
-        pageSize,
-        page
+        cat,
+        limit,
+        offset,
+        order,
       }
     })
   },
 
   /**
      * @description: 精品歌单
-     * @param categoryType 歌单分类
-     * @param orderType 分别对应最新和最热
-     * @param pageSize 获取条数
+     * @param cat 歌单分类
+     * @param before 分页参数,取上一页最后一个歌单的 updateTime 获取下一页数据
+     * @param limit 获取条数
      * @return:
      */
 
-  getHighQualityList(categoryType, orderType, pageSize) {
+  getHighQualityList(cat, limit, before) {
     return axios.get(highQualityList, {
       params: {
-        categoryType,
-        orderType,
-        pageSize
+        cat,
+        limit,
+        before
       }
     })
   },
@@ -198,10 +198,12 @@ export default {
      * @return:
      */
 
-  getSingerAlbum(id) {
+  getSingerAlbum(id, limit, offset) {
     return axios.get(singerAlbum, {
       params: {
-        id
+        id,
+        limit,
+        offset
       }
     })
   },
@@ -272,26 +274,12 @@ export default {
      * @return:
      */
 
-  getSongListComment(id, pageSize, page) {
+  getSongListComment(id, limit, offset) {
     return axios.get(songListComment, {
       params: {
         id,
-        pageSize,
-        page
-      }
-    })
-  },
-
-  /**
-   * @description: 音乐详情
-   * @param id 音乐ID
-   * @return:
-   */
-
-  getSongInfo(id) {
-    return axios.get(songInfo, {
-      params: {
-        id
+        limit,
+        offset
       }
     })
   },
@@ -339,12 +327,26 @@ export default {
   },
 
   /**
-   * @description: 最新音乐
-   * @param {type}
-   * @return:
+   * @description: 排行榜
+   * @param idx
+   * @return: 
    */
 
-  getLastestSongs() {
-    return axios.get(lastestSongs)
-  }
+  getRankList(idx) {
+    return axios.get(rankList, {
+      params: {
+        idx
+      }
+    })
+  },
+
+/**
+ * @description: 所有榜单内容摘要
+ * @param {type} 
+ * @return: 
+ */  
+
+ getRankListDetail(){
+   return axios.get(rankListDetail)
+ }
 }

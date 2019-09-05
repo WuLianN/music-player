@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-26 18:11:42
- * @LastEditTime: 2019-08-22 14:47:35
+ * @LastEditTime: 2019-09-05 13:17:56
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -73,8 +73,7 @@ export default {
   methods: {
     getData (page) {
       api.getSingerRankList(30, page).then(res => {
-        const result = res.data.data
-        // console.log(result);
+        const result = res.data.list.artists
         result.forEach(item => {
           this.purifyResult.push({
             artistName: item.name,

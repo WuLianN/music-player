@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-02 21:04:00
- * @LastEditTime: 2019-08-22 15:04:45
+ * @LastEditTime: 2019-09-05 13:13:26
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -102,7 +102,7 @@ export default {
     getComment () {
       api.getSongListComment(this.songListID, 30, 0).then(res => {
         // console.log(res.data.data);
-        const result = res.data.data
+        const result = res.data
         this.hotComments = result.hotComments
         this.comments = result.comments
       })

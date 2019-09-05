@@ -1,5 +1,12 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-09-03 12:08:23
+ * @LastEditTime: 2019-09-05 12:25:27
+ * @LastEditors: Please set LastEditors
+ */
 const category = {
-  type1: '推荐',
+  type1: '全部',
   type2: '官方',
   type3: '精品',
   type4: '华语',
