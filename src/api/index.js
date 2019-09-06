@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-07 13:43:40
- * @LastEditTime: 2019-09-05 16:27:11
+ * @LastEditTime: 2019-09-06 12:47:20
  * @LastEditors: Please set LastEditors
  */
 import axios from 'axios'
@@ -39,12 +39,12 @@ export default {
      * @return:
      */
 
-  getSearch(keywords, type, pageSize) {
+  getSearch(keywords, type, limit) {
     return axios.get(search, {
       params: {
-        keyword: keywords,
-        type: type,
-        pageSize: pageSize
+        keywords,
+        type,
+        limit
       }
     })
   },

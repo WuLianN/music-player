@@ -1,12 +1,20 @@
+/*
+ * @Description: In User Settings Edit
+ * @Author: your name
+ * @Date: 2019-09-03 12:08:23
+ * @LastEditTime: 2019-09-06 12:44:58
+ * @LastEditors: Please set LastEditors
+ */
 const category = {
-  type1: 'song', // 音乐
-  type2: 'singer', // 歌手
-  type3: 'album', // 专辑
-  type4: 'songList', // 歌单
-  type5: 'video', // 视频
-  type6: 'radio', // 电台
-  type7: 'user', // 用户
-  type8: 'lrc' // 歌词
+  type1: 1, // 单曲
+  type2: 10, // 专辑
+  type3: 100, // 歌手
+  type4: 1000, // 歌单
+  type5: 1002, // 用户
+  type6: 1004, // MV,
+  type7: 1006, // 歌词
+  type8: 1009, // 电台
+  type9: 1014, // 视频
 }
 
 export const searchCat1 = category.type1
@@ -17,3 +25,4 @@ export const searchCat5 = category.type5
 export const searchCat6 = category.type6
 export const searchCat7 = category.type7
 export const searchCat8 = category.type8
+export const searchCat9 = category.type9
