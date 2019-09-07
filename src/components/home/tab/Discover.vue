@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-01 15:04:53
- * @LastEditTime: 2019-09-04 16:44:58
+ * @LastEditTime: 2019-09-07 21:17:06
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -74,15 +74,41 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div></div>
+      <van-tabs v-model="tabsActive" line-height="0" class="tabs">
+        <van-tab title="新碟" class="tabs-tab">
+          <div class="tabs-tab-component">
+            <rowOfDisplayCase :data="topAlbum" v-if="isShowTopAlbum" />
+          </div>
+          <div class="tabs-tab-more">
+            <span class="recommentList-header-span-wrap" @touchstart="goSongList">
+              <span class="recommentList-header-leftSpan"></span>
+              <span class="recommentList-header-lastTitle">更多新碟</span>
+              <span class="recommentList-header-rightSpan"></span>
+            </span>
+          </div>
+        </van-tab>
+        <van-tab title="新歌" class="tabs-tab">
+          <div class="tabs-tab-component">
+            <rowOfDisplayCase :data="newSong" v-if="isShowNewSong" />
+          </div>
+          <div class="tabs-tab-more">
+            <span class="recommentList-header-span-wrap" @touchstart="goSongList">
+              <span class="recommentList-header-leftSpan"></span>
+              <span class="recommentList-header-lastTitle">更多新歌</span>
+              <span class="recommentList-header-rightSpan"></span>
+            </span>
+          </div>
+        </van-tab>
+      </van-tabs>
+    </div>
   </div>
 </template>
 
 <script>
 import api from "@/api/index";
 import { clearArray } from "@/util/transform";
+import rowOfDisplayCase from "@/components/public/rowOfDisplayCase";
 export default {
   name: "discover",
   data() {
@@ -90,13 +116,20 @@ export default {
       bannerResults: [],
       purifyResult: [],
       songInfo: [],
-      active: 0
+      topAlbum: [],
+      newSong: [],
+      active: 0,
+      tabsActive: 0,
+      isShowTopAlbum: false,
+      isShowNewSong: false
     };
   },
 
   created() {
     this.getBanner();
     this.getRecommentList();
+    this.getTopAlbum();
+    this.getNewSong();
   },
 
   methods: {
@@ -227,11 +260,9 @@ export default {
             name: item.name,
             coverImgUrl: item.picUrl,
             playCount: item.playCount,
-
             description: item.copywriter,
             shareCount: item.shareCount,
             tags: item.tags,
-
             trackCount: item.trackCount,
             commentCount: item.commentCount,
             type: "songList"
@@ -271,7 +302,62 @@ export default {
         clearArray(this.purifyResult);
         this.getRecommentList();
       }
+    },
+
+    getTopAlbum() {
+      api.getTopAlbum(50, 0).then(res => {
+        const result = res.data.albums;
+        result.forEach(item => {
+          this.topAlbum.push({
+            id: item.id,
+            name: item.name,
+            coverImgUrl: item.picUrl,
+            playCount: item.playCount,
+            description: item.description,
+            shareCount: item.shareCount,
+            tags: item.tags,
+            trackCount: item.trackCount,
+            commentCount: item.commentCount,
+            publishTime: item.publishTime,
+            artist: item.artist.name,
+            type: "songList"
+          });
+        });
+
+        // 展示新碟
+        this.isShowTopAlbum = true;
+      });
+    },
+
+    getNewSong() {
+      api.getNewSong().then(res => {
+        const result = res.data.result;
+        result.forEach(item => {
+          this.newSong.push({
+            id: item.id,
+            name: item.name,
+            // coverImgUrl: item.picUrl,
+            coverImgUrl: item.song.album.blurPicUrl,
+            playCount: item.playCount,
+            description: item.description,
+            shareCount: item.shareCount,
+            tags: item.tags,
+            trackCount: item.trackCount,
+            commentCount: item.commentCount,
+            publishTime: item.publishTime,
+            artist: item.song.artists[0].name,
+            type: "songList"
+          });
+        });
+      
+        // 展示新歌
+        this.isShowNewSong = true;
+      });
     }
+  },
+
+  components: {
+    rowOfDisplayCase
   }
 };
 </script>
@@ -464,5 +550,30 @@ export default {
 .recommentList-show-count {
   font-size: 1.8vh;
   color: white;
+}
+
+.tabs {
+  width: 26vw;
+  height: 5vh;
+  /* text-indent: 1vw; */
+}
+
+.tabs-tab {
+  width: 100vw;
+  height: 20vh;
+  position: relative;
+}
+
+.tabs-tab-component {
+  width: 100vw;
+  height: 20vh;
+  /* margin: 0 0 0 2.5vw; */
+}
+
+.tabs-tab-more {
+  width: 21vw;
+  height: 3vh;
+  position: absolute;
+  margin: -24vh 0 0 75vw;
 }
 </style>

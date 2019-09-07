@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-22 12:45:39
- * @LastEditTime: 2019-09-02 21:25:25
+ * @LastEditTime: 2019-09-07 11:29:36
  * @LastEditors: Please set LastEditors
  */
 import Vue from 'vue'
@@ -70,12 +70,13 @@ Vue.filter('snippetNum', function (value) {
     return ''
   } else {
     if (value > 99999 && value <= 99999999) {
-      let result = Math.floor(value / 10000)
+      const result = Math.floor(value / 10000)
       // console.log(result);
       return result + '万'
     } else if (value > 99999999) {
-      let result = Math.floor(value / 10000000)
-      return result + '亿'
+      const result = (value / 100000000)
+      const Tresult = result.toString().slice(0,3)
+      return Tresult + '亿'
     } else {
       return value
     }

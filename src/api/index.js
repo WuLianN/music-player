@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-07 13:43:40
- * @LastEditTime: 2019-09-06 12:47:20
+ * @LastEditTime: 2019-09-07 21:01:30
  * @LastEditors: Please set LastEditors
  */
 import axios from 'axios'
@@ -27,7 +27,9 @@ import {
   mvTop,
   mvUrl,
   rankList,
-  rankListDetail
+  rankListDetail,
+  topAlbum,
+  newSong
 } from './source'
 
 export default {
@@ -340,13 +342,39 @@ export default {
     })
   },
 
-/**
- * @description: 所有榜单内容摘要
- * @param {type} 
- * @return: 
- */  
+  /**
+   * @description: 所有榜单内容摘要
+   * @param {type} 
+   * @return: 
+   */
 
- getRankListDetail(){
-   return axios.get(rankListDetail)
- }
+  getRankListDetail() {
+    return axios.get(rankListDetail)
+  },
+
+  /**
+   * @description: 新碟上架
+   * @param limit 
+   * @param offset
+   * @return: 
+   */
+
+  getTopAlbum(limit, offset) {
+    return axios.get(topAlbum, {
+      params: {
+        limit,
+        offset
+      }
+    })
+  },
+
+  /**
+   * @description: 推荐新音乐
+   * @param {type} 
+   * @return: 
+   */
+
+  getNewSong() {
+    return axios.get(newSong)
+  }
 }
