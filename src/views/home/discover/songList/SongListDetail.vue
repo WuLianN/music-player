@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-02 13:11:38
- * @LastEditTime: 2019-09-04 16:11:32
+ * @LastEditTime: 2019-09-08 21:08:22
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -108,6 +108,11 @@ export default {
       this.songList = this.$route.params.rankList;
     } else if (this.$route.params.user === "user") {
       this.songList = this.$route.params.user;
+    } else if (this.$route.params.CD === "newCD") {
+      this.songList = this.$route.params.CD;
+      if (this.$route.params.leftTitle) {
+        this.leftTitle = "专辑";
+      }
     }
   },
 

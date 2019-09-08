@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-01 15:04:53
- * @LastEditTime: 2019-09-07 21:17:06
+ * @LastEditTime: 2019-09-08 21:25:33
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -81,7 +81,7 @@
             <rowOfDisplayCase :data="topAlbum" v-if="isShowTopAlbum" />
           </div>
           <div class="tabs-tab-more">
-            <span class="recommentList-header-span-wrap" @touchstart="goSongList">
+            <span class="recommentList-header-span-wrap" @click="moreCD">
               <span class="recommentList-header-leftSpan"></span>
               <span class="recommentList-header-lastTitle">更多新碟</span>
               <span class="recommentList-header-rightSpan"></span>
@@ -93,7 +93,7 @@
             <rowOfDisplayCase :data="newSong" v-if="isShowNewSong" />
           </div>
           <div class="tabs-tab-more">
-            <span class="recommentList-header-span-wrap" @touchstart="goSongList">
+            <span class="recommentList-header-span-wrap" @click="moreSongs">
               <span class="recommentList-header-leftSpan"></span>
               <span class="recommentList-header-lastTitle">更多新歌</span>
               <span class="recommentList-header-rightSpan"></span>
@@ -320,12 +320,14 @@ export default {
             commentCount: item.commentCount,
             publishTime: item.publishTime,
             artist: item.artist.name,
-            type: "songList"
+            type: "songList",
+            api: "WY"
           });
         });
 
         // 展示新碟
         this.isShowTopAlbum = true;
+        this.$store.commit("setNewCD", this.topAlbum);
       });
     },
 
@@ -346,13 +348,23 @@ export default {
             commentCount: item.commentCount,
             publishTime: item.publishTime,
             artist: item.song.artists[0].name,
-            type: "songList"
+            type: "songList",
+            api: "WY"
           });
         });
-      
+
         // 展示新歌
         this.isShowNewSong = true;
+        this.$store.commit("setNewSongs", this.newSong)
       });
+    },
+
+    moreCD() {
+      this.$router.push({ name: "newCD" });
+    },
+
+    moreSongs() {
+      this.$router.push({ name: "newSongs" });
     }
   },
 
@@ -567,7 +579,6 @@ export default {
 .tabs-tab-component {
   width: 100vw;
   height: 20vh;
-  /* margin: 0 0 0 2.5vw; */
 }
 
 .tabs-tab-more {

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-07-22 12:45:39
- * @LastEditTime: 2019-08-29 15:00:56
+ * @LastEditTime: 2019-09-08 21:24:24
  * @LastEditors: Please set LastEditors
  */
 import Vue from 'vue'
@@ -22,8 +22,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 
   state: {
-    GetLastestSongs: '',
     WYartist: '',
+    NewCD: [],
+    NewSongs: [],
     IsLoading: false,
     IsShow: true,
     IsChangeTitle: false,

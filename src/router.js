@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-08 10:41:09
- * @LastEditTime: 2019-09-03 12:16:21
+ * @LastEditTime: 2019-09-08 20:16:59
  * @LastEditors: Please set LastEditors
  */
 import Vue from 'vue'
@@ -50,6 +50,10 @@ const MVplayer = () => import('./views/home/discover/mv/MVplayer')
 
 // 搜索
 const Search = () => import('./views/home/search/Search')
+
+// 新碟/新歌
+const NewCD = () => import('./views/home/discover/new/CD')
+const NewSongs = () => import('./views/home/discover/new/Songs')
 
 export default new Router({
   mode: 'history',
@@ -185,6 +189,19 @@ export default new Router({
       path: '/specialList',
       name: 'specialList',
       component: SpecialList
+    },
+
+    // 新碟/新歌
+    {
+      path: '/newCD',
+      name: 'newCD',
+      component: NewCD
+    },
+
+    {
+      path: '/newSongs',
+      name: 'newSongs',
+      component: NewSongs
     }
 
   ]

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-11 12:33:25
- * @LastEditTime: 2019-08-27 21:20:18
+ * @LastEditTime: 2019-09-08 21:24:07
  * @LastEditors: Please set LastEditors
  */
 export const getIsShow = state => {
@@ -29,14 +29,18 @@ export const getLoading = state => {
   return state.IsLoading
 }
 
-export const getLastestSongs = state => {
-  return state.GetLastestSongs
-}
-
 export const getIsMusicList = state => {
   return state.IsGetMusicList
 }
 
 export const getWYartist = state => {
   return state.WYartist
+}
+
+export const getNewCD = state => {
+  return state.NewCD
+}
+
+export const getNewSongs = state => {
+  return state.NewSongs
 }

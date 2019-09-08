@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-11 12:01:57
- * @LastEditTime: 2019-08-27 21:19:37
+ * @LastEditTime: 2019-09-08 21:23:32
  * @LastEditors: Please set LastEditors
  */
 
@@ -41,12 +41,18 @@ export const setIsGetMusicList = (state, isGetMusicList) => {
   state.IsGetMusicList = isGetMusicList
 }
 
-// 设置获取最新音乐
-export const setGetLastestSongs = (state, getLastestSongs) => {
-  state.GetLastestSongs = getLastestSongs
-}
 
 // 网易云歌手 专为Singers.vue打造
 export const setWYartist = (state, wyArtist) => {
   state.WYartist = wyArtist
+}
+
+// 设置新碟
+export const setNewCD = (state, newCD) => {
+  state.NewCD = newCD
+}
+
+// 设置新歌
+export const setNewSongs = (state, newSongs) => {
+  state.NewSongs = newSongs
 }
