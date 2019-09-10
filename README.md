@@ -92,6 +92,15 @@
 3. 本地收藏功能 
 
 
+## display
+![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/discover.png)
+![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/songList.png)
+![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/mv.png)
+![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/rankList.png)
+![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/player.png)
+![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/lyrics.png)
+
+
 <br>
 
  :warning: **注意**
@@ -146,6 +155,42 @@ npm run serve
    }, [])
    
 ```
+
+
+  **浅拷贝**
+  * 概念
+  ```
+  创建一个新对象，这个对象有着原始对象属性值的一份精确拷贝。如果属性是基本类型，
+  拷贝的就是基本类型的值，如果属性是引用类型，拷贝的就是内存地址 ，
+  所以如果其中一个对象改变了这个地址，就会影响到另一个对象
+  ```
+
+
+  **深拷贝**
+  * 概念
+  ```
+  将一个对象从内存中完整的拷贝一份出来,从堆内存中开辟一个新的区域存放新对象,且修改新对象不会影响原对象
+  ```
+  
+  * 乞丐版
+  ```
+  JSON.parse(JSON.stringify(target))
+  ```
+
+  * 面试版
+  ``` 
+  function clone(target) {
+    if (typeof target === 'object') {
+        let cloneTarget = Array.isArray(target) ? [] : {};
+        for (const key in target) {
+            cloneTarget[key] = clone(target[key]);
+        }
+        return cloneTarget;
+    } else {
+        return target;
+    }
+  }
+ ```
 
 ```
   获取xxx元素距离左边的距离
