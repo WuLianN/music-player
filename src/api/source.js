@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-07 13:59:55
- * @LastEditTime: 2019-09-07 21:00:34
+ * @LastEditTime: 2019-09-11 17:06:04
  * @LastEditors: Please set LastEditors
  */
 
@@ -30,7 +30,8 @@ const api = {
   rankList: '/top/list', // 排行榜
   rankListDetail: '/toplist/detail', // 所有榜单内容摘要
   topAlbum: '/top/album', // 新碟上架
-  newSong: '/personalized/newsong' // 推荐新音乐
+  newSong: '/personalized/newsong', // 推荐新音乐
+  topSong: '/top/song' // 新歌速递
 
 }
 
@@ -57,3 +58,4 @@ export const rankList = api.rankList
 export const rankListDetail = api.rankListDetail
 export const topAlbum = api.topAlbum
 export const newSong = api.newSong
+export const topSong = api.topSong

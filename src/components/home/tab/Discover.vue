@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-01 15:04:53
- * @LastEditTime: 2019-09-08 21:25:33
+ * @LastEditTime: 2019-09-11 17:23:58
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -310,7 +310,7 @@ export default {
         result.forEach(item => {
           this.topAlbum.push({
             id: item.id,
-            name: item.name,
+            songName: item.name,
             coverImgUrl: item.picUrl,
             playCount: item.playCount,
             description: item.description,
@@ -321,7 +321,8 @@ export default {
             publishTime: item.publishTime,
             artist: item.artist.name,
             type: "songList",
-            api: "WY"
+            api: "WY",
+            playStyle: "album"
           });
         });
 
@@ -337,7 +338,7 @@ export default {
         result.forEach(item => {
           this.newSong.push({
             id: item.id,
-            name: item.name,
+            songName: item.name,
             // coverImgUrl: item.picUrl,
             coverImgUrl: item.song.album.blurPicUrl,
             playCount: item.playCount,
@@ -349,13 +350,14 @@ export default {
             publishTime: item.publishTime,
             artist: item.song.artists[0].name,
             type: "songList",
-            api: "WY"
+            api: "WY",
+            playStyle: "song"
           });
         });
 
         // 展示新歌
         this.isShowNewSong = true;
-        this.$store.commit("setNewSongs", this.newSong)
+        this.$store.commit("setNewSongs", this.newSong);
       });
     },
 

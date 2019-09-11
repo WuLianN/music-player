@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-07 13:43:40
- * @LastEditTime: 2019-09-07 21:01:30
+ * @LastEditTime: 2019-09-11 17:07:45
  * @LastEditors: Please set LastEditors
  */
 import axios from 'axios'
@@ -29,7 +29,8 @@ import {
   rankList,
   rankListDetail,
   topAlbum,
-  newSong
+  newSong,
+  topSong
 } from './source'
 
 export default {
@@ -376,5 +377,19 @@ export default {
 
   getNewSong() {
     return axios.get(newSong)
+  },
+
+  /**
+   * @description: 新歌速递
+   * @param type 全部:0 华语:7 欧美:96 日本:8 韩国:16
+   * @return: 
+   */
+
+  getTopSong(type) {
+    return axios.get(topSong, {
+      params: {
+        type
+      }
+    })
   }
 }

@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-02 13:11:38
- * @LastEditTime: 2019-09-08 21:08:22
+ * @LastEditTime: 2019-09-11 15:55:05
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -128,7 +128,7 @@ export default {
       if (type === "songList") {
         api.getSongList(ID).then(res => {
           const result = res.data.playlist.tracks;
-
+    
           const purifyRes = [];
           result.forEach(item => {
             purifyRes.push({
