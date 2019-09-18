@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: WuLianN
  * @Date: 2019-07-22 12:44:21
- * @LastEditTime: 2019-09-05 16:56:56
+ * @LastEditTime: 2019-09-12 21:18:09
  * @LastEditors: Please set LastEditors
  -->
 ![](https://github.com/WuLianN/music-player/blob/master/src/assets/logo/cover.png)
@@ -200,6 +200,26 @@ npm run serve
 
 ```
 ## :pencil: vue
+```
+Vue包装了数个数组操作函数，使用这些方法操作的数组去，其数据变动时会被vue监测： 
+
+    push()
+    pop()
+    shift()
+    unshift()
+    splice()
+    sort()
+    reverse()
+    vue2.0还增加个方法可以观测Vue.set(items, indexOfItem, newValue)
+    filter(), concat(), slice() 。这些不会改变原始数组，但总是返回一个新数组。当使用非变异方法时，可以用新数组替换旧数组
+
+Vue 不能检测以下变动的数组： 
+
+    ① 当你利用索引直接设置一个项时，vm.items[indexOfItem] = newValue
+    ② 当你修改数组的长度时，例如： vm.items.length = newLength
+```
+
+
 ```
 v-for 遍历绑定动态class和ref 但获得的是集合
 <div

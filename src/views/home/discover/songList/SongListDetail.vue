@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-02 13:11:38
- * @LastEditTime: 2019-09-11 15:55:05
+ * @LastEditTime: 2019-09-18 18:20:43
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -16,7 +16,7 @@
       <div class="main-info-content">
         <div class="main-info-title">{{ res.name | snippet17 }}</div>
         <div class="main-info-creator">
-          <img class="main-info-creator-img" :src="res.avatarUrl" alt />
+          <img class="main-info-creator-img" :src="res.avatarUrl" v-if="res.avatarUrl" alt />
           <span>{{ res.nickname | snippet10 }}</span>
         </div>
         <div class="main-info-des">{{ res.description | snippet17 }}</div>

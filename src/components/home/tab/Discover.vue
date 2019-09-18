@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-01 15:04:53
- * @LastEditTime: 2019-09-11 17:23:58
+ * @LastEditTime: 2019-09-18 18:27:41
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -261,10 +261,10 @@ export default {
             coverImgUrl: item.picUrl,
             playCount: item.playCount,
             description: item.copywriter,
-            shareCount: item.shareCount,
+            shareCount: "分享",
             tags: item.tags,
             trackCount: item.trackCount,
-            commentCount: item.commentCount,
+            commentCount: "评论",
             type: "songList"
           });
         });
@@ -299,6 +299,7 @@ export default {
       // 下滑
       if (startScreenY - endScreenY < -50) {
         // 清空原数组中的数据 -> 再添加数据
+
         clearArray(this.purifyResult);
         this.getRecommentList();
       }
@@ -314,10 +315,10 @@ export default {
             coverImgUrl: item.picUrl,
             playCount: item.playCount,
             description: item.description,
-            shareCount: item.shareCount,
+            shareCount: "分享",
             tags: item.tags,
             trackCount: item.trackCount,
-            commentCount: item.commentCount,
+            commentCount: "评论",
             publishTime: item.publishTime,
             artist: item.artist.name,
             type: "songList",

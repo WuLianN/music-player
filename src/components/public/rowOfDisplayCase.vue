@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-07 13:25:26
- * @LastEditTime: 2019-09-11 17:23:40
+ * @LastEditTime: 2019-09-18 18:30:05
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -45,7 +45,7 @@ export default {
         // 图片链接
         this.$store.commit("setPicUrl", item.coverImgUrl);
         // 歌曲名
-        this.$store.commit("setSongName", item.name);
+        this.$store.commit("setSongName", item.songName);
         // 歌曲作者
         this.$store.commit("setSongArtist", item.artist);
         // api来源
