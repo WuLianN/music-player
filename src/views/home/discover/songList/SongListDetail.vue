@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-02 13:11:38
- * @LastEditTime: 2019-09-18 18:20:43
+ * @LastEditTime: 2019-09-19 17:44:34
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -54,7 +54,13 @@
     >
       <div class="footer-header">
         <div class="toCircle-left"></div>
-        <div class="footer-header-title"></div>
+        <div class="footer-header-img-wrap">
+          <img class="footer-header-img" src="@/assets/pause-gray.png" alt />
+        </div>
+        <div class="footer-header-title">
+          <span class="footer-header-titleName">播放全部</span>
+          <span class="footer-header-titleCount">(共{{ res.trackCount}}首)</span>
+        </div>
         <div class="toCircle-right"></div>
       </div>
 
@@ -128,7 +134,7 @@ export default {
       if (type === "songList") {
         api.getSongList(ID).then(res => {
           const result = res.data.playlist.tracks;
-    
+
           const purifyRes = [];
           result.forEach(item => {
             purifyRes.push({
@@ -376,13 +382,46 @@ export default {
   background: white;
 }
 
+.footer-header-img-wrap {
+  width: 10vw;
+  height: 7vh;
+  margin: 0 0 0 -6vw;
+  background: white;
+  border-top-left-radius: 60%;
+}
+
+.footer-header-img {
+  width: 10vw;
+  height: 6vh;
+  background: white;
+  margin: 1vh 0 0 0;
+   border-top-left-radius: 20%;
+}
+
 .footer-header-title {
   width: 80vw;
   height: 7vh;
   background: white;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+}
+
+.footer-header-titleName {
+  display: inline-block;
+  width: 18vw;
+  height: 7vh;
+  line-height: 8vh;
+  font-weight: bold;
+}
+
+.footer-header-titleCount {
+  display: inline-block;
+  width: 20vw;
+  height: 7vh;
+  line-height: 8vh;
+  color: gray;
+  font-size: 2vh;
 }
 
 .footer-list {

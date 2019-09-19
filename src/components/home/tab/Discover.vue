@@ -2,12 +2,12 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-01 15:04:53
- * @LastEditTime: 2019-09-18 18:27:41
+ * @LastEditTime: 2019-09-19 16:20:09
  * @LastEditors: Please set LastEditors
  -->
 <template>
-  <div class="discover-wrap">
-    <div class="discover" @touchstart="getStart" @touchend="getEnd" @touchmove="touchMove">
+  <div class="discover-wrap" ref="scroll">
+    <div class="discover">
       <van-swipe :autoplay="3000" class="swipe">
         <van-swipe-item v-for="(image, index) in bannerResults" :key="index">
           <img v-lazy="image.picUrl" class="swipe-img" @click="getBannerInfo(image)" />
@@ -61,7 +61,7 @@
           <div
             class="recommentList-show"
             @click="goSongListDetail(item)"
-            v-for="(item, index) in purifyResult"
+            v-for="(item, index) in purifyResult[0]"
             :key="index"
           >
             <img class="recommentList-show-img" :src="item.coverImgUrl" alt />
@@ -109,6 +109,7 @@
 import api from "@/api/index";
 import { clearArray } from "@/util/transform";
 import rowOfDisplayCase from "@/components/public/rowOfDisplayCase";
+import BScroll from "better-scroll";
 export default {
   name: "discover",
   data() {
@@ -121,7 +122,9 @@ export default {
       active: 0,
       tabsActive: 0,
       isShowTopAlbum: false,
-      isShowNewSong: false
+      isShowNewSong: false,
+      isFirstTimeLoad: true,
+      scroll: null
     };
   },
 
@@ -130,6 +133,12 @@ export default {
     this.getRecommentList();
     this.getTopAlbum();
     this.getNewSong();
+  },
+
+  mounted() {
+    this.$nextTick(() => {
+      this.initScroll();
+    });
   },
 
   methods: {
@@ -251,11 +260,12 @@ export default {
     },
 
     getRecommentList() {
-      const offset = 6 * Math.floor(Math.random() * 11); // 0 - 60
-      api.getRecommentList(6, offset).then(res => {
+      api.getRecommentList(30).then(res => {
         const result = res.data.result;
+        const recommentList = [];
+
         result.forEach((item, index) => {
-          this.purifyResult.push({
+          recommentList.push({
             id: item.id,
             name: item.name,
             coverImgUrl: item.picUrl,
@@ -268,41 +278,26 @@ export default {
             type: "songList"
           });
         });
+
+        if (this.isFirstTimeLoad) {
+          const data = recommentList.slice(0, 6);
+          this.purifyResult.push(data);
+
+          // 首次加载后不再加载
+          this.isFirstTimeLoad = false;
+        } else {
+          // 完成下拉刷新
+          this.scroll.finishPullDown();
+
+          const min = Math.floor(Math.random() * 7);
+          const max = min + 6;
+          const data = recommentList.slice(min, max);
+
+          // 清空purifyResult
+          clearArray(this.purifyResult);
+          this.purifyResult.push(data);
+        }
       });
-    },
-
-    getStart(e) {
-      // 第一个触点
-      this.startTouches = e.touches;
-    },
-
-    getEnd(e) {
-      // 最后一个触点
-      this.endTouches = e.changedTouches;
-
-      this.slide();
-    },
-
-    touchMove() {
-      // this.slide();
-    },
-
-    slide() {
-      // 起点
-      const startScreenX = this.startTouches[0].screenX;
-      const startScreenY = this.startTouches[0].screenY;
-
-      // 终点
-      const endScreenX = this.endTouches[0].screenX;
-      const endScreenY = this.endTouches[0].screenY;
-
-      // 下滑
-      if (startScreenY - endScreenY < -50) {
-        // 清空原数组中的数据 -> 再添加数据
-
-        clearArray(this.purifyResult);
-        this.getRecommentList();
-      }
     },
 
     getTopAlbum() {
@@ -368,6 +363,28 @@ export default {
 
     moreSongs() {
       this.$router.push({ name: "newSongs" });
+    },
+
+    initScroll() {
+      if (!this.scroll) {
+       // console.log(this.scroll); // null
+
+        this.scroll = new BScroll(this.$refs.scroll, {
+          scrollY: true,
+          scrollBar: false,
+          click: true,
+          tap: true,
+          mouseWheel: true, // pc模式下鼠标滚动
+          pullDownRefresh: {
+            threshold: 50,
+            stop: 20
+          }
+        });
+
+        this.scroll.on("pullingDown", this.getRecommentList);
+      } else {
+        this.scroll.refresh();
+      }
     }
   },
 
@@ -378,10 +395,16 @@ export default {
 </script>
 
 <style scoped>
-.discover {
+.discover-wrap {
   width: 100vw;
   height: 82vh;
-  overflow: auto;
+  overflow: hidden;
+}
+
+.discover {
+  width: 100vw;
+  height: 135vh;
+  /* background: gray; */
 }
 
 .swipe {
