@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-12 10:29:31
- * @LastEditTime: 2019-09-05 13:31:51
+ * @LastEditTime: 2019-09-23 21:41:56
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -42,37 +42,37 @@
 </template>
 
 <script>
-import api from '@/api/index'
-import QQapi from '@/api/qq/qqIndex'
-import cookie from '@/util/cookie'
+import api from "@/api/index";
+import QQapi from "@/api/qq/qqIndex";
+import cookie from "@/util/cookie";
 export default {
-  data () {
+  data() {
     return {
-      uid: '',
-      uin: '',
+      uid: "",
+      uin: "",
       isLogin: false,
       isqqLogin: false,
       userInfo: [],
       qqUserInfo: [],
-      userImg: '',
-      nickname: '',
-      hostname: ''
-    }
+      userImg: "",
+      nickname: "",
+      hostname: ""
+    };
   },
 
-  created () {
-    this.checkUserInfo()
-    this.checkqqUserInfo()
+  created() {
+    this.checkUserInfo();
+    this.checkqqUserInfo();
   },
 
   methods: {
-    getUserInfo (index) {
-      const uid = this.uid
+    getUserInfo(index) {
+      const uid = this.uid;
       api.getUsetSongList(uid).then(res => {
-        this.isLogin = false
+        this.isLogin = false;
 
-        const result = res.data.playlist
-    
+        const result = res.data.playlist;
+
         result.forEach((item, index) => {
           if (index === 0) {
             this.userInfo = {
@@ -84,98 +84,98 @@ export default {
               detailDescription: item.creator.detailDescription,
               city: item.creator.city,
               province: item.creator.province
-            }
+            };
           }
-        })
+        });
 
         // 登录成功 关闭登录页面
-        this.isLogin = true
+        this.isLogin = true;
 
-        this.userImg = this.userInfo.avatarUrl
+        this.userImg = this.userInfo.avatarUrl;
 
-        const cookieValue = JSON.stringify(this.userInfo)
+        const cookieValue = JSON.stringify(this.userInfo);
 
         // console.log(cookieValue);
 
         // 设置cookie
-        cookie.setCookie('userId', cookieValue, 365)
+        cookie.setCookie("userId", cookieValue, 365);
 
         // 隐藏login页面
-        const recoverFalse = false
-        this.$store.commit('setIsShowUserInfo', recoverFalse)
-        if (this.$route.name === 'user') {
-          this.$router.go(0)
-          this.$emit('goUser')
+        const recoverFalse = false;
+        this.$store.commit("setIsShowUserInfo", recoverFalse);
+        if (this.$route.name === "user") {
+          this.$router.go(0);
+          this.$emit("goUser");
         } else {
-          this.$router.push({ name: 'user' })
-          this.$emit('goUser')
+          this.$router.push({ name: "user" });
+          this.$emit("goUser");
         }
-      })
+      });
     },
 
-    checkUserInfo () {
-      const existCookie = cookie.checkCookie('userId')
+    checkUserInfo() {
+      const existCookie = cookie.checkCookie("userId");
       // console.log(existCookie);
 
       if (existCookie) {
-        this.isLogin = true
-        const cookieInfo = cookie.getCookie('userId')
+        this.isLogin = true;
+        const cookieInfo = cookie.getCookie("userId");
         // console.log(cookieInfo);
 
-        const transCookieInfo = JSON.parse(cookieInfo)
+        const transCookieInfo = JSON.parse(cookieInfo);
         // console.log(transCookieInfo);
 
-        this.userImg = transCookieInfo.avatarUrl
-        this.nickname = transCookieInfo.nickname
+        this.userImg = transCookieInfo.avatarUrl;
+        this.nickname = transCookieInfo.nickname;
       } else {
-        this.isLogin = false
+        this.isLogin = false;
       }
     },
 
-    getQQuserInfo () {
-      const uid = this.uin
+    getQQuserInfo() {
+      const uid = this.uin;
 
       QQapi.getUserSongList(uid).then(res => {
         // console.log(res.data.data)
 
-        this.isqqLogin = true
+        this.isqqLogin = true;
 
-        const cookieValue = JSON.stringify(uid)
+        const cookieValue = JSON.stringify(uid);
 
         // 设置cookie
-        cookie.setCookie('qqUserId', cookieValue, 365)
+        cookie.setCookie("qqUserId", cookieValue, 365);
 
         // 隐藏login页面
-        const recoverFalse = false
-        this.$store.commit('setIsShowUserInfo', recoverFalse)
+        const recoverFalse = false;
+        this.$store.commit("setIsShowUserInfo", recoverFalse);
 
-        if (this.$route.name === 'user') {
-          this.$router.go(0)
-          this.$emit('goUser')
+        if (this.$route.name === "user") {
+          this.$router.go(0);
+          this.$emit("goUser");
         } else {
-          this.$router.push({ name: 'user' })
-          this.$emit('goUser')
+          this.$router.push({ name: "user" });
+          this.$emit("goUser");
         }
-      })
+      });
     },
 
-    checkqqUserInfo () {
-      const existCookie = cookie.checkCookie('qqUserId')
+    checkqqUserInfo() {
+      const existCookie = cookie.checkCookie("qqUserId");
       // console.log(existCookie);
 
       if (existCookie) {
-        this.isqqLogin = true
-        const cookieInfo = cookie.getCookie('qqUserId')
+        this.isqqLogin = true;
+        const cookieInfo = cookie.getCookie("qqUserId");
 
-        const transCookieInfo = JSON.parse(cookieInfo)
+        const transCookieInfo = JSON.parse(cookieInfo);
 
-        this.hostname = transCookieInfo
+        this.hostname = transCookieInfo;
       } else {
-        this.isqqLogin = false
+        this.isqqLogin = false;
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -223,12 +223,13 @@ export default {
 }
 
 .login-btn {
-  width: 20vw;
-  height: 5vh;
+  width: 25%;
+  height: 13%;
   color: white;
   background: rgba(255, 0, 0, 0.842);
   font-weight: bold;
-  border-radius: 30%;
+  border-radius: 26%/50%;
+  border-radius: 30px;
   border: none;
 }
 
@@ -282,12 +283,12 @@ export default {
 }
 
 .qq-btn {
-  width: 20vw;
-  height: 5vh;
+  width: 25%;
+  height: 13%;
   color: white;
   background: rgb(3, 143, 38);
   font-weight: bold;
-  border-radius: 30%;
+  border-radius: 26%/50%;
   border: none;
 }
 

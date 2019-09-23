@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: WuLianN
  * @Date: 2019-07-22 12:44:21
- * @LastEditTime: 2019-09-12 21:18:09
+ * @LastEditTime: 2019-09-23 21:52:57
  * @LastEditors: Please set LastEditors
  -->
 ![](https://github.com/WuLianN/music-player/blob/master/src/assets/logo/cover.png)
@@ -246,6 +246,21 @@ v-for 遍历绑定动态class和ref 但获得的是集合
 
 
 ## :pencil: CSS
+```
+border-radius百分比设置原理
+场景：长方形左右圆角 本项目的logi使用此方法（放弃了vw、vh -换算麻烦，使用百分比）
+width: 25%;
+height: 13%;
+border-radius: 26%/50%; 注： ”/” 前面的一个值 -> 椭圆的水平半径,后面的值 -> 椭圆的垂直半径
+
+公式
+当宽度 > 高度时
+
+水平：( (1/2*高度) / 宽度 ) * 100%
+垂直：( (1/2*高度) / 高度) * 100% 即为50%
+```
+
+
 ```
 div中单行文字超出显示省略号
 
