@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-09-11 16:00:46
- * @LastEditTime: 2019-09-11 18:48:50
+ * @LastEditTime: 2019-09-23 22:06:40
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -62,34 +62,22 @@ export default {
       } else if (this.title === "华语") {
         this.image = require("@/assets/newSongs/mandarin.jpg");
 
-        // 清空purifyResult
-        clearArray(this.purifyResult);
-
-        // 获取音乐歌单
+        clearArray(this.purifyResult)
         this.getSongList(newSongsCat1);
       } else if (this.title === "欧美") {
         this.image = require("@/assets/newSongs/western.jpg");
 
-        // 清空purifyResult
         clearArray(this.purifyResult);
-
-        // 获取音乐歌单
         this.getSongList(newSongsCat2);
       } else if (this.title === "韩国") {
         this.image = require("@/assets/newSongs/korean.jpg");
 
-        // 清空purifyResult
         clearArray(this.purifyResult);
-
-        // 获取音乐歌单
         this.getSongList(newSongsCat3);
       } else if (this.title === "日本") {
         this.image = require("@/assets/newSongs/japanese.jpg");
 
-        // 清空purifyResult
         clearArray(this.purifyResult);
-
-        // 获取音乐歌单
         this.getSongList(newSongsCat4);
       }
     },

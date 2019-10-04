@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: WuLianN
  * @Date: 2019-07-22 12:44:21
- * @LastEditTime: 2019-09-23 21:52:57
+ * @LastEditTime: 2019-10-04 18:37:08
  * @LastEditors: Please set LastEditors
  -->
 ![](https://github.com/WuLianN/music-player/blob/master/src/assets/logo/cover.png)
@@ -16,7 +16,7 @@
 
 <div align=center>
 
-*网易云的歌单 + 腾讯系的音乐*
+*网易云的歌单 + 腾讯系的音乐(没api了)*
 
 </div>
 
@@ -49,8 +49,6 @@
 
 
 <br>
-
-<!-- :point_right: ~~[在线演示](https://messoer.github.io/dual-core-player/dist/#/discover)~~ -->
 
 <br>
 
@@ -270,11 +268,19 @@ white-space:nowrap;
 ```
 
 ```
-div中的图片居中(方法之一) -> 设置到div
-
+div中的图片居中 
+法一 -> 设置到div
 display: table-cell;
 vertical-align: middle;
 text-align: center;
+
+法二 -> 设置到img
+display: block;
+margin: 0 auto;
+
+法三 -> flex布局
+justify-content: center; 水平居中
+align-items: center; 垂直居中
 ```
 
 ```
