@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-02 13:11:38
- * @LastEditTime: 2019-10-12 19:47:01
+ * @LastEditTime: 2019-10-12 19:52:37
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -54,18 +54,18 @@
           <div>{{ item.name }}</div>
         </div>
       </div>
-    </div>
 
-    <div class="recomment-title">更多榜单</div>
-    <div class="more">
-      <div
-        class="recomment-type"
-        v-for="(item, index) in more"
-        :key="index"
-        @click="goSongListDetail(item)"
-      >
-        <img :src="item.coverImgUrl" class="recomment-type-img" alt />
-        <div>{{ item.name }}</div>
+      <div class="recomment-title">更多榜单</div>
+      <div class="more">
+        <div
+          class="recomment-type"
+          v-for="(item, index) in more"
+          :key="index"
+          @click="goSongListDetail(item)"
+        >
+          <img :src="item.coverImgUrl" class="recomment-type-img" alt />
+          <div>{{ item.name }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -339,10 +339,9 @@ export default {
 .more {
   width: 90vw;
   height: 45vh;
-  margin: 0 auto 10vh auto;
+  margin: 0 auto;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
-  position: relative;
 }
 </style>
