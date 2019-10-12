@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-02 13:11:38
- * @LastEditTime: 2019-09-05 15:46:36
+ * @LastEditTime: 2019-10-12 19:47:01
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -57,6 +57,17 @@
     </div>
 
     <div class="recomment-title">更多榜单</div>
+    <div class="more">
+      <div
+        class="recomment-type"
+        v-for="(item, index) in more"
+        :key="index"
+        @click="goSongListDetail(item)"
+      >
+        <img :src="item.coverImgUrl" class="recomment-type-img" alt />
+        <div>{{ item.name }}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -70,6 +81,7 @@ export default {
       offcial: [],
       recomment: [],
       global: [],
+      more: [],
       leftTitle: "排行榜",
       home: "home"
     };
@@ -80,11 +92,8 @@ export default {
   },
 
   created() {
-    // this.getOfficial();
-    // this.getRecomment();
-    // this.getGlobal();
-
     this.getRankListDetail();
+    this.getTopList();
   },
 
   methods: {
@@ -92,7 +101,7 @@ export default {
       this.$router.push({ name: "home" });
     },
 
-    // 获取"所有榜单内容摘要" 
+    // 获取"所有榜单内容摘要"
     getRankListDetail() {
       api.getRankListDetail().then(res => {
         const result = res.data.list;
@@ -104,102 +113,106 @@ export default {
             tracks: item.tracks,
             description: item.description,
             type: "songList",
-            api: "WY",
-
+            api: "WY"
           });
         });
 
         // 获取 “官方榜” 歌单
-        this.offcial = this.rankListDetail.slice(0,4)
+        this.offcial = this.rankListDetail.slice(0, 4);
       });
     },
 
-    // 获取 “推荐榜” 歌单
-    getRecomment() {
-      this.$axios
-        .all([
-          getSongList.getYOLOsongs(),
-          getSongList.getRap(),
-          getSongList.getElectronica(),
-          getSongList.getACGsongs(),
-          getSongList.getEnglishNewSongs(),
-          getSongList.getTikToKSongs()
-        ])
-        .then(
-          this.$axios.spread(
-            (YOLO, rap, electronica, ACG, englishSongs, TikTok) => {
-              const result = [];
-              result.push(YOLO.data.data.playlists[0]);
-              result.push(rap.data.data.playlists[0]);
-              result.push(electronica.data.data.playlists[0]);
-              result.push(ACG.data.data.playlists[0]);
-              result.push(englishSongs.data.data.playlists[0]);
-              result.push(TikTok.data.data.playlists[0]);
+    // 获取“所有榜单”
+    getTopList() {
+      api.getTopList().then(res => {
+        const result = res.data.list;
+        let list = [];
 
-              result.forEach(item => {
-                this.recomment.push({
-                  coverImgUrl: item.coverImgUrl,
-                  playCount: item.playCount,
-                  trackCount: item.trackCount,
-                  id: item.id,
-                  nickname: item.creator.nickname,
-                  description: item.description,
-                  name: item.name,
-                  avatarUrl: require("../../../../assets/home/neteaseLogo.png"),
-                  shareCount: "分享",
-                  commentCount: "评论",
-                  type: "songList"
-                });
-              });
+        // 云音乐类型
+        let cloudMusicList = [];
+        // 抖音排行榜
+        let TikTok = [];
+        // 全球榜
+        let globalList = [];
+        // 更多榜单
+        let moreList = [];
 
-              // console.log(result);
+        result.forEach(item => {
+          if (item.name.match("云音乐")) {
+            cloudMusicList.push(item);
+          } else {
+            list.push(item.name);
+
+            if (item.name.match("抖音排行榜")) {
+              TikTok.push(item);
+            } else if (item.name.match("美国Billboard周榜")) {
+              globalList.push(item);
+            } else if (item.name.match("UK排行榜周榜")) {
+              globalList.push(item);
+            } else if (item.name.match("Beatport全球电子舞曲榜")) {
+              globalList.push(item);
+            } else if (item.name.match("日本Oricon周榜")) {
+              globalList.push(item);
+            } else if (item.name.match("iTunes榜")) {
+              globalList.push(item);
+            } else if (item.name.match("英国Q杂志中文版周榜")) {
+              globalList.push(item);
+            } else {
+              if (!item.name.match("网易原创歌曲榜")) {
+                moreList.push(item);
+              }
             }
-          )
-        );
-    },
+          }
+        });
 
-    // 获取 “全球榜” 歌单
-    getGlobal() {
-      this.$axios
-        .all([
-          getSongList.getBillboard(),
-          getSongList.getUK(),
-          getSongList.getBeatport(),
-          getSongList.getOricon(),
-          getSongList.getiTunes(),
-          getSongList.getQboard()
-        ])
-        .then(
-          this.$axios.spread(
-            (Billboard, UK, Beatport, Oricon, iTunes, Qboard) => {
-              const result = [];
-              result.push(Billboard.data.data.playlists[0]);
-              result.push(UK.data.data.playlists[0]);
-              result.push(Beatport.data.data.playlists[0]);
-              result.push(Oricon.data.data.playlists[0]);
-              result.push(iTunes.data.data.playlists[0]);
-              result.push(Qboard.data.data.playlists[0]);
+        // 推荐榜中的 4种类型榜单
+        let temp1 = cloudMusicList.slice(3, 7);
+        // 云音乐欧美新歌榜
+        let temp2 = cloudMusicList.slice(10, 11);
 
-              result.forEach(item => {
-                this.global.push({
-                  coverImgUrl: item.coverImgUrl,
-                  playCount: item.playCount,
-                  trackCount: item.trackCount,
-                  id: item.id,
-                  nickname: item.creator.nickname,
-                  description: item.description,
-                  name: item.name,
-                  avatarUrl: item.coverImgUrl,
-                  shareCount: "分享",
-                  commentCount: "评论",
-                  type: "songList"
-                });
-              });
+        let recommentList = [...temp1, ...temp2, ...TikTok];
+        recommentList.forEach(item => {
+          this.recomment.push({
+            updateFrequency: item.updateFrequency,
+            coverImgUrl: item.coverImgUrl,
+            id: item.id,
+            tracks: item.tracks,
+            description: item.description,
+            name: item.name,
+            playCount: item.playCount,
+            type: "songList",
+            api: "WY"
+          });
+        });
 
-              // console.log(result);
-            }
-          )
-        );
+        globalList.forEach(item => {
+          this.global.push({
+            updateFrequency: item.updateFrequency,
+            coverImgUrl: item.coverImgUrl,
+            id: item.id,
+            tracks: item.tracks,
+            description: item.description,
+            name: item.name,
+            playCount: item.playCount,
+            type: "songList",
+            api: "WY"
+          });
+        });
+
+        moreList.forEach(item => {
+          this.more.push({
+            updateFrequency: item.updateFrequency,
+            coverImgUrl: item.coverImgUrl,
+            id: item.id,
+            tracks: item.tracks,
+            description: item.description,
+            name: item.name,
+            playCount: item.playCount,
+            type: "songList",
+            api: "WY"
+          });
+        });
+      });
     },
 
     goSongListDetail(item) {
@@ -321,5 +334,15 @@ export default {
   width: 28vw;
   height: 15vh;
   border-radius: 10%;
+}
+
+.more {
+  width: 90vw;
+  height: 45vh;
+  margin: 0 auto 10vh auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  position: relative;
 }
 </style>
