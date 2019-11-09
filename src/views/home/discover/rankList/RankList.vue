@@ -2,7 +2,7 @@
  * @Description: In User Settings Edit
  * @Author: your name
  * @Date: 2019-08-02 13:11:38
- * @LastEditTime: 2019-10-12 19:52:37
+ * @LastEditTime: 2019-10-12 19:55:41
  * @LastEditors: Please set LastEditors
  -->
 <template>
@@ -56,7 +56,7 @@
       </div>
 
       <div class="recomment-title">更多榜单</div>
-      <div class="more">
+      <div class="recomment">
         <div
           class="recomment-type"
           v-for="(item, index) in more"
@@ -334,14 +334,5 @@ export default {
   width: 28vw;
   height: 15vh;
   border-radius: 10%;
-}
-
-.more {
-  width: 90vw;
-  height: 45vh;
-  margin: 0 auto;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
 }
 </style>
