@@ -38,6 +38,7 @@
 <br>
 
 <br>
+
 ## display
 
 ![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/discover.png)
@@ -75,6 +76,8 @@
 * 感谢[Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)提供api
 * 感谢帮助我解惑的各位大佬
 
+
+<br>
 
  :warning: **注意**
 
