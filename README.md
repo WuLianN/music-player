@@ -27,8 +27,6 @@
 </div>
 
 
-
-
 <br>
 
  :loudspeaker: **本项目长期维护，有bug提交issues**
@@ -39,33 +37,14 @@
  
 <br>
 
-
- :baby_chick:   :point_right:   :water_buffalo: 
- 
- 
 <br>
-
-## :movie_camera: demo 演示
-
-
-<br>
-
-<br>
-
-*最佳演示浏览器*
-* :100: chrome 
-* firefox
-
-
-
-<br>
-
-  
-##  :heart: 感谢
-* 感谢[Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)提供api
-* 感谢帮助我解惑的各位大佬
-
-
+## display
+![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/discover.png)
+![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/songList.png)
+![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/mv.png)
+![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/rankList.png)
+![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/player.png)
+![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/lyrics.png)
 
 <br>
 
@@ -80,7 +59,6 @@
 * [better-scroll](https://ustbhuangyi.github.io/better-scroll/#/)
 * [lodash](https://www.lodashjs.com/docs/latest)
 
-
 <br>
 
 
@@ -90,16 +68,12 @@
 3. 本地收藏功能 
 
 
-## display
-![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/discover.png)
-![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/songList.png)
-![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/mv.png)
-![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/rankList.png)
-![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/player.png)
-![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/lyrics.png)
-
-
 <br>
+
+##  :heart: 感谢
+* 感谢[Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)提供api
+* 感谢帮助我解惑的各位大佬
+
 
  :warning: **注意**
 
