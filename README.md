@@ -39,6 +39,7 @@
 
 <br>
 ## display
+
 ![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/discover.png)
 ![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/songList.png)
 ![](https://github.com/WuLianN/music-player/blob/master/src/assets/display/mv.png)
