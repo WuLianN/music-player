@@ -92,18 +92,23 @@
 
 :warning: 运行[Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)获得api
 
+### 开启node服务器 
+
+```
+cd NeteaseCloudMusicApi 
+
+npm install (下载依赖)
+
+node app (开启node服务)
+```
 <br>
 
-## :key: Project setup
+### :key: 运行项目
 ```
 npm install
-```
 
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
-
 
 <br>
 
