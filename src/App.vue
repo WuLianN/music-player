@@ -12,7 +12,7 @@
       <van-loading type="spinner" color="#1989fa" size="50px"></van-loading>
     </div>
 
-    <keep-alive>
+    <keep-alive exclude="SongListDetail">
       <router-view />
     </keep-alive>
 

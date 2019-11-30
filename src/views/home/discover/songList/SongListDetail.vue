@@ -80,6 +80,7 @@ import Header from "@/components/public/Header";
 import SearchList from "@/components/music/search/SearchList";
 import { mapGetters } from "vuex";
 export default {
+  name: 'SongListDetail',
   data() {
     return {
       leftTitle: "歌单",
