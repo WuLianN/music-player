@@ -12,7 +12,9 @@
       <van-loading type="spinner" color="#1989fa" size="50px"></van-loading>
     </div>
 
-    <router-view />
+    <keep-alive>
+      <router-view />
+    </keep-alive>
 
     <div class="player" v-show="isShow">
       <PlayerGlobal />
@@ -98,9 +100,8 @@ export default {
 
     async getIsUpdate(isChange) {
       if (isChange === true) {
-
         await this.getData();
-       
+
         await this.getPlay();
       }
     },
@@ -179,7 +180,6 @@ export default {
         const url = res.data.data[0].url;
         this.WYmp3 = url;
       });
-
     },
 
     // 播放哪个平台的音乐

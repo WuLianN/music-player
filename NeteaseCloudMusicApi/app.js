@@ -83,9 +83,10 @@ fs.readdirSync(path.join(__dirname, 'module')).reverse().forEach(file => {
 })
 
 const port = process.env.PORT || 3000
+const host = process.env.HOST || ''
 
-app.server = app.listen(port, () => {
-  console.log(`server running @ http://localhost:${port}`)
+app.server = app.listen(port, host, () => {
+  console.log(`server running @ http://${host ? host : 'localhost'}:${port}`)
 })
 
 module.exports = app
