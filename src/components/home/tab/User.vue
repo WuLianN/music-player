@@ -114,6 +114,8 @@ export default {
       }
       this.purifyResult.push(favourite)
 
+      // console.log(this.purifyResult)
+
       // 判断是否有收藏音乐
       if (this.purifyResult[0].length > 0) {
         // 显示收藏歌单
@@ -123,8 +125,11 @@ export default {
 
         const picUrl = this.purifyResult[0][0].picUrl
 
+        // console.log(picUrl)
+
         if (picUrl !== '') {
-          this.coverImg = this.picUrl
+          this.coverImg = picUrl
+          
         } else {
           // 获取KW音乐图片
           const id = this.purifyResult[0][0].id
