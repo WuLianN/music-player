@@ -68,6 +68,7 @@
 
 <script>
 export default {
+  name: "SingerInfo",
   data () {
     return {
       artist: '',
