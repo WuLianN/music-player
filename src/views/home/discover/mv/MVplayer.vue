@@ -50,10 +50,11 @@
 </template>
 
 <script>
-import api from '@/api/index'
+import api from "@/api/index";
 import { formatSec } from "@/util/transform";
 import Header from "@/components/public/Header";
 export default {
+  name: "MVplayer",
   data() {
     return {
       mvID: "",
@@ -75,15 +76,6 @@ export default {
   },
 
   methods: {
-    onClickLeft() {
-      if (this.$route.params.videos === "videos") {
-        const videos = this.$route.params.videos;
-        this.$router.push({ name: videos, params: { index: 2 } });
-      } else {
-        this.$router.push({ name: "mv" });
-      }
-    },
-
     async fullScreen() {
       if (document.fullscreenElement) {
         this.isFullScreen = false;
@@ -228,15 +220,23 @@ export default {
     getMVurl() {
       this.mvID = this.$store.getters.getmvID;
       api.getMVurl(this.mvID).then(res => {
-        this.$refs.video.src = res.data.data.url
-        
-      })
+        this.$refs.video.src = res.data.data.url;
+      });
+    },
+
+    goBack() {
+      if (this.$route.params.videos === "videos") {
+        this.mv = "videos";
+      } else {
+        this.mv = "mv";
+      }
     }
   },
 
   created() {
     this.getMVurl();
     this.setOneSec();
+    this.goBack();
     this.leftTitle = this.$route.params.title;
   },
 

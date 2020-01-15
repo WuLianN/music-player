@@ -175,7 +175,7 @@ export default {
               tempArr.push({
                 songName: item.name,
                 id: item.id,
-                artist: item.album.name,
+                artist: item.artists[0].name,
                 picUrl: item.artists[0].img1v1Url,
                 api: "WY"
               });

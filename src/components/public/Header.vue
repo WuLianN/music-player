@@ -17,10 +17,10 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      picUrl: require('@/assets/arrow-left-gray.png')
-    }
+      picUrl: require("@/assets/arrow-left-gray.png")
+    };
   },
 
   props: {
@@ -33,27 +33,30 @@ export default {
   },
 
   methods: {
-    onClickLeft (where) {
-      if (this.where === 'user') {
-        this.$router.push({ name: where, params: { index: 0 } })
-      } else if (this.where === 'songList') {
-        this.$router.push({ name: where, params: { active: this.active } })
+    onClickLeft(where) {
+      if (this.where === "user") {
+        this.$router.push({ name: where, params: { index: 0 } });
+      } else if (this.where === "songList") {
+        this.$router.push({ name: where, params: { active: this.active } });
+      } else if (this.where === "videos") {
+        // 返回当前歌手的视频
+        this.$router.go(-1);
       } else {
-        this.$router.push({ name: where })
+        this.$router.push({ name: where });
       }
     },
 
-    isChangeImg () {
+    isChangeImg() {
       if (this.changeImg) {
-        this.picUrl = require('@/assets/arrow-left-white.png')
+        this.picUrl = require("@/assets/arrow-left-white.png");
       }
     }
   },
 
-  created () {
-    this.isChangeImg()
+  created() {
+    this.isChangeImg();
   }
-}
+};
 </script>
 
 <style scoped>

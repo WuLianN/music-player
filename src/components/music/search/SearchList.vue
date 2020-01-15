@@ -19,6 +19,7 @@
 
 <script>
 export default {
+  name: "SearchList",
   data () {
     return {
       results: this.purifyResult
