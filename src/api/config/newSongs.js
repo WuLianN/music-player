@@ -6,10 +6,10 @@
  * @LastEditors: Please set LastEditors
  */
 const category = {
-    type1: 7, // 华语
-    type2: 8, // 日本
-    type3: 16, // 韩国
-    type4: 96 // 欧美
+  type1: 7, // 华语
+  type2: 8, // 日本
+  type3: 16, // 韩国
+  type4: 96 // 欧美
 }
 
 export const newSongsCat1 = category.type1

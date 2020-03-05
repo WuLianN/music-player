@@ -36,41 +36,41 @@
 </template>
 
 <script>
-import Header from "@/components/public/Header";
+import Header from '@/components/public/Header'
 export default {
-  data() {
+  data () {
     return {
-      leftTitle: "更多新碟",
-      home: "home",
+      leftTitle: '更多新碟',
+      home: 'home',
       cd: [],
       scroll: null,
       isLoadingMore: false
-    };
+    }
   },
 
-  created() {
-    this.getData();
+  created () {
+    this.getData()
   },
 
   methods: {
-    getData() {
-      this.cd = this.$store.getters.getNewCD;
+    getData () {
+      this.cd = this.$store.getters.getNewCD
     },
 
-    goSongListDetail(item) {
-      this.$store.commit("setSongList", item);
+    goSongListDetail (item) {
+      this.$store.commit('setSongList', item)
 
       this.$router.push({
-        name: "songListDetail",
-        params: { CD: "newCD", leftTitle: "专辑" }
-      });
+        name: 'songListDetail',
+        params: { CD: 'newCD', leftTitle: '专辑' }
+      })
     }
   },
 
   components: {
     Header
   }
-};
+}
 </script>
 
 <style scoped>

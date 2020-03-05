@@ -4,7 +4,7 @@
  * @Date: 2019-08-25 11:12:59
  * @LastEditTime: 2019-09-03 12:19:20
  * @LastEditors: Please set LastEditors
-  
+
  -->
 <template>
   <div class="specialList">
@@ -34,177 +34,177 @@
 </template>
 
 <script>
-import KWapi from "@/api/kuwo/kwIndex";
-import touch from "@/util/touch";
-import { Dialog } from "vant";
+import KWapi from '@/api/kuwo/kwIndex'
+import touch from '@/util/touch'
+import { Dialog } from 'vant'
 export default {
-  data() {
+  data () {
     return {
-      colOrdel: "删除",
-      startTouches: "",
-      endTouches: "",
+      colOrdel: '删除',
+      startTouches: '',
+      endTouches: '',
       isplay: false,
       isShowFeature: true,
       purifyResult: [],
       featureIndex: Number
-    };
+    }
   },
 
-  created() {
-    this.getLocalStorage();
+  created () {
+    this.getLocalStorage()
   },
 
   methods: {
-    touchStart() {
-      touch.touchStart();
+    touchStart () {
+      touch.touchStart()
     },
 
-    touchEnd(index) {
-      touch.touchEnd();
+    touchEnd (index) {
+      touch.touchEnd()
 
-      const direction = touch.slide("parallel");
+      const direction = touch.slide('parallel')
 
-      if (direction === "left") {
+      if (direction === 'left') {
         if (this.$refs.list[index].classList.length === 1) {
           // 显示 content
-          this.$refs.list[index].classList.add("showContent");
+          this.$refs.list[index].classList.add('showContent')
           // 手指滑动到了
         } else if (this.$refs.list[index].classList.length === 2) {
           // 显示功能框
-          this.featureIndex = index;
-          this.isShowFeature = true;
+          this.featureIndex = index
+          this.isShowFeature = true
         } else if (this.$refs.list[index].classList.length === 3) {
-          this.$refs.list[index].classList.add("showContent");
+          this.$refs.list[index].classList.add('showContent')
         }
-      } else if (direction === "right") {
-        console.log("right");
+      } else if (direction === 'right') {
+        console.log('right')
 
         if (this.$refs.list[index].classList.length === 1) {
           // 隐藏功能框
-          this.isShowFeature = false;
+          this.isShowFeature = false
         } else if (this.$refs.list[index].classList.length === 2) {
           // 显示多选框
-          this.$refs.list[index].classList.remove("showContent");
+          this.$refs.list[index].classList.remove('showContent')
         } else if (this.$refs.list[index].classList.length === 3) {
           // 隐藏功能框
-          this.isShowFeature = false;
+          this.isShowFeature = false
         }
-      } else if (direction === "none") {
-        this.isplay = true;
+      } else if (direction === 'none') {
+        this.isplay = true
       }
     },
 
-    getLocalStorage() {
+    getLocalStorage () {
       // storage是对象
-      const storage = window.localStorage;
+      const storage = window.localStorage
 
-      const favourite = [];
+      const favourite = []
 
       for (const key in storage) {
         if (storage.hasOwnProperty(key)) {
-          if (key.match("song-")) {
-            const jsonObj = JSON.parse(storage[key]);
+          if (key.match('song-')) {
+            const jsonObj = JSON.parse(storage[key])
 
-            const obj = {};
+            const obj = {}
 
             for (const key in jsonObj) {
-              obj[key] = jsonObj[key];
+              obj[key] = jsonObj[key]
             }
 
-            favourite.push(obj);
+            favourite.push(obj)
           }
         }
       }
-      this.purifyResult.push(favourite);
+      this.purifyResult.push(favourite)
 
       // 判断是否有收藏音乐
       if (this.purifyResult[0].length > 0) {
         // 显示收藏歌单
-        this.isCollect = true;
+        this.isCollect = true
 
-        this.songLength = this.purifyResult[0].length;
+        this.songLength = this.purifyResult[0].length
 
-        const picUrl = this.purifyResult[0][0].picUrl;
+        const picUrl = this.purifyResult[0][0].picUrl
 
-        if (picUrl !== "") {
-          this.coverImg = this.picUrl;
+        if (picUrl !== '') {
+          this.coverImg = this.picUrl
         } else {
           // 获取KW音乐图片
-          const id = this.purifyResult[0][0].id;
-          this.getKWpicData(id);
+          const id = this.purifyResult[0][0].id
+          this.getKWpicData(id)
         }
       }
     },
 
-    getKWpicData(ID) {
+    getKWpicData (ID) {
       KWapi.getKWpic(ID)
         .then(res => {
           return (
-            "data:image/png;base64," +
+            'data:image/png;base64,' +
             btoa(
               new Uint8Array(res.data).reduce(
                 (data, byte) => data + String.fromCharCode(byte),
-                ""
+                ''
               )
             )
-          );
+          )
         })
         .then(KWpicData => {
-          this.coverImg = KWpicData;
-        });
+          this.coverImg = KWpicData
+        })
     },
 
-    play(item) {
-      const isUpdate = true;
-      const isFirstTime = true;
-      const isRecoverScrollTop = true;
+    play (item) {
+      const isUpdate = true
+      const isFirstTime = true
+      const isRecoverScrollTop = true
 
       // id
-      this.$store.commit("setID", item.id);
+      this.$store.commit('setID', item.id)
       // 图片链接
-      this.$store.commit("setPicUrl", item.picUrl);
+      this.$store.commit('setPicUrl', item.picUrl)
       // 歌曲名
-      this.$store.commit("setSongName", item.songName);
+      this.$store.commit('setSongName', item.songName)
       // 歌曲作者
-      this.$store.commit("setSongArtist", item.artist);
+      this.$store.commit('setSongArtist', item.artist)
       // api来源
-      this.$store.commit("setAPI", item.api);
+      this.$store.commit('setAPI', item.api)
       // 更新数据
-      this.$store.commit("setIsUpdate", isUpdate);
+      this.$store.commit('setIsUpdate', isUpdate)
       // 首次加载歌词
-      this.$store.commit("setIsFirstTime", isFirstTime);
+      this.$store.commit('setIsFirstTime', isFirstTime)
 
       // 恢复歌词滚动的初始位置
-      this.$store.commit("setIsRecoverScrollTop", isRecoverScrollTop);
+      this.$store.commit('setIsRecoverScrollTop', isRecoverScrollTop)
 
       // 在musciList中播放歌曲
       if (this.isMusicListDo) {
-        const isChangeTitle = true;
-        this.$store.commit("setIsChangeTitle", isChangeTitle);
+        const isChangeTitle = true
+        this.$store.commit('setIsChangeTitle', isChangeTitle)
       }
 
       // 逆解
-      const result = JSON.parse(JSON.stringify(this.purifyResult));
-      const result1 = result.pop();
+      const result = JSON.parse(JSON.stringify(this.purifyResult))
+      const result1 = result.pop()
 
-      this.$store.commit("setSearchResult", result1);
+      this.$store.commit('setSearchResult', result1)
       // 备份
-      const reserveResult = JSON.parse(JSON.stringify(result1));
-      this.$store.commit("setReserveResult", reserveResult);
+      const reserveResult = JSON.parse(JSON.stringify(result1))
+      this.$store.commit('setReserveResult', reserveResult)
     },
 
-    delCollect(item) {
-      const songName = item.songName;
-      const key = "song-" + songName;
+    delCollect (item) {
+      const songName = item.songName
+      const key = 'song-' + songName
       Dialog.confirm({
-        message: "确定删除吗？"
+        message: '确定删除吗？'
       }).then(res => {
-        localStorage.removeItem(key);
-        this.$router.push({ name: "specialList" });
-      });
+        localStorage.removeItem(key)
+        this.$router.push({ name: 'specialList' })
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>

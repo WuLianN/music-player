@@ -75,7 +75,7 @@ Vue.filter('snippetNum', function (value) {
       return result + '万'
     } else if (value > 99999999) {
       const result = (value / 100000000)
-      const Tresult = result.toString().slice(0,3)
+      const Tresult = result.toString().slice(0, 3)
       return Tresult + '亿'
     } else {
       return value

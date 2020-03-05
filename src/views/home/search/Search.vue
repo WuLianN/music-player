@@ -14,33 +14,33 @@
 </template>
 
 <script>
-import Search from "@/components/music/search/Search.vue";
+import Search from '@/components/music/search/Search.vue'
 export default {
-  name: "SearchXX",
-  data() {
+  name: 'SearchXX',
+  data () {
     return {
       // category: "song",
-      category: "",
-      placeholder: "歌名、歌手"
-    };
+      category: '',
+      placeholder: '歌名、歌手'
+    }
   },
 
-  created() {
+  created () {
     // 导航完成之后获取
-    this.getCategory();
+    this.getCategory()
   },
 
   methods: {
-    getCategory() {
+    getCategory () {
       // console.log(this.$route.query.category);
-      this.category = this.$route.query.category;
+      this.category = this.$route.query.category
     }
   },
 
   components: {
     Search
   }
-};
+}
 </script>
 
 <style scoped>

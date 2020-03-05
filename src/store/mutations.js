@@ -41,7 +41,6 @@ export const setIsGetMusicList = (state, isGetMusicList) => {
   state.IsGetMusicList = isGetMusicList
 }
 
-
 // 网易云歌手 专为Singers.vue打造
 export const setWYartist = (state, wyArtist) => {
   state.WYartist = wyArtist

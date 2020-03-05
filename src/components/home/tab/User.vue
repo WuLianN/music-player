@@ -129,7 +129,6 @@ export default {
 
         if (picUrl !== '') {
           this.coverImg = picUrl
-          
         } else {
           // 获取KW音乐图片
           const id = this.purifyResult[0][0].id

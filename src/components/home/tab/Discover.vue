@@ -106,13 +106,13 @@
 </template>
 
 <script>
-import api from "@/api/index";
-import { clearArray } from "@/util/transform";
-import rowOfDisplayCase from "@/components/public/rowOfDisplayCase";
-import BScroll from "better-scroll";
+import api from '@/api/index'
+import { clearArray } from '@/util/transform'
+import rowOfDisplayCase from '@/components/public/rowOfDisplayCase'
+import BScroll from 'better-scroll'
 export default {
-  name: "discover",
-  data() {
+  name: 'discover',
+  data () {
     return {
       bannerResults: [],
       purifyResult: [],
@@ -125,56 +125,56 @@ export default {
       isShowNewSong: false,
       isFirstTimeLoad: true,
       scroll: null
-    };
+    }
   },
 
-  created() {
-    this.getBanner();
-    this.getRecommentList();
-    this.getTopAlbum();
-    this.getNewSong();
+  created () {
+    this.getBanner()
+    this.getRecommentList()
+    this.getTopAlbum()
+    this.getNewSong()
   },
 
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
-      this.initScroll();
-    });
+      this.initScroll()
+    })
   },
 
   methods: {
-    goSearch() {
+    goSearch () {
       // this.$router.push({ name: "search", params: { category: "song" } });  //http://localhost:8080/Search
-      this.$router.push({ name: "search", query: { category: "song" } }); // http://localhost:8080/Search?category=song
+      this.$router.push({ name: 'search', query: { category: 'song' } }) // http://localhost:8080/Search?category=song
     },
 
-    goRankList() {
-      this.$router.push({ name: "rankList" });
+    goRankList () {
+      this.$router.push({ name: 'rankList' })
     },
 
-    goSingers() {
-      this.$router.push({ name: "singers" });
+    goSingers () {
+      this.$router.push({ name: 'singers' })
     },
 
-    goMV() {
-      this.$router.push({ name: "mv" });
+    goMV () {
+      this.$router.push({ name: 'mv' })
     },
 
-    goSongList() {
-      this.$router.push({ name: "songList" });
+    goSongList () {
+      this.$router.push({ name: 'songList' })
     },
 
-    goSongListDetail(item) {
-      this.$store.commit("setSongList", item);
+    goSongListDetail (item) {
+      this.$store.commit('setSongList', item)
 
       this.$router.push({
-        name: "songListDetail",
-        params: { home: "home" }
-      });
+        name: 'songListDetail',
+        params: { home: 'home' }
+      })
     },
 
-    getBanner() {
+    getBanner () {
       api.getBanner(1).then(res => {
-        const result = res.data.banners;
+        const result = res.data.banners
         result.forEach(item => {
           this.bannerResults.push({
             picUrl: item.pic,
@@ -183,22 +183,22 @@ export default {
             song: item.song,
             typeTitle: item.typeTitle,
             titleColor: item.typeColor
-          });
-        });
-      });
+          })
+        })
+      })
     },
 
-    getBannerInfo(image) {
-      const targetType = image.targetType;
+    getBannerInfo (image) {
+      const targetType = image.targetType
 
       if (targetType === 1) {
-        const id = image.song.al.id;
-        const picUrl = image.song.al.picUrl;
-        const songName = image.song.al.name;
-        const songArtist = image.song.ar[0].name;
-        const api = "WY";
+        const id = image.song.al.id
+        const picUrl = image.song.al.picUrl
+        const songName = image.song.al.name
+        const songArtist = image.song.ar[0].name
+        const api = 'WY'
 
-        clearArray(this.songInfo);
+        clearArray(this.songInfo)
 
         this.songInfo.push({
           id,
@@ -206,32 +206,32 @@ export default {
           songName,
           songArtist,
           api
-        });
+        })
 
-        const isUpdate = true;
-        const isFirstTime = true;
+        const isUpdate = true
+        const isFirstTime = true
 
         // id
-        this.$store.commit("setID", this.songInfo[0].id);
+        this.$store.commit('setID', this.songInfo[0].id)
         // 图片链接
-        this.$store.commit("setPicUrl", this.songInfo[0].picUrl);
+        this.$store.commit('setPicUrl', this.songInfo[0].picUrl)
         // 歌曲名
-        this.$store.commit("setSongName", this.songInfo[0].songName);
+        this.$store.commit('setSongName', this.songInfo[0].songName)
         // 歌曲作者
-        this.$store.commit("setSongArtist", this.songInfo[0].songArtist);
+        this.$store.commit('setSongArtist', this.songInfo[0].songArtist)
         // api来源
-        this.$store.commit("setAPI", this.songInfo[0].api);
+        this.$store.commit('setAPI', this.songInfo[0].api)
         // 更新数据
-        this.$store.commit("setIsUpdate", isUpdate);
+        this.$store.commit('setIsUpdate', isUpdate)
         // 首次加载歌词
-        this.$store.commit("setIsFirstTime", isFirstTime);
+        this.$store.commit('setIsFirstTime', isFirstTime)
       } else if (targetType === 10) {
         // "/album?id=80848946"
-        const albumID = image.targetId;
+        const albumID = image.targetId
 
         api.getAlbum(albumID).then(res => {
-          const result = res.data.album;
-          const songs = res.data.songs;
+          const result = res.data.album
+          const songs = res.data.songs
 
           const albumInfo = {
             name: result.name,
@@ -246,23 +246,23 @@ export default {
             nickname: result.artist.name,
             avatarUrl: result.artist.picUrl,
             songs,
-            type: "album"
-          };
+            type: 'album'
+          }
 
-          this.$store.commit("setSongList", albumInfo);
+          this.$store.commit('setSongList', albumInfo)
 
           this.$router.push({
-            name: "songListDetail",
-            params: { home: "home", leftTitle: "专辑" }
-          });
-        });
+            name: 'songListDetail',
+            params: { home: 'home', leftTitle: '专辑' }
+          })
+        })
       }
     },
 
-    getRecommentList() {
+    getRecommentList () {
       api.getRecommentList(30).then(res => {
-        const result = res.data.result;
-        const recommentList = [];
+        const result = res.data.result
+        const recommentList = []
 
         result.forEach((item, index) => {
           recommentList.push({
@@ -271,38 +271,38 @@ export default {
             coverImgUrl: item.picUrl,
             playCount: item.playCount,
             description: item.copywriter,
-            shareCount: "分享",
+            shareCount: '分享',
             tags: item.tags,
             trackCount: item.trackCount,
-            commentCount: "评论",
-            type: "songList"
-          });
-        });
+            commentCount: '评论',
+            type: 'songList'
+          })
+        })
 
         if (this.isFirstTimeLoad) {
-          const data = recommentList.slice(0, 6);
-          this.purifyResult.push(data);
+          const data = recommentList.slice(0, 6)
+          this.purifyResult.push(data)
 
           // 首次加载后不再加载
-          this.isFirstTimeLoad = false;
+          this.isFirstTimeLoad = false
         } else {
           // 完成下拉刷新
-          this.scroll.finishPullDown();
+          this.scroll.finishPullDown()
 
-          const min = Math.floor(Math.random() * 7);
-          const max = min + 6;
-          const data = recommentList.slice(min, max);
+          const min = Math.floor(Math.random() * 7)
+          const max = min + 6
+          const data = recommentList.slice(min, max)
 
           // 清空purifyResult
-          clearArray(this.purifyResult);
-          this.purifyResult.push(data);
+          clearArray(this.purifyResult)
+          this.purifyResult.push(data)
         }
-      });
+      })
     },
 
-    getTopAlbum() {
+    getTopAlbum () {
       api.getTopAlbum(50, 0).then(res => {
-        const result = res.data.albums;
+        const result = res.data.albums
         result.forEach(item => {
           this.topAlbum.push({
             id: item.id,
@@ -310,27 +310,27 @@ export default {
             coverImgUrl: item.picUrl,
             playCount: item.playCount,
             description: item.description,
-            shareCount: "分享",
+            shareCount: '分享',
             tags: item.tags,
             trackCount: item.trackCount,
-            commentCount: "评论",
+            commentCount: '评论',
             publishTime: item.publishTime,
             artist: item.artist.name,
-            type: "songList",
-            api: "WY",
-            playStyle: "album"
-          });
-        });
+            type: 'songList',
+            api: 'WY',
+            playStyle: 'album'
+          })
+        })
 
         // 展示新碟
-        this.isShowTopAlbum = true;
-        this.$store.commit("setNewCD", this.topAlbum);
-      });
+        this.isShowTopAlbum = true
+        this.$store.commit('setNewCD', this.topAlbum)
+      })
     },
 
-    getNewSong() {
+    getNewSong () {
       api.getNewSong().then(res => {
-        const result = res.data.result;
+        const result = res.data.result
         result.forEach(item => {
           this.newSong.push({
             id: item.id,
@@ -345,29 +345,29 @@ export default {
             commentCount: item.commentCount,
             publishTime: item.publishTime,
             artist: item.song.artists[0].name,
-            type: "songList",
-            api: "WY",
-            playStyle: "song"
-          });
-        });
+            type: 'songList',
+            api: 'WY',
+            playStyle: 'song'
+          })
+        })
 
         // 展示新歌
-        this.isShowNewSong = true;
-        this.$store.commit("setNewSongs", this.newSong);
-      });
+        this.isShowNewSong = true
+        this.$store.commit('setNewSongs', this.newSong)
+      })
     },
 
-    moreCD() {
-      this.$router.push({ name: "newCD" });
+    moreCD () {
+      this.$router.push({ name: 'newCD' })
     },
 
-    moreSongs() {
-      this.$router.push({ name: "newSongs" });
+    moreSongs () {
+      this.$router.push({ name: 'newSongs' })
     },
 
-    initScroll() {
+    initScroll () {
       if (!this.scroll) {
-       // console.log(this.scroll); // null
+        // console.log(this.scroll); // null
 
         this.scroll = new BScroll(this.$refs.scroll, {
           scrollY: true,
@@ -379,11 +379,11 @@ export default {
             threshold: 50,
             stop: 20
           }
-        });
+        })
 
-        this.scroll.on("pullingDown", this.getRecommentList);
+        this.scroll.on('pullingDown', this.getRecommentList)
       } else {
-        this.scroll.refresh();
+        this.scroll.refresh()
       }
     }
   },
@@ -391,7 +391,7 @@ export default {
   components: {
     rowOfDisplayCase
   }
-};
+}
 </script>
 
 <style scoped>

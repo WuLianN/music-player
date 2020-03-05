@@ -18,30 +18,30 @@
 </template>
 
 <script>
-import api from "@/api/index";
+import api from '@/api/index'
 import {
   newSongsCat1, // 华语
   newSongsCat2, // 日本
   newSongsCat3, // 韩国
   newSongsCat4 // 欧美
-} from "@/api/config/newSongs.js";
-import SearchList from "@/components/music/search/SearchList";
-import { clearArray } from "@/util/transform";
+} from '@/api/config/newSongs.js'
+import SearchList from '@/components/music/search/SearchList'
+import { clearArray } from '@/util/transform'
 
 export default {
-  data() {
+  data () {
     return {
-      image: "",
+      image: '',
       purifyResult: []
-    };
+    }
   },
 
   props: {
     title: String
   },
 
-  created() {
-    this.getData();
+  created () {
+    this.getData()
   },
 
   components: {
@@ -49,43 +49,43 @@ export default {
   },
 
   methods: {
-    getData() {
-      if (this.title === "推荐") {
+    getData () {
+      if (this.title === '推荐') {
         // 更换图片
-        this.image = require("@/assets/newSongs/recomment.jpg");
+        this.image = require('@/assets/newSongs/recomment.jpg')
 
         // 清空purifyResult
-        clearArray(this.purifyResult);
+        clearArray(this.purifyResult)
 
         // 获取音乐歌单
-        this.purifyResult.push(this.$store.getters.getNewSongs);
-      } else if (this.title === "华语") {
-        this.image = require("@/assets/newSongs/mandarin.jpg");
+        this.purifyResult.push(this.$store.getters.getNewSongs)
+      } else if (this.title === '华语') {
+        this.image = require('@/assets/newSongs/mandarin.jpg')
 
         clearArray(this.purifyResult)
-        this.getSongList(newSongsCat1);
-      } else if (this.title === "欧美") {
-        this.image = require("@/assets/newSongs/western.jpg");
+        this.getSongList(newSongsCat1)
+      } else if (this.title === '欧美') {
+        this.image = require('@/assets/newSongs/western.jpg')
 
-        clearArray(this.purifyResult);
-        this.getSongList(newSongsCat2);
-      } else if (this.title === "韩国") {
-        this.image = require("@/assets/newSongs/korean.jpg");
+        clearArray(this.purifyResult)
+        this.getSongList(newSongsCat2)
+      } else if (this.title === '韩国') {
+        this.image = require('@/assets/newSongs/korean.jpg')
 
-        clearArray(this.purifyResult);
-        this.getSongList(newSongsCat3);
-      } else if (this.title === "日本") {
-        this.image = require("@/assets/newSongs/japanese.jpg");
+        clearArray(this.purifyResult)
+        this.getSongList(newSongsCat3)
+      } else if (this.title === '日本') {
+        this.image = require('@/assets/newSongs/japanese.jpg')
 
-        clearArray(this.purifyResult);
-        this.getSongList(newSongsCat4);
+        clearArray(this.purifyResult)
+        this.getSongList(newSongsCat4)
       }
     },
 
-    getSongList(type) {
+    getSongList (type) {
       api.getTopSong(type).then(res => {
-        const result = res.data.data;
-        const newSong = [];
+        const result = res.data.data
+        const newSong = []
 
         result.forEach(item => {
           newSong.push({
@@ -93,15 +93,15 @@ export default {
             songName: item.name,
             picUrl: item.album.blurPicUrl,
             artist: item.artists[0].name,
-            api: "WY"
-          });
-        });
+            api: 'WY'
+          })
+        })
 
-        this.purifyResult.push(newSong);
-      });
+        this.purifyResult.push(newSong)
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>

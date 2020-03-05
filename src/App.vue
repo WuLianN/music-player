@@ -41,20 +41,20 @@
 </template>
 
 <script>
-import api from "@/api/index";
-import PlayerGlobal from "@/components/music/player/PlayerGlobal.vue";
-import Player from "@/components/music/player/Player.vue";
-import SearchList from "@/components/music/search/SearchList.vue";
-import { mapGetters } from "vuex";
+import api from '@/api/index'
+import PlayerGlobal from '@/components/music/player/PlayerGlobal.vue'
+import Player from '@/components/music/player/Player.vue'
+import SearchList from '@/components/music/search/SearchList.vue'
+import { mapGetters } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
-      ID: "",
-      api: "",
-      KWmp3: "",
-      WYmp3: "",
-      currentIndex: "",
-      lyric: "",
+      ID: '',
+      api: '',
+      KWmp3: '',
+      WYmp3: '',
+      currentIndex: '',
+      lyric: '',
       searchResult: [],
       purifyResult: [],
       isShow: true,
@@ -65,7 +65,7 @@ export default {
       isPlay: true,
       isPause: true,
       isLoading: false
-    };
+    }
   },
 
   components: {
@@ -76,258 +76,258 @@ export default {
 
   computed: {
     ...mapGetters([
-      "getIsShow",
-      "getIsUpdate",
-      "getIsPlayOrPause",
-      "getIsLoop",
-      "getIsShowPlayerGlobal",
-      "getIsShowMusicList",
-      "getIsShowMask",
-      "getIsMusicList",
-      "getIsUpdateCurrentTime",
-      "getLoading"
+      'getIsShow',
+      'getIsUpdate',
+      'getIsPlayOrPause',
+      'getIsLoop',
+      'getIsShowPlayerGlobal',
+      'getIsShowMusicList',
+      'getIsShowMask',
+      'getIsMusicList',
+      'getIsUpdateCurrentTime',
+      'getLoading'
     ])
   },
 
   watch: {
-    getIsShow(isChange) {
+    getIsShow (isChange) {
       if (isChange) {
-        this.isShow = true;
+        this.isShow = true
       } else {
-        this.isShow = false;
+        this.isShow = false
       }
     },
 
-    async getIsUpdate(isChange) {
+    async getIsUpdate (isChange) {
       if (isChange === true) {
-        await this.getData();
+        await this.getData()
 
-        await this.getPlay();
+        await this.getPlay()
       }
     },
 
-    getIsPlayOrPause(isChange) {
+    getIsPlayOrPause (isChange) {
       // console.log(isChange);
       if (isChange) {
         // true -> 播放
-        this.$refs.audio1.play();
+        this.$refs.audio1.play()
       } else {
         // false -> 暂停
-        this.$refs.audio1.pause();
+        this.$refs.audio1.pause()
       }
     },
 
-    getIsLoop(isChange) {
+    getIsLoop (isChange) {
       if (isChange) {
-        this.IsLoop = true;
+        this.IsLoop = true
       } else {
-        this.IsLoop = false;
+        this.IsLoop = false
       }
     },
 
-    getIsShowMusicList(isChange) {
+    getIsShowMusicList (isChange) {
       if (isChange) {
-        this.isShowMusicList = true;
-        this.musicList();
+        this.isShowMusicList = true
+        this.musicList()
       } else {
-        this.isShowMusicList = false;
+        this.isShowMusicList = false
       }
     },
 
-    getIsShowMask(isChange) {
+    getIsShowMask (isChange) {
       if (isChange) {
-        this.isShowMask = true;
+        this.isShowMask = true
 
-        const recoverFalse = false;
-        this.$store.commit("setIsShowMask", recoverFalse);
+        const recoverFalse = false
+        this.$store.commit('setIsShowMask', recoverFalse)
       }
     },
 
-    getIsMusicList(isChange) {
+    getIsMusicList (isChange) {
       if (isChange) {
-        this.musicList();
+        this.musicList()
 
-        const recoverFalse = false;
-        this.$store.commit("setIsGetMusicList", recoverFalse);
+        const recoverFalse = false
+        this.$store.commit('setIsGetMusicList', recoverFalse)
       }
     },
 
-    getIsUpdateCurrentTime(isChange) {
+    getIsUpdateCurrentTime (isChange) {
       if (isChange) {
-        const currentTime = this.$store.getters.getCurrentTimeByTouch;
-        this.$refs.audio1.currentTime = currentTime;
+        const currentTime = this.$store.getters.getCurrentTimeByTouch
+        this.$refs.audio1.currentTime = currentTime
 
-        const recoverFalse = false;
-        this.$store.commit("setIsUpdateCurrentTime", recoverFalse);
+        const recoverFalse = false
+        this.$store.commit('setIsUpdateCurrentTime', recoverFalse)
       }
     },
 
-    getLoading(isChange) {
+    getLoading (isChange) {
       if (isChange === 0) {
-        this.isLoading = false;
+        this.isLoading = false
       } else {
-        this.isLoading = true;
+        this.isLoading = true
       }
     }
   },
 
   methods: {
     // 获取数据
-    async getData() {
-      this.ID = this.$store.getters.getID;
+    async getData () {
+      this.ID = this.$store.getters.getID
 
       await api.getUrl(this.ID).then(res => {
-        const url = res.data.data[0].url;
+        const url = res.data.data[0].url
 
         // 检查资源是否可用
-        this.checkResource(url, "WYmp3");
-      });
+        this.checkResource(url, 'WYmp3')
+      })
     },
 
     // 播放哪个平台的音乐
-    getPlay() {
+    getPlay () {
       // 判断api
-      const api = this.$store.getters.getAPI;
+      const api = this.$store.getters.getAPI
 
-      if (api === "WY") {
-        this.$refs.audio1.src = this.WYmp3;
-      } else if (api === "KW") {
-        this.$refs.audio1.src = this.KWmp3;
-      } else if (api === "QQ") {
-        this.$refs.audio1.src = this.QQmp3;
+      if (api === 'WY') {
+        this.$refs.audio1.src = this.WYmp3
+      } else if (api === 'KW') {
+        this.$refs.audio1.src = this.KWmp3
+      } else if (api === 'QQ') {
+        this.$refs.audio1.src = this.QQmp3
       }
 
-      this.$refs.audio1.play();
+      this.$refs.audio1.play()
 
       // 获取要播放的数组 - 搜索的歌曲 - 歌单的歌曲 - 喜欢的歌曲
-      this.searchResult = this.$store.getters.getSearchResult;
+      this.searchResult = this.$store.getters.getSearchResult
       // console.log(this.searchResult);
 
       // 获得数组中当前对象的索引
       this.currentIndex = this.searchResult
         .map(item => item.id)
-        .indexOf(this.ID);
+        .indexOf(this.ID)
 
-      this.$store.commit("setCurrentIndex", this.currentIndex);
+      this.$store.commit('setCurrentIndex', this.currentIndex)
     },
 
     // 获取歌曲的长度
-    getDuration() {
-      const duration = this.$refs.audio1.duration;
+    getDuration () {
+      const duration = this.$refs.audio1.duration
       // console.log(duration);
-      this.$store.commit("setDuration", duration);
+      this.$store.commit('setDuration', duration)
     },
 
     // 获取歌曲当前的长度
-    getCurrentTime(e) {
-      const currentTime = e.target.currentTime;
-      this.$store.commit("setCurrentTime", currentTime);
+    getCurrentTime (e) {
+      const currentTime = e.target.currentTime
+      this.$store.commit('setCurrentTime', currentTime)
     },
 
     // 侦测是否播放
-    getPlayState() {
-      this.$store.commit("setIsPlayState", this.isPlay);
+    getPlayState () {
+      this.$store.commit('setIsPlayState', this.isPlay)
 
       // pause -> false
-      const recoverFalse = false;
-      this.$store.commit("setIsPauseState", recoverFalse);
+      const recoverFalse = false
+      this.$store.commit('setIsPauseState', recoverFalse)
     },
 
     // 侦测是否暂停
-    getPauseState() {
-      this.$store.commit("setIsPauseState", this.isPause);
+    getPauseState () {
+      this.$store.commit('setIsPauseState', this.isPause)
 
       // play -> false
-      const recoverFalse = false;
-      this.$store.commit("setIsPlayState", recoverFalse);
+      const recoverFalse = false
+      this.$store.commit('setIsPlayState', recoverFalse)
     },
 
     // 自动获取下一首
-    getNextSong() {
-      this.ID = this.searchResult[this.currentIndex + 1].id;
+    getNextSong () {
+      this.ID = this.searchResult[this.currentIndex + 1].id
       // console.log(this.ID);
 
-      this.api = this.searchResult[this.currentIndex + 1].api;
+      this.api = this.searchResult[this.currentIndex + 1].api
 
-      if (this.api === "WY") {
+      if (this.api === 'WY') {
         api.getUrl(this.ID).then(res => {
-          this.KWmp3 = res.data.data.url;
-          this.$refs.audio1.src = this.KWmp3;
-          this.$refs.audio1.play();
-        });
-      } else if (this.api === "KW") {
-        this.KWmp3 = `https://v1.itooi.cn/kuwo/url?id=${this.ID}&quality=flac`;
-        this.$refs.audio1.src = this.KWmp3;
-        this.$refs.audio1.play();
-      } else if (this.api === "QQ") {
-        this.QQmp3 = `https://v1.itooi.cn/tencent/url?id=${this.ID}&quality=flac`;
-        this.$refs.audio1.src = this.QQmp3;
-        this.$refs.audio1.play();
+          this.KWmp3 = res.data.data.url
+          this.$refs.audio1.src = this.KWmp3
+          this.$refs.audio1.play()
+        })
+      } else if (this.api === 'KW') {
+        this.KWmp3 = `https://v1.itooi.cn/kuwo/url?id=${this.ID}&quality=flac`
+        this.$refs.audio1.src = this.KWmp3
+        this.$refs.audio1.play()
+      } else if (this.api === 'QQ') {
+        this.QQmp3 = `https://v1.itooi.cn/tencent/url?id=${this.ID}&quality=flac`
+        this.$refs.audio1.src = this.QQmp3
+        this.$refs.audio1.play()
       }
 
-      const songName = this.searchResult[this.currentIndex + 1].songName;
-      const songArtist = this.searchResult[this.currentIndex + 1].artist;
-      const picUrl = this.searchResult[this.currentIndex + 1].picUrl;
-      const isUpdate = true;
-      const isChangeTitle = true;
+      const songName = this.searchResult[this.currentIndex + 1].songName
+      const songArtist = this.searchResult[this.currentIndex + 1].artist
+      const picUrl = this.searchResult[this.currentIndex + 1].picUrl
+      const isUpdate = true
+      const isChangeTitle = true
 
       // 改变vuex状态
-      this.$store.commit("setID", this.ID);
-      this.$store.commit("setSongName", songName);
-      this.$store.commit("setSongArtist", songArtist);
-      this.$store.commit("setPicUrl", picUrl);
+      this.$store.commit('setID', this.ID)
+      this.$store.commit('setSongName', songName)
+      this.$store.commit('setSongArtist', songArtist)
+      this.$store.commit('setPicUrl', picUrl)
 
       // 更新PlayerGlobal
-      this.$store.commit("setIsUpdate", isUpdate);
+      this.$store.commit('setIsUpdate', isUpdate)
       // 更新Player Title
-      this.$store.commit("setIsChangeTitle", isChangeTitle);
+      this.$store.commit('setIsChangeTitle', isChangeTitle)
     },
 
     // 歌单
-    musicList() {
+    musicList () {
       // 清空数组
-      const purifyResultLength = this.purifyResult.length;
-      this.purifyResult.splice(0, purifyResultLength);
+      const purifyResultLength = this.purifyResult.length
+      this.purifyResult.splice(0, purifyResultLength)
 
       // 获取数据 改变 -> 随机不展示、还是展示原数组
-      const reserveResult = this.$store.getters.getReserveResult;
-      this.purifyResult.push(reserveResult);
+      const reserveResult = this.$store.getters.getReserveResult
+      this.purifyResult.push(reserveResult)
     },
 
     // 遮罩层
-    mask() {
+    mask () {
       // 关闭遮罩层
-      this.isShowMask = false;
-      this.$store.commit("setIsShowMask", this.isShowMask);
+      this.isShowMask = false
+      this.$store.commit('setIsShowMask', this.isShowMask)
 
       // 关闭musicList
-      this.isShowMusicList = false;
-      this.$store.commit("setIsShowMusicList", this.isShowMusicList);
+      this.isShowMusicList = false
+      this.$store.commit('setIsShowMusicList', this.isShowMusicList)
     },
 
     // 检查资源是否可用
-    checkResource(url, api) {
+    checkResource (url, api) {
       if (url === null) {
         // 存在歌单
         if (this.searchResult) {
           // 获取下一首
-          this.getNextSong();
+          this.getNextSong()
         } else {
-          throw new Error("资源不存在！");
+          throw new Error('资源不存在！')
         }
       } else {
         // 策略模式 -> 可以将platform模块化
         const platform = {
           WYmp3: () => {
-            return (this.WYmp3 = url);
+            return (this.WYmp3 = url)
           }
-        };
+        }
 
-        platform[api]();
+        platform[api]()
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -56,15 +56,15 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["getIsLoadingMore"])
+    ...mapGetters(['getIsLoadingMore'])
   },
 
   watch: {
-    getIsLoadingMore(isChange) {
+    getIsLoadingMore (isChange) {
       if (isChange) {
-        this.isLoadingMore = true;
+        this.isLoadingMore = true
       } else {
-        this.isLoadingMore = false;
+        this.isLoadingMore = false
       }
     }
   },
@@ -94,15 +94,14 @@ export default {
             trackCount: item.trackCount,
             commentCount: item.commentCount,
             api: 'WY',
-            type: 'songList',
+            type: 'songList'
           })
         })
       })
     },
 
     getScrollData () {
-     
-      this.getData();
+      this.getData()
     },
 
     getScrollTop: _.throttle(

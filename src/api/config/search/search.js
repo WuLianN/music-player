@@ -14,7 +14,7 @@ const category = {
   type6: 1004, // MV,
   type7: 1006, // 歌词
   type8: 1009, // 电台
-  type9: 1014, // 视频
+  type9: 1014 // 视频
 }
 
 export const searchCat1 = category.type1

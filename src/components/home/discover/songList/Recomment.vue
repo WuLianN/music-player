@@ -81,15 +81,15 @@
 </template>
 
 <script>
-import api from "@/api/index";
-import { songListCat1 } from "@/api/config/songList"
-import { vw2px } from "@/util/transform";
-import BScroll from "better-scroll";
-import { mapGetters } from "vuex";
-const _ = require("lodash");
+import api from '@/api/index'
+import { songListCat1 } from '@/api/config/songList'
+import { vw2px } from '@/util/transform'
+import BScroll from 'better-scroll'
+import { mapGetters } from 'vuex'
+const _ = require('lodash')
 
 export default {
-  data() {
+  data () {
     return {
       swipeResult: [],
       purifyResult: [],
@@ -98,46 +98,46 @@ export default {
       page: 0,
       scroll: null,
       isLoadingMore: false,
-      swiperImg1: "",
-      swiperImg2: "",
-      swiperImg3: "",
-      swiperName1: "",
-      swiperName2: "",
-      swiperName3: "",
-      swiperCount1: "",
-      swiperCount2: "",
-      swiperCount3: ""
-    };
+      swiperImg1: '',
+      swiperImg2: '',
+      swiperImg3: '',
+      swiperName1: '',
+      swiperName2: '',
+      swiperName3: '',
+      swiperCount1: '',
+      swiperCount2: '',
+      swiperCount3: ''
+    }
   },
 
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
-      this.initScroll();
-    });
+      this.initScroll()
+    })
   },
 
   computed: {
-    ...mapGetters(["getIsLoadingMore"])
+    ...mapGetters(['getIsLoadingMore'])
   },
 
   watch: {
-    getIsLoadingMore(isChange) {
+    getIsLoadingMore (isChange) {
       if (isChange) {
-        this.isLoadingMore = true;
+        this.isLoadingMore = true
       } else {
-        this.isLoadingMore = false;
+        this.isLoadingMore = false
       }
     }
   },
 
-  created() {
-    this.getData(0);
+  created () {
+    this.getData(0)
   },
 
   methods: {
-    getData(page) {
+    getData (page) {
       api.getHotSongList(songListCat1, 18, page).then(res => {
-        const result = res.data.playlists;
+        const result = res.data.playlists
         result.forEach((item, index) => {
           if (index > 2) {
             this.purifyResult.push({
@@ -152,9 +152,9 @@ export default {
               id: item.id,
               trackCount: item.trackCount,
               commentCount: item.commentCount,
-              api: "WY",
-              type: "songList"
-            });
+              api: 'WY',
+              type: 'songList'
+            })
           } else {
             this.swipeResult.push({
               name: item.name,
@@ -168,29 +168,29 @@ export default {
               id: item.id,
               trackCount: item.trackCount,
               commentCount: item.commentCount,
-              api: "WY",
-              type: "songList"
-            });
+              api: 'WY',
+              type: 'songList'
+            })
           }
-        });
+        })
 
-        this.swiperImg1 = this.swipeResult[0].coverImgUrl;
-        this.swiperImg2 = this.swipeResult[1].coverImgUrl;
-        this.swiperImg3 = this.swipeResult[2].coverImgUrl;
+        this.swiperImg1 = this.swipeResult[0].coverImgUrl
+        this.swiperImg2 = this.swipeResult[1].coverImgUrl
+        this.swiperImg3 = this.swipeResult[2].coverImgUrl
 
-        this.swiperName1 = this.swipeResult[0].name;
-        this.swiperName2 = this.swipeResult[1].name;
-        this.swiperName3 = this.swipeResult[2].name;
+        this.swiperName1 = this.swipeResult[0].name
+        this.swiperName2 = this.swipeResult[1].name
+        this.swiperName3 = this.swipeResult[2].name
 
-        this.swiperCount1 = this.swipeResult[0].playCount;
-        this.swiperCount2 = this.swipeResult[0].playCount;
-        this.swiperCount3 = this.swipeResult[0].playCount;
-      });
+        this.swiperCount1 = this.swipeResult[0].playCount
+        this.swiperCount2 = this.swipeResult[0].playCount
+        this.swiperCount3 = this.swipeResult[0].playCount
+      })
     },
 
-    getMoreData(page) {
+    getMoreData (page) {
       api.getHotSongList(songListCat1, 18, page).then(res => {
-        const result = res.data.playlists;
+        const result = res.data.playlists
         result.forEach((item, index) => {
           this.purifyResult.push({
             name: item.name,
@@ -204,124 +204,123 @@ export default {
             id: item.id,
             trackCount: item.trackCount,
             commentCount: item.commentCount,
-            api: "WY"
-          });
-        });
-      });
+            api: 'WY'
+          })
+        })
+      })
     },
 
-    goSongListDetail(item) {
+    goSongListDetail (item) {
       // console.log(item);
       // 传递purifyResult
 
-      this.$store.commit("setSongList", item);
+      this.$store.commit('setSongList', item)
 
-      this.$router.push({ name: "songListDetail" });
+      this.$router.push({ name: 'songListDetail' })
     },
 
-    getTouchStart(e) {
-      this.startTouches = e.touches;
+    getTouchStart (e) {
+      this.startTouches = e.touches
     },
 
-    getTouchEnd(e) {
-      this.endTouches = e.changedTouches;
+    getTouchEnd (e) {
+      this.endTouches = e.changedTouches
 
-      this.slide(e);
+      this.slide(e)
     },
 
-    getTouchMove(e) {
+    getTouchMove (e) {
       // 起点
-      const startScreenX = this.startTouches[0].screenX;
+      const startScreenX = this.startTouches[0].screenX
 
       // 移动点
-      const moveScreenX = e.touches[0].screenX;
+      const moveScreenX = e.touches[0].screenX
 
       // 两点距离
-      this.distance = startScreenX - moveScreenX;
-
+      this.distance = startScreenX - moveScreenX
     },
 
-    slide(e) {
+    slide (e) {
       // 起点
-      const startScreenX = this.startTouches[0].screenX;
-      const startScreenY = this.startTouches[0].screenY;
+      const startScreenX = this.startTouches[0].screenX
+      const startScreenY = this.startTouches[0].screenY
 
       // 终点
-      const endScreenX = this.endTouches[0].screenX;
-      const endScreenY = this.endTouches[0].screenY;
+      const endScreenX = this.endTouches[0].screenX
+      const endScreenY = this.endTouches[0].screenY
 
-      const vw25 = vw2px(25);
-      const vw50 = vw2px(50);
+      const vw25 = vw2px(25)
+      const vw50 = vw2px(50)
 
       if (startScreenX - endScreenX < 0) {
-        e.stopPropagation();
+        e.stopPropagation()
         // window.getComputedStyle(this.$refs.div0).left
         // 左划
 
-        if (window.getComputedStyle(this.$refs.div1).left === 0 + "px") {
-          this.$refs.div1.style.left = vw25;
-          this.$refs.div2.style.left = vw50;
-          this.$refs.div3.style.left = 0 + "px";
-          this.$refs.div1.classList.add("main-swipe-transform");
-          this.$refs.div2.classList.remove("main-swipe-transform");
+        if (window.getComputedStyle(this.$refs.div1).left === 0 + 'px') {
+          this.$refs.div1.style.left = vw25
+          this.$refs.div2.style.left = vw50
+          this.$refs.div3.style.left = 0 + 'px'
+          this.$refs.div1.classList.add('main-swipe-transform')
+          this.$refs.div2.classList.remove('main-swipe-transform')
         } else if (window.getComputedStyle(this.$refs.div1).left === vw25) {
-          this.$refs.div1.style.left = vw50;
-          this.$refs.div2.style.left = 0 + "px";
-          this.$refs.div3.style.left = vw25;
-          this.$refs.div3.classList.add("main-swipe-transform");
-          this.$refs.div1.classList.remove("main-swipe-transform");
+          this.$refs.div1.style.left = vw50
+          this.$refs.div2.style.left = 0 + 'px'
+          this.$refs.div3.style.left = vw25
+          this.$refs.div3.classList.add('main-swipe-transform')
+          this.$refs.div1.classList.remove('main-swipe-transform')
         } else if (window.getComputedStyle(this.$refs.div1).left === vw50) {
-          this.$refs.div1.style.left = 0 + "px";
-          this.$refs.div2.style.left = vw25;
-          this.$refs.div3.style.left = vw50;
-          this.$refs.div2.classList.add("main-swipe-transform");
-          this.$refs.div3.classList.remove("main-swipe-transform");
+          this.$refs.div1.style.left = 0 + 'px'
+          this.$refs.div2.style.left = vw25
+          this.$refs.div3.style.left = vw50
+          this.$refs.div2.classList.add('main-swipe-transform')
+          this.$refs.div3.classList.remove('main-swipe-transform')
         }
       } else if (startScreenX - endScreenX > 0) {
-        e.stopPropagation();
+        e.stopPropagation()
 
         // console.log(window.getComputedStyle(this.$refs.div0[0]).left);
         // console.log(this.$refs.div0[0].offsetLeft);
 
         // 右划;
-        if (window.getComputedStyle(this.$refs.div1).left === 0 + "px") {
-          this.$refs.div1.style.left = vw50;
-          this.$refs.div2.style.left = 0 + "px";
-          this.$refs.div3.style.left = vw25;
-          this.$refs.div3.classList.add("main-swipe-transform");
-          this.$refs.div2.classList.remove("main-swipe-transform");
+        if (window.getComputedStyle(this.$refs.div1).left === 0 + 'px') {
+          this.$refs.div1.style.left = vw50
+          this.$refs.div2.style.left = 0 + 'px'
+          this.$refs.div3.style.left = vw25
+          this.$refs.div3.classList.add('main-swipe-transform')
+          this.$refs.div2.classList.remove('main-swipe-transform')
         } else if (window.getComputedStyle(this.$refs.div1).left === vw25) {
-          this.$refs.div1.style.left = 0 + "px";
-          this.$refs.div2.style.left = vw25;
-          this.$refs.div3.style.left = vw50;
-          this.$refs.div2.classList.add("main-swipe-transform");
-          this.$refs.div1.classList.remove("main-swipe-transform");
+          this.$refs.div1.style.left = 0 + 'px'
+          this.$refs.div2.style.left = vw25
+          this.$refs.div3.style.left = vw50
+          this.$refs.div2.classList.add('main-swipe-transform')
+          this.$refs.div1.classList.remove('main-swipe-transform')
         } else if (window.getComputedStyle(this.$refs.div1).left === vw50) {
-          this.$refs.div1.style.left = vw25;
-          this.$refs.div2.style.left = vw50;
-          this.$refs.div3.style.left = 0 + "px";
-          this.$refs.div1.classList.add("main-swipe-transform");
-          this.$refs.div3.classList.remove("main-swipe-transform");
+          this.$refs.div1.style.left = vw25
+          this.$refs.div2.style.left = vw50
+          this.$refs.div3.style.left = 0 + 'px'
+          this.$refs.div1.classList.add('main-swipe-transform')
+          this.$refs.div3.classList.remove('main-swipe-transform')
         }
       }
     },
 
     getScrollTop: _.throttle(
-      function() {
-        this.getScrollData();
-        this.scroll.finishPullUp();
+      function () {
+        this.getScrollData()
+        this.scroll.finishPullUp()
       },
       500,
       { leading: true, trailing: false }
     ),
 
-    getScrollData() {
-      this.page++;
-      const page = this.page * 18;
-      this.getMoreData(page);
+    getScrollData () {
+      this.page++
+      const page = this.page * 18
+      this.getMoreData(page)
     },
 
-    initScroll() {
+    initScroll () {
       if (!this.scroll) {
         this.scroll = new BScroll(this.$refs.scroll, {
           scrollY: true,
@@ -331,15 +330,15 @@ export default {
           pullUpLoad: {
             threshold: 1
           }
-        });
+        })
 
-        this.scroll.on("pullingUp", this.getScrollTop);
+        this.scroll.on('pullingUp', this.getScrollTop)
       } else {
-        this.scroll.refresh();
+        this.scroll.refresh()
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -19,58 +19,57 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       songList: []
-    };
+    }
   },
 
   props: {
     data: Array
   },
 
-  created() {
-    this.songList = this.data.slice(0, 3);
+  created () {
+    this.songList = this.data.slice(0, 3)
   },
 
   methods: {
-    play(item) {
-      if (item.playStyle === "song") {
-        const isUpdate = true;
-        const isFirstTime = true;
-        const isRecoverScrollTop = true;
+    play (item) {
+      if (item.playStyle === 'song') {
+        const isUpdate = true
+        const isFirstTime = true
+        const isRecoverScrollTop = true
 
         // id
-        this.$store.commit("setID", item.id);
+        this.$store.commit('setID', item.id)
         // 图片链接
-        this.$store.commit("setPicUrl", item.coverImgUrl);
+        this.$store.commit('setPicUrl', item.coverImgUrl)
         // 歌曲名
-        this.$store.commit("setSongName", item.songName);
+        this.$store.commit('setSongName', item.songName)
         // 歌曲作者
-        this.$store.commit("setSongArtist", item.artist);
+        this.$store.commit('setSongArtist', item.artist)
         // api来源
-        this.$store.commit("setAPI", item.api);
+        this.$store.commit('setAPI', item.api)
         // 更新数据
-        this.$store.commit("setIsUpdate", isUpdate);
+        this.$store.commit('setIsUpdate', isUpdate)
         // 首次加载歌词
-        this.$store.commit("setIsFirstTime", isFirstTime);
+        this.$store.commit('setIsFirstTime', isFirstTime)
 
         // 恢复歌词滚动的初始位置
-        this.$store.commit("setIsRecoverScrollTop", isRecoverScrollTop);
-      } else if (item.playStyle === "album") {
-        
-        this.$store.commit("setSongList", item);
+        this.$store.commit('setIsRecoverScrollTop', isRecoverScrollTop)
+      } else if (item.playStyle === 'album') {
+        this.$store.commit('setSongList', item)
         this.$router.push({
-          name: "songListDetail",
+          name: 'songListDetail',
           params: {
-            home: "home",
-            leftTitle: "专辑"
+            home: 'home',
+            leftTitle: '专辑'
           }
-        });
+        })
       }
     }
   }
-};
+}
 </script>
 
 <style scoped>

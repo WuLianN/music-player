@@ -102,30 +102,30 @@
 </template>
 
 <script>
-import api from "@/api/index";
-import QQapi from "@/api/qq/qqIndex";
-import KWapi from "@/api/kuwo/kwIndex";
-import { setInterval, clearInterval } from "timers";
-import { mapGetters } from "vuex";
-import { shuffle, formatSec } from "@/util/transform";
+import api from '@/api/index'
+import QQapi from '@/api/qq/qqIndex'
+import KWapi from '@/api/kuwo/kwIndex'
+import { setInterval, clearInterval } from 'timers'
+import { mapGetters } from 'vuex'
+import { shuffle, formatSec } from '@/util/transform'
 
 export default {
-  data() {
+  data () {
     return {
-      picUrl: "",
-      songName: "",
-      songArtist: "",
-      songID: "",
-      api: "",
-      duration: "",
-      currentTime: "",
-      preID: "",
-      nextID: "",
-      interval: "",
-      intervalLyric: "",
-      reserveResult: "",
-      progress: "",
-      distance: "",
+      picUrl: '',
+      songName: '',
+      songArtist: '',
+      songID: '',
+      api: '',
+      duration: '',
+      currentTime: '',
+      preID: '',
+      nextID: '',
+      interval: '',
+      intervalLyric: '',
+      reserveResult: '',
+      progress: '',
+      distance: '',
       rotate: `rotate({0})`,
       lyric: [],
       lyrics: [],
@@ -142,679 +142,679 @@ export default {
       isShowMusicList: false,
       isFirstTime: false,
       isCollected: Boolean
-    };
+    }
   },
 
   computed: {
     ...mapGetters([
-      "getIsShow",
-      "getIsChangeTitle",
-      "getIsPlay",
-      "getIsPause",
-      "getIsRecoverScrollTop"
+      'getIsShow',
+      'getIsChangeTitle',
+      'getIsPlay',
+      'getIsPause',
+      'getIsRecoverScrollTop'
     ])
   },
 
   watch: {
     // 侦测变化 -> 是否展示Player组件 （这一步是点击PlayerGlobal改变vuex状态)
-    getIsShow(isChange) {
+    getIsShow (isChange) {
       // console.log(isChange);
 
       if (isChange === false) {
         // 获取数据
-        this.getData();
+        this.getData()
 
         // 清除定时器
-        clearInterval(this.interval);
-        clearInterval(this.intervalLyric);
+        clearInterval(this.interval)
+        clearInterval(this.intervalLyric)
 
         // 恢复旋转角度
         // this.rotateAngle = 0;
 
         // 音乐转盘
-        setTimeout(this.rotating, 300);
+        setTimeout(this.rotating, 300)
 
         // 获取歌词
-        this.getLyrics();
+        this.getLyrics()
 
         // 获取音乐图片
-        this.getPicUrl();
+        this.getPicUrl()
 
         // 歌曲当前的长度
-        this.updateCurrentTime();
+        this.updateCurrentTime()
       }
     },
 
-    getIsChangeTitle(isChange) {
+    getIsChangeTitle (isChange) {
       if (isChange === true) {
-        this.getData();
+        this.getData()
         // 清除定时器
-        clearInterval(this.interval);
-        clearInterval(this.intervalLyric);
+        clearInterval(this.interval)
+        clearInterval(this.intervalLyric)
 
         // 音乐转盘
-        setTimeout(this.rotating, 300);
+        setTimeout(this.rotating, 300)
 
         // 获取歌词
-        const isFirstTime = true;
-        this.$store.commit("setIsFirstTime", isFirstTime);
-        this.getLyrics();
+        const isFirstTime = true
+        this.$store.commit('setIsFirstTime', isFirstTime)
+        this.getLyrics()
 
         // 获取音乐图片
-        this.getPicUrl();
+        this.getPicUrl()
 
         // 初始化歌词滚动的位置
-        this.recoverScrollTop();
+        this.recoverScrollTop()
 
         // 歌曲当前的长度
-        this.updateCurrentTime();
+        this.updateCurrentTime()
 
         // 初始化收藏状态
-        this.recoverIsCollect();
+        this.recoverIsCollect()
 
-        const isChangeTitle = false;
-        this.$store.commit("setIsChangeTitle", isChangeTitle);
+        const isChangeTitle = false
+        this.$store.commit('setIsChangeTitle', isChangeTitle)
       }
     },
 
-    getIsPlay(isChange) {
+    getIsPlay (isChange) {
       if (isChange) {
         // 播放
-        this.$refs.switchImg.src = require("@/assets/play-white.png");
+        this.$refs.switchImg.src = require('@/assets/play-white.png')
       }
     },
 
-    getIsPause(isChange) {
+    getIsPause (isChange) {
       if (isChange) {
         // 暂停
-        this.$refs.switchImg.src = require("@/assets/pause-white.png");
+        this.$refs.switchImg.src = require('@/assets/pause-white.png')
       }
     },
 
-    getIsRecoverScrollTop(isChange) {
+    getIsRecoverScrollTop (isChange) {
       if (isChange) {
-        this.recoverScrollTop();
+        this.recoverScrollTop()
 
-        const recoverFalse = false;
-        this.$store.commit("setIsRecoverScrollTop", recoverFalse);
+        const recoverFalse = false
+        this.$store.commit('setIsRecoverScrollTop', recoverFalse)
       }
     }
   },
 
   methods: {
-    getData() {
-      this.picUrl = this.$store.getters.getPicUrl;
-      this.songName = this.$store.getters.getSongName;
-      this.songArtist = this.$store.getters.getSongArtist;
-      this.songID = this.$store.getters.getID;
-      this.api = this.$store.getters.getAPI;
+    getData () {
+      this.picUrl = this.$store.getters.getPicUrl
+      this.songName = this.$store.getters.getSongName
+      this.songArtist = this.$store.getters.getSongArtist
+      this.songID = this.$store.getters.getID
+      this.api = this.$store.getters.getAPI
       // console.log(this.songID, this.api);
 
-      const duration = this.$store.getters.getDuration;
-      this.duration = formatSec(duration);
+      const duration = this.$store.getters.getDuration
+      this.duration = formatSec(duration)
 
-      const currentTime = this.$store.getters.getCurrentTime;
-      this.currentTime = formatSec(currentTime);
+      const currentTime = this.$store.getters.getCurrentTime
+      this.currentTime = formatSec(currentTime)
     },
 
     // 获取音乐歌词
-    getLyrics() {
-      if (this.api === "WY") {
+    getLyrics () {
+      if (this.api === 'WY') {
         // 获取网易云音乐歌词
-        this.getWYlyric();
-      } else if (this.api === "KW") {
+        this.getWYlyric()
+      } else if (this.api === 'KW') {
         // 获取酷我音乐歌词
-        this.getKWlyric();
-      } else if (this.api === "QQ") {
+        this.getKWlyric()
+      } else if (this.api === 'QQ') {
         // 获取QQ音乐歌词
-        this.getQQlyric();
+        this.getQQlyric()
       }
     },
 
     // 获取酷我音乐歌词
-    getKWlyric() {
+    getKWlyric () {
       // 检测是否第一次加载歌词
-      this.isFirstTime = this.$store.getters.getIsFirstTime;
+      this.isFirstTime = this.$store.getters.getIsFirstTime
       // console.log(this.isFirstTime);
 
       if (this.isFirstTime === true) {
         // 清空数组
-        this.lyric = [];
-        this.lyrics = [];
+        this.lyric = []
+        this.lyrics = []
 
         KWapi.getKWlrc(this.songID)
           .then(res => {
-            const result = res.data;
-            const resultSplit = result.split("\n");
+            const result = res.data
+            const resultSplit = result.split('\n')
             // console.log(result_split);
             resultSplit.forEach(ele => {
               // console.log(ele);
 
-              const res = ele.split("]");
+              const res = ele.split(']')
 
-              const time = res[0].slice(1, 6);
-              const lyric = res[1];
+              const time = res[0].slice(1, 6)
+              const lyric = res[1]
               // console.log(res[1]);
 
               this.lyrics.push({
                 time: time,
                 lyrics: lyric
-              });
-            });
+              })
+            })
 
-            this.lyric.push(this.lyrics);
+            this.lyric.push(this.lyrics)
             // console.log(this.lyric);
 
             // 不再加载歌词(第一次)
-            this.$store.commit("setIsFirstTime", this.isFirstTime);
+            this.$store.commit('setIsFirstTime', this.isFirstTime)
           })
           .catch(err => {
-            console.log(err);
-          });
+            console.log(err)
+          })
       }
 
       // 不再加载歌词(重复调用)
-      this.isFirstTime = false;
+      this.isFirstTime = false
     },
 
     // 获取网易云音乐歌词
-    getWYlyric() {
+    getWYlyric () {
       // 检测是否第一次加载歌词
-      this.isFirstTime = this.$store.getters.getIsFirstTime;
+      this.isFirstTime = this.$store.getters.getIsFirstTime
       // console.log(this.isFirstTime);
 
       if (this.isFirstTime === true) {
         // 清空数组
-        this.lyric = [];
-        this.lyrics = [];
+        this.lyric = []
+        this.lyrics = []
 
         // console.log(this.songID);
 
         api
           .getLrc(this.songID)
           .then(res => {
-            const result = res.data.lrc.lyric;
-            const resultSplit = result.split("\n");
+            const result = res.data.lrc.lyric
+            const resultSplit = result.split('\n')
             // console.log(result_split);
             resultSplit.forEach(ele => {
               // console.log(ele);
 
-              const res = ele.split("]");
+              const res = ele.split(']')
 
-              const time = res[0].slice(1, 6);
-              const lyric = res[1];
+              const time = res[0].slice(1, 6)
+              const lyric = res[1]
               // console.log(res[1]);
 
               this.lyrics.push({
                 time: time,
                 lyrics: lyric
-              });
-            });
+              })
+            })
 
-            this.lyric.push(this.lyrics);
+            this.lyric.push(this.lyrics)
             // console.log(this.lyric);
 
             // 不再加载歌词(第一次)
-            this.$store.commit("setIsFirstTime", this.isFirstTime);
+            this.$store.commit('setIsFirstTime', this.isFirstTime)
           })
           .catch(err => {
-            console.log(err);
-          });
+            console.log(err)
+          })
       }
 
       // 不再加载歌词(重复调用)
-      this.isFirstTime = false;
+      this.isFirstTime = false
     },
 
     // 获取QQ音乐歌词
-    getQQlyric() {
+    getQQlyric () {
       // 检测是否第一次加载歌词
-      this.isFirstTime = this.$store.getters.getIsFirstTime;
+      this.isFirstTime = this.$store.getters.getIsFirstTime
       // console.log(this.isFirstTime);
 
       if (this.isFirstTime === true) {
         // 清空数组
-        this.lyric = [];
-        this.lyrics = [];
+        this.lyric = []
+        this.lyrics = []
 
         QQapi.getLrc(this.songID)
           .then(res => {
-            const result = res.data;
-            const resultSplit = result.split("\n");
+            const result = res.data
+            const resultSplit = result.split('\n')
             // console.log(result_split);
             resultSplit.forEach(ele => {
               // console.log(ele);
 
-              const res = ele.split("]");
+              const res = ele.split(']')
 
-              const time = res[0].slice(1, 6);
-              const lyric = res[1];
+              const time = res[0].slice(1, 6)
+              const lyric = res[1]
               // console.log(res[1]);
 
               this.lyrics.push({
                 time: time,
                 lyrics: lyric
-              });
-            });
+              })
+            })
 
-            this.lyric.push(this.lyrics);
+            this.lyric.push(this.lyrics)
             // console.log(this.lyric);
 
             // 不再加载歌词(第一次)
-            this.$store.commit("setIsFirstTime", this.isFirstTime);
+            this.$store.commit('setIsFirstTime', this.isFirstTime)
           })
           .catch(err => {
-            console.log(err);
-          });
+            console.log(err)
+          })
       }
 
       // 不再加载歌词(重复调用)
-      this.isFirstTime = false;
+      this.isFirstTime = false
     },
 
     // 获取音乐图片
-    getPicUrl() {
-      if (this.api === "WY") {
+    getPicUrl () {
+      if (this.api === 'WY') {
         // 获取网易云音乐图片
-        this.$refs.playerImg.src = this.picUrl;
-        this.$refs.playerBgImg.src = this.picUrl;
-      } else if (this.api === "KW") {
+        this.$refs.playerImg.src = this.picUrl
+        this.$refs.playerBgImg.src = this.picUrl
+      } else if (this.api === 'KW') {
         // 获取酷我音乐图片
-        this.getKWpicData(this.songID);
-      } else if (this.api === "QQ") {
+        this.getKWpicData(this.songID)
+      } else if (this.api === 'QQ') {
         // 获取QQ音乐图片
-        this.$refs.playerImg.src = this.picUrl;
-        this.$refs.playerBgImg.src = this.picUrl;
+        this.$refs.playerImg.src = this.picUrl
+        this.$refs.playerBgImg.src = this.picUrl
       }
     },
 
     // 音乐转盘旋转
-    rotating() {
+    rotating () {
       this.interval = setInterval(() => {
-        this.rotateAngle += 1;
-        this.rotate = `rotate(${this.rotateAngle}deg)`;
-      }, 100);
+        this.rotateAngle += 1
+        this.rotate = `rotate(${this.rotateAngle}deg)`
+      }, 100)
     },
 
     // 互换 音乐转盘、歌词
-    exchange() {
+    exchange () {
       // 获得isShowMusicList的状态
-      const isShowMusicList = this.$store.getters.getIsShowMusicList;
+      const isShowMusicList = this.$store.getters.getIsShowMusicList
 
       if (this.isPlayerOrlyrics && !isShowMusicList) {
-        this.isPlayerOrlyrics = false;
-        const recoverFalse = false;
-        this.$store.commit("setIsShowMusicList", recoverFalse);
+        this.isPlayerOrlyrics = false
+        const recoverFalse = false
+        this.$store.commit('setIsShowMusicList', recoverFalse)
       } else if (this.isPlayerOrlyrics && isShowMusicList) {
-        const recoverFalse = false;
-        this.$store.commit("setIsShowMusicList", recoverFalse);
+        const recoverFalse = false
+        this.$store.commit('setIsShowMusicList', recoverFalse)
       } else if (!this.isPlayerOrlyrics && isShowMusicList) {
-        const recoverFalse = false;
-        this.$store.commit("setIsShowMusicList", recoverFalse);
+        const recoverFalse = false
+        this.$store.commit('setIsShowMusicList', recoverFalse)
       } else {
-        this.isPlayerOrlyrics = true;
-        const recoverFalse = false;
-        this.$store.commit("setIsShowMusicList", recoverFalse);
+        this.isPlayerOrlyrics = true
+        const recoverFalse = false
+        this.$store.commit('setIsShowMusicList', recoverFalse)
       }
     },
 
     // 更新当前的进度
-    updateCurrentTime() {
+    updateCurrentTime () {
       this.intervalLyric = setInterval(() => {
         // 当前时间
-        const currentTime = this.$store.getters.getCurrentTime;
+        const currentTime = this.$store.getters.getCurrentTime
         // console.log(currentTime);
-        this.currentTime = formatSec(currentTime);
+        this.currentTime = formatSec(currentTime)
         // console.log(this.currentTime);
 
         // 歌曲总长度
-        const duration = this.$store.getters.getDuration;
+        const duration = this.$store.getters.getDuration
 
         // dom总长度
         // let lineLength = window.getComputedStyle(this.$refs.line).width; //只读
-        const lineLength = this.$refs.line.offsetWidth;
+        const lineLength = this.$refs.line.offsetWidth
 
         // 向下取整
-        const TcurrentTime = Math.floor(currentTime);
-        const Tduration = Math.floor(duration);
-        const TlineLength = Math.floor(lineLength);
+        const TcurrentTime = Math.floor(currentTime)
+        const Tduration = Math.floor(duration)
+        const TlineLength = Math.floor(lineLength)
 
         // 当前进度
         this.progress =
-          Math.floor((TcurrentTime / Tduration) * TlineLength) + "px";
+          Math.floor((TcurrentTime / Tduration) * TlineLength) + 'px'
         // console.log(this.progress);
 
         // 匹配当前进度的歌词(高亮)
         // console.log(this.$refs.p instanceof Array);
 
         for (const i of this.$refs.p) {
-          if (this.currentTime === i.getAttribute("time")) {
-            this.isActive = this.$refs.p.indexOf(i);
+          if (this.currentTime === i.getAttribute('time')) {
+            this.isActive = this.$refs.p.indexOf(i)
             // console.log(this.isActive);
 
-            let needScrollHeight = 0;
+            let needScrollHeight = 0
 
             // qq音乐歌词特殊
-            if (this.api === "QQ") {
+            if (this.api === 'QQ') {
               // 歌词滚动
               if (this.$refs.p.indexOf(i) > 10) {
-                const FIRST = 10; // 第11条歌词开始滚动
-                const screenHeight = window.screen.height;
-                const transMarginTop = screenHeight * 0.065; // 0.065为 6.5vh
-                const preScrollHeight = -100; // 前10条歌词的高度
+                const FIRST = 10 // 第11条歌词开始滚动
+                const screenHeight = window.screen.height
+                const transMarginTop = screenHeight * 0.065 // 0.065为 6.5vh
+                const preScrollHeight = -100 // 前10条歌词的高度
 
                 needScrollHeight =
                   -transMarginTop * (this.$refs.p.indexOf(i) - FIRST) +
-                  preScrollHeight;
+                  preScrollHeight
 
-                this.$refs.scroll.style.top = needScrollHeight + "px";
+                this.$refs.scroll.style.top = needScrollHeight + 'px'
               }
             } else {
               // 歌词滚动
               if (this.$refs.p.indexOf(i) > 5) {
-                const FIRST = 6;
-                const screenHeight = window.screen.height;
-                const transMarginTop = screenHeight * 0.065;
-                const preScrollHeight = -60;
+                const FIRST = 6
+                const screenHeight = window.screen.height
+                const transMarginTop = screenHeight * 0.065
+                const preScrollHeight = -60
 
                 needScrollHeight =
                   -transMarginTop * (this.$refs.p.indexOf(i) - FIRST) +
-                  preScrollHeight;
+                  preScrollHeight
 
-                this.$refs.scroll.style.top = needScrollHeight + "px";
+                this.$refs.scroll.style.top = needScrollHeight + 'px'
               }
             }
           }
         }
-      }, 1000);
+      }, 1000)
     },
 
     // 恢复歌词滚动的初始位置
-    recoverScrollTop() {
-      this.$refs.scroll.style.top = 0 + "px";
+    recoverScrollTop () {
+      this.$refs.scroll.style.top = 0 + 'px'
     },
 
     // 点击左箭头返回
-    onClickLeft() {
+    onClickLeft () {
       // 恢复初始化
-      this.isPlayerOrlyrics = true;
+      this.isPlayerOrlyrics = true
 
       // 展示PlayerGlobal
-      const isShow = true;
-      this.$store.commit("setIsShow", isShow);
+      const isShow = true
+      this.$store.commit('setIsShow', isShow)
 
       // 关闭musicList
-      const recoverFalse = false;
-      this.$store.commit("setIsShowMusicList", recoverFalse);
+      const recoverFalse = false
+      this.$store.commit('setIsShowMusicList', recoverFalse)
     },
 
     // 上一首
-    preSong() {
-      const currentIndex = this.$store.getters.getCurrentIndex;
+    preSong () {
+      const currentIndex = this.$store.getters.getCurrentIndex
 
       // 排除 - 第一首
       if (currentIndex !== 0) {
-        const preCurrentIndex = currentIndex - 1;
-        const searchResult = this.$store.getters.getSearchResult;
+        const preCurrentIndex = currentIndex - 1
+        const searchResult = this.$store.getters.getSearchResult
 
-        this.preID = searchResult[preCurrentIndex].id;
-        this.$store.commit("setID", this.preID);
+        this.preID = searchResult[preCurrentIndex].id
+        this.$store.commit('setID', this.preID)
 
         // 更新当前歌曲的索引
-        this.$store.commit("setCurrentIndex", preCurrentIndex);
+        this.$store.commit('setCurrentIndex', preCurrentIndex)
 
-        const songName = searchResult[preCurrentIndex].songName;
-        const songArtist = searchResult[preCurrentIndex].artist;
-        const picUrl = searchResult[preCurrentIndex].picUrl;
-        const isUpdate = true;
-        const isChangeTitle = true;
-        const song = searchResult[preCurrentIndex];
+        const songName = searchResult[preCurrentIndex].songName
+        const songArtist = searchResult[preCurrentIndex].artist
+        const picUrl = searchResult[preCurrentIndex].picUrl
+        const isUpdate = true
+        const isChangeTitle = true
+        const song = searchResult[preCurrentIndex]
 
-        if (song.picUrl === "") {
-          this.getKWpicData(this.preID);
+        if (song.picUrl === '') {
+          this.getKWpicData(this.preID)
         }
 
         // 改变vuex状态
-        this.$store.commit("setSongName", songName);
-        this.$store.commit("setSongArtist", songArtist);
-        this.$store.commit("setPicUrl", picUrl);
+        this.$store.commit('setSongName', songName)
+        this.$store.commit('setSongArtist', songArtist)
+        this.$store.commit('setPicUrl', picUrl)
 
         // 更新PlayerGlobal
-        this.$store.commit("setIsUpdate", isUpdate);
+        this.$store.commit('setIsUpdate', isUpdate)
 
         // 更新Player Title
-        this.$store.commit("setIsChangeTitle", isChangeTitle);
+        this.$store.commit('setIsChangeTitle', isChangeTitle)
       }
     },
 
     // 下一首
-    nextSong() {
-      const currentIndex = this.$store.getters.getCurrentIndex;
-      const searchResult = this.$store.getters.getSearchResult;
-      const searchResultLength = searchResult.length;
+    nextSong () {
+      const currentIndex = this.$store.getters.getCurrentIndex
+      const searchResult = this.$store.getters.getSearchResult
+      const searchResultLength = searchResult.length
 
       // 排除 - 最后一首
       if (currentIndex < searchResultLength) {
-        const nextCurrentIndex = currentIndex + 1;
+        const nextCurrentIndex = currentIndex + 1
 
-        this.nextID = searchResult[nextCurrentIndex].id;
-        this.$store.commit("setID", this.nextID);
+        this.nextID = searchResult[nextCurrentIndex].id
+        this.$store.commit('setID', this.nextID)
 
         // 更新当前歌曲的索引
-        this.$store.commit("setCurrentIndex", nextCurrentIndex);
+        this.$store.commit('setCurrentIndex', nextCurrentIndex)
 
-        const songName = searchResult[nextCurrentIndex].songName;
-        const songArtist = searchResult[nextCurrentIndex].artist;
-        const picUrl = searchResult[nextCurrentIndex].picUrl;
-        const isUpdate = true;
-        const isChangeTitle = true;
-        const song = searchResult[nextCurrentIndex];
+        const songName = searchResult[nextCurrentIndex].songName
+        const songArtist = searchResult[nextCurrentIndex].artist
+        const picUrl = searchResult[nextCurrentIndex].picUrl
+        const isUpdate = true
+        const isChangeTitle = true
+        const song = searchResult[nextCurrentIndex]
 
-        if (song.picUrl === "") {
-          this.getKWpicData(this.nextID);
+        if (song.picUrl === '') {
+          this.getKWpicData(this.nextID)
         }
 
         // 改变vuex状态
-        this.$store.commit("setSongName", songName);
-        this.$store.commit("setSongArtist", songArtist);
-        this.$store.commit("setPicUrl", picUrl);
+        this.$store.commit('setSongName', songName)
+        this.$store.commit('setSongArtist', songArtist)
+        this.$store.commit('setPicUrl', picUrl)
 
         // 更新PlayerGlobal
-        this.$store.commit("setIsUpdate", isUpdate);
+        this.$store.commit('setIsUpdate', isUpdate)
 
         // 更新Player Title
-        this.$store.commit("setIsChangeTitle", isChangeTitle);
+        this.$store.commit('setIsChangeTitle', isChangeTitle)
       }
     },
 
     // 播放or暂停
-    playOrPause() {
-      const isPlayOrPause = this.$store.getters.getIsPlayOrPause;
+    playOrPause () {
+      const isPlayOrPause = this.$store.getters.getIsPlayOrPause
       // console.log(isPlayOrPause);
 
       if (isPlayOrPause) {
         // true -> pause
-        const pause = false;
+        const pause = false
 
         // 请求停止
-        this.$store.commit("setIsPlayOrPause", pause);
+        this.$store.commit('setIsPlayOrPause', pause)
 
         // 清除定时器
-        clearInterval(this.interval);
+        clearInterval(this.interval)
       } else {
         // false -> play
-        const play = true;
+        const play = true
 
         // 请求播放
-        this.$store.commit("setIsPlayOrPause", play);
+        this.$store.commit('setIsPlayOrPause', play)
 
         // 继续旋转
-        this.rotating();
+        this.rotating()
       }
     },
 
     // 歌单
-    musicList() {
+    musicList () {
       // 展示musicList
-      const isShowMusicList = true;
-      this.$store.commit("setIsShowMusicList", isShowMusicList);
+      const isShowMusicList = true
+      this.$store.commit('setIsShowMusicList', isShowMusicList)
     },
 
     // 请求酷我音乐图片
-    getKWpicData(ID) {
+    getKWpicData (ID) {
       KWapi.getKWpic(ID)
         .then(res => {
           return (
-            "data:image/png;base64," +
+            'data:image/png;base64,' +
             btoa(
               new Uint8Array(res.data).reduce(
                 (data, byte) => data + String.fromCharCode(byte),
-                ""
+                ''
               )
             )
-          );
+          )
         })
         .then(KWpicData => {
-          this.$refs.playerImg.src = KWpicData;
-          this.$refs.playerBgImg.src = KWpicData;
-        });
+          this.$refs.playerImg.src = KWpicData
+          this.$refs.playerBgImg.src = KWpicData
+        })
     },
 
     // 播放方式 随机播放、单曲循环、列表播放
-    playStyle() {
-      this.playStyleNum += 1;
+    playStyle () {
+      this.playStyleNum += 1
 
       if (this.playStyleNum > 3) {
-        this.playStyleNum = 1;
+        this.playStyleNum = 1
       }
 
       if (this.playStyleNum === 1) {
         // 随机 -> 打乱数组
-        this.$refs.playStyleImg.src = require("@/assets/random.png");
+        this.$refs.playStyleImg.src = require('@/assets/random.png')
 
         // 随机算法
-        let searchResult = this.$store.getters.getSearchResult;
-        shuffle(searchResult);
+        let searchResult = this.$store.getters.getSearchResult
+        shuffle(searchResult)
         // console.log(searchResult);
 
-        this.$store.commit("setSearchResult", searchResult);
+        this.$store.commit('setSearchResult', searchResult)
       } else if (this.playStyleNum === 2) {
         // 单曲
-        this.$refs.playStyleImg.src = require("@/assets/singlecycle.png");
+        this.$refs.playStyleImg.src = require('@/assets/singlecycle.png')
 
         // 开始单曲循环
-        const isLoop = true;
-        this.$store.commit("setIsLoop", isLoop);
+        const isLoop = true
+        this.$store.commit('setIsLoop', isLoop)
       } else if (this.playStyleNum === 3) {
         // 列表
-        this.$refs.playStyleImg.src = require("@/assets/loop.png");
+        this.$refs.playStyleImg.src = require('@/assets/loop.png')
 
         // 恢复原始数组
-        const reserveResult = this.$store.getters.getReserveResult;
+        const reserveResult = this.$store.getters.getReserveResult
         // console.log(reserveResult);
 
-        this.$store.commit("setSearchResult", reserveResult);
+        this.$store.commit('setSearchResult', reserveResult)
 
         // 关闭单曲循环
-        const isLoop = false;
-        this.$store.commit("setIsLoop", isLoop);
+        const isLoop = false
+        this.$store.commit('setIsLoop', isLoop)
       }
     },
 
     // 收藏
-    isCollect(e) {
-      this.isCollected = this.$store.getters.getIsCollect; // true
+    isCollect (e) {
+      this.isCollected = this.$store.getters.getIsCollect // true
       if (this.isCollected) {
-        this.$refs.collectImg.src = require("@/assets/collect1.png");
+        this.$refs.collectImg.src = require('@/assets/collect1.png')
 
         // localSession
-        const storage = window.localStorage;
+        const storage = window.localStorage
         const data = {
           songName: this.songName,
           artist: this.songArtist,
           id: this.songID,
           picUrl: this.picUrl,
           api: this.api
-        };
-        const DATA = JSON.stringify(data);
-        storage.setItem("song-" + this.songName, DATA);
+        }
+        const DATA = JSON.stringify(data)
+        storage.setItem('song-' + this.songName, DATA)
 
         // 恢复false
-        const recoverFalse = false;
-        this.$store.commit("setIsCollect", recoverFalse);
+        const recoverFalse = false
+        this.$store.commit('setIsCollect', recoverFalse)
 
         // 阻止冒泡
-        e.stopPropagation(); // 阻止捕获和冒泡阶段中当前事件的进一步传播。
+        e.stopPropagation() // 阻止捕获和冒泡阶段中当前事件的进一步传播。
       } else {
-        this.$refs.collectImg.src = require("@/assets/collect.png");
+        this.$refs.collectImg.src = require('@/assets/collect.png')
 
-        const storage = window.localStorage;
-        storage.removeItem("song-" + this.songName);
+        const storage = window.localStorage
+        storage.removeItem('song-' + this.songName)
 
         // 恢复true
-        const recoverTrue = true;
-        this.$store.commit("setIsCollect", recoverTrue);
+        const recoverTrue = true
+        this.$store.commit('setIsCollect', recoverTrue)
 
-        e.stopPropagation();
+        e.stopPropagation()
       }
     },
 
     // 恢复不收藏状态
-    recoverIsCollect() {
-      this.$refs.collectImg.src = require("@/assets/collect.png");
+    recoverIsCollect () {
+      this.$refs.collectImg.src = require('@/assets/collect.png')
     },
 
     // 触摸抬手
-    touchEnd(e) {
+    touchEnd (e) {
       // 触摸点距离左屏幕宽度的距离
       // let touchEnd = e.changedTouches[0].screenX;
-      const touchEnd = e.changedTouches[0].clientX;
+      const touchEnd = e.changedTouches[0].clientX
 
       // 歌曲总长度
-      const duration = this.$store.getters.getDuration;
+      const duration = this.$store.getters.getDuration
 
       // 总长度
-      const lineLength = this.$refs.line.offsetWidth;
+      const lineLength = this.$refs.line.offsetWidth
 
-      const TtouchEnd = Math.floor(touchEnd);
+      const TtouchEnd = Math.floor(touchEnd)
 
-      const Tduration = Math.floor(duration);
-      const TlineLength = Math.floor(lineLength);
+      const Tduration = Math.floor(duration)
+      const TlineLength = Math.floor(lineLength)
 
       // 进度条距离左屏幕宽度的距离
-      const otherLength = this.$refs.progressLine.offsetLeft;
+      const otherLength = this.$refs.progressLine.offsetLeft
       // console.log(otherLength);
 
       // style样式
-      const leftLength = TtouchEnd - otherLength + "px";
-      this.progress = leftLength;
+      const leftLength = TtouchEnd - otherLength + 'px'
+      this.progress = leftLength
 
       const currentTime = Math.floor(
         ((TtouchEnd - otherLength) / TlineLength) * Tduration
-      );
+      )
 
       // 存取currentTime
-      this.$store.commit("setCurrentTimeByTouch", currentTime);
+      this.$store.commit('setCurrentTimeByTouch', currentTime)
 
       // 触发更新currentTime
-      const isUpdateCurrentTime = true;
-      this.$store.commit("setIsUpdateCurrentTime", isUpdateCurrentTime);
+      const isUpdateCurrentTime = true
+      this.$store.commit('setIsUpdateCurrentTime', isUpdateCurrentTime)
 
       // console.log(currentTime);
     },
 
     // 触摸移动进度条
-    touchMove(e) {
-      const touchMove = e.touches[0].clientX;
-      const TtouchMove = Math.floor(touchMove);
+    touchMove (e) {
+      const touchMove = e.touches[0].clientX
+      const TtouchMove = Math.floor(touchMove)
 
       // 进度条距离左屏幕宽度的距离
-      const otherLength = this.$refs.progressLine.offsetLeft;
-      const leftLength = TtouchMove - otherLength + "px";
-      this.progress = leftLength;
+      const otherLength = this.$refs.progressLine.offsetLeft
+      const leftLength = TtouchMove - otherLength + 'px'
+      this.progress = leftLength
     }
   }
-};
+}
 </script>
 
 <style scoped>

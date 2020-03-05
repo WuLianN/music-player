@@ -43,7 +43,7 @@ export default {
      * @return:
      */
 
-  getSearch(keywords, type, limit) {
+  getSearch (keywords, type, limit) {
     return axios.get(search, {
       params: {
         keywords,
@@ -60,7 +60,7 @@ export default {
      * @return:
      */
 
-  getUrl(id) {
+  getUrl (id) {
     return axios.get(url, {
       params: {
         id
@@ -75,7 +75,7 @@ export default {
      * @return:
      */
 
-  getPic(id, imgSize) {
+  getPic (id, imgSize) {
     return axios.get(pic, {
       params: {
         id,
@@ -90,7 +90,7 @@ export default {
      * @return:
      */
 
-  getLrc(id) {
+  getLrc (id) {
     return axios.get(lrc, {
       params: {
         id
@@ -100,11 +100,11 @@ export default {
 
   /**
      * @description: 首页轮播图
-     * @param type 
+     * @param type
      * @return:
      */
 
-  getBanner(type) {
+  getBanner (type) {
     return axios.get(banner, {
       params: {
         type
@@ -116,17 +116,16 @@ export default {
    * @description: 推荐歌单
    * @param limit 取出数量, 默认为 30
    * @param offset 偏移数量, 用于分页, 如:( 页数 -1)*30, 其中30为limit的值, 默认为0
-   * @return: 
+   * @return:
    */
 
-  getRecommentList(limit, offset = 0) {
+  getRecommentList (limit, offset = 0) {
     return axios.get(recommentList, {
       params: {
         limit,
         offset
       }
     })
-
   },
 
   /**
@@ -135,7 +134,7 @@ export default {
    * @return:
    */
 
-  getAlbum(id) {
+  getAlbum (id) {
     return axios.get(album, {
       params: {
         id
@@ -152,13 +151,13 @@ export default {
      * @return:
      */
 
-  getHotSongList(cat, limit, offset, order = 'hot') {
+  getHotSongList (cat, limit, offset, order = 'hot') {
     return axios.get(hotSongList, {
       params: {
         cat,
         limit,
         offset,
-        order,
+        order
       }
     })
   },
@@ -171,7 +170,7 @@ export default {
      * @return:
      */
 
-  getHighQualityList(cat, limit, before) {
+  getHighQualityList (cat, limit, before) {
     return axios.get(highQualityList, {
       params: {
         cat,
@@ -188,7 +187,7 @@ export default {
      * @return:
      */
 
-  getSongList(id) {
+  getSongList (id) {
     return axios.get(songList, {
       params: {
         id
@@ -202,7 +201,7 @@ export default {
      * @return:
      */
 
-  getSingerAlbum(id, limit, offset) {
+  getSingerAlbum (id, limit, offset) {
     return axios.get(singerAlbum, {
       params: {
         id,
@@ -218,7 +217,7 @@ export default {
     * @return:
     */
 
-  getSingerSongList(id) {
+  getSingerSongList (id) {
     return axios.get(singerSongList, {
       params: {
         id
@@ -232,7 +231,7 @@ export default {
     * @return:
     */
 
-  getSingerMV(id) {
+  getSingerMV (id) {
     return axios.get(singerMV, {
       params: {
         id
@@ -246,7 +245,7 @@ export default {
      * @return:
      */
 
-  getSingerInfo(id) {
+  getSingerInfo (id) {
     return axios.get(singerInfo, {
       params: {
         id
@@ -261,7 +260,7 @@ export default {
      * @return:
      */
 
-  getSingerRankList(pageSize, page) {
+  getSingerRankList (pageSize, page) {
     return axios.get(singerRankList, {
       params: {
         pageSize,
@@ -278,7 +277,7 @@ export default {
      * @return:
      */
 
-  getSongListComment(id, limit, offset) {
+  getSongListComment (id, limit, offset) {
     return axios.get(songListComment, {
       params: {
         id,
@@ -294,7 +293,7 @@ export default {
    * @return:
    */
 
-  getUsetSongList(uid) {
+  getUsetSongList (uid) {
     return axios.get(userSongList, {
       params: {
         uid
@@ -312,17 +311,17 @@ export default {
    * @return:
    */
 
-  getMVtop() {
+  getMVtop () {
     return axios.get(mvTop)
   },
 
   /**
    * @description: mv地址
    * @param id
-   * @return: 
+   * @return:
    */
 
-  getMVurl(id) {
+  getMVurl (id) {
     return axios.get(mvUrl, {
       params: {
         id
@@ -333,10 +332,10 @@ export default {
   /**
    * @description: 排行榜
    * @param idx
-   * @return: 
+   * @return:
    */
 
-  getRankList(idx) {
+  getRankList (idx) {
     return axios.get(rankList, {
       params: {
         idx
@@ -346,22 +345,22 @@ export default {
 
   /**
    * @description: 所有榜单内容摘要
-   * @param {type} 
-   * @return: 
+   * @param {type}
+   * @return:
    */
 
-  getRankListDetail() {
+  getRankListDetail () {
     return axios.get(rankListDetail)
   },
 
   /**
    * @description: 新碟上架
-   * @param limit 
+   * @param limit
    * @param offset
-   * @return: 
+   * @return:
    */
 
-  getTopAlbum(limit, offset) {
+  getTopAlbum (limit, offset) {
     return axios.get(topAlbum, {
       params: {
         limit,
@@ -372,21 +371,21 @@ export default {
 
   /**
    * @description: 推荐新音乐
-   * @param {type} 
-   * @return: 
+   * @param {type}
+   * @return:
    */
 
-  getNewSong() {
+  getNewSong () {
     return axios.get(newSong)
   },
 
   /**
    * @description: 新歌速递
    * @param type 全部:0 华语:7 欧美:96 日本:8 韩国:16
-   * @return: 
+   * @return:
    */
 
-  getTopSong(type) {
+  getTopSong (type) {
     return axios.get(topSong, {
       params: {
         type
@@ -396,11 +395,11 @@ export default {
 
   /**
    * @description: 所有榜单
-   * @param {type} 
-   * @return: 
+   * @param {type}
+   * @return:
    */
-  
-  getTopList(){
+
+  getTopList () {
     return axios.get(topList)
   }
 }

@@ -72,39 +72,39 @@
 </template>
 
 <script>
-import api from "@/api/index";
-import Header from "@/components/public/Header";
+import api from '@/api/index'
+import Header from '@/components/public/Header'
 export default {
-  data() {
+  data () {
     return {
       rankListDetail: [],
       offcial: [],
       recomment: [],
       global: [],
       more: [],
-      leftTitle: "排行榜",
-      home: "home"
-    };
+      leftTitle: '排行榜',
+      home: 'home'
+    }
   },
 
   components: {
     Header
   },
 
-  created() {
-    this.getRankListDetail();
-    this.getTopList();
+  created () {
+    this.getRankListDetail()
+    this.getTopList()
   },
 
   methods: {
-    onClickLeft() {
-      this.$router.push({ name: "home" });
+    onClickLeft () {
+      this.$router.push({ name: 'home' })
     },
 
     // 获取"所有榜单内容摘要"
-    getRankListDetail() {
+    getRankListDetail () {
       api.getRankListDetail().then(res => {
-        const result = res.data.list;
+        const result = res.data.list
         result.forEach(item => {
           this.rankListDetail.push({
             updateFrequency: item.updateFrequency,
@@ -112,65 +112,65 @@ export default {
             id: item.id,
             tracks: item.tracks,
             description: item.description,
-            type: "songList",
-            api: "WY"
-          });
-        });
+            type: 'songList',
+            api: 'WY'
+          })
+        })
 
         // 获取 “官方榜” 歌单
-        this.offcial = this.rankListDetail.slice(0, 4);
-      });
+        this.offcial = this.rankListDetail.slice(0, 4)
+      })
     },
 
     // 获取“所有榜单”
-    getTopList() {
+    getTopList () {
       api.getTopList().then(res => {
-        const result = res.data.list;
-        let list = [];
+        const result = res.data.list
+        let list = []
 
         // 云音乐类型
-        let cloudMusicList = [];
+        let cloudMusicList = []
         // 抖音排行榜
-        let TikTok = [];
+        let TikTok = []
         // 全球榜
-        let globalList = [];
+        let globalList = []
         // 更多榜单
-        let moreList = [];
+        let moreList = []
 
         result.forEach(item => {
-          if (item.name.match("云音乐")) {
-            cloudMusicList.push(item);
+          if (item.name.match('云音乐')) {
+            cloudMusicList.push(item)
           } else {
-            list.push(item.name);
+            list.push(item.name)
 
-            if (item.name.match("抖音排行榜")) {
-              TikTok.push(item);
-            } else if (item.name.match("美国Billboard周榜")) {
-              globalList.push(item);
-            } else if (item.name.match("UK排行榜周榜")) {
-              globalList.push(item);
-            } else if (item.name.match("Beatport全球电子舞曲榜")) {
-              globalList.push(item);
-            } else if (item.name.match("日本Oricon周榜")) {
-              globalList.push(item);
-            } else if (item.name.match("iTunes榜")) {
-              globalList.push(item);
-            } else if (item.name.match("英国Q杂志中文版周榜")) {
-              globalList.push(item);
+            if (item.name.match('抖音排行榜')) {
+              TikTok.push(item)
+            } else if (item.name.match('美国Billboard周榜')) {
+              globalList.push(item)
+            } else if (item.name.match('UK排行榜周榜')) {
+              globalList.push(item)
+            } else if (item.name.match('Beatport全球电子舞曲榜')) {
+              globalList.push(item)
+            } else if (item.name.match('日本Oricon周榜')) {
+              globalList.push(item)
+            } else if (item.name.match('iTunes榜')) {
+              globalList.push(item)
+            } else if (item.name.match('英国Q杂志中文版周榜')) {
+              globalList.push(item)
             } else {
-              if (!item.name.match("网易原创歌曲榜")) {
-                moreList.push(item);
+              if (!item.name.match('网易原创歌曲榜')) {
+                moreList.push(item)
               }
             }
           }
-        });
+        })
 
         // 推荐榜中的 4种类型榜单
-        let temp1 = cloudMusicList.slice(3, 7);
+        let temp1 = cloudMusicList.slice(3, 7)
         // 云音乐欧美新歌榜
-        let temp2 = cloudMusicList.slice(10, 11);
+        let temp2 = cloudMusicList.slice(10, 11)
 
-        let recommentList = [...temp1, ...temp2, ...TikTok];
+        let recommentList = [...temp1, ...temp2, ...TikTok]
         recommentList.forEach(item => {
           this.recomment.push({
             updateFrequency: item.updateFrequency,
@@ -180,10 +180,10 @@ export default {
             description: item.description,
             name: item.name,
             playCount: item.playCount,
-            type: "songList",
-            api: "WY"
-          });
-        });
+            type: 'songList',
+            api: 'WY'
+          })
+        })
 
         globalList.forEach(item => {
           this.global.push({
@@ -194,10 +194,10 @@ export default {
             description: item.description,
             name: item.name,
             playCount: item.playCount,
-            type: "songList",
-            api: "WY"
-          });
-        });
+            type: 'songList',
+            api: 'WY'
+          })
+        })
 
         moreList.forEach(item => {
           this.more.push({
@@ -208,22 +208,22 @@ export default {
             description: item.description,
             name: item.name,
             playCount: item.playCount,
-            type: "songList",
-            api: "WY"
-          });
-        });
-      });
+            type: 'songList',
+            api: 'WY'
+          })
+        })
+      })
     },
 
-    goSongListDetail(item) {
-      this.$store.commit("setSongList", item);
+    goSongListDetail (item) {
+      this.$store.commit('setSongList', item)
       this.$router.push({
-        name: "songListDetail",
-        params: { rankList: "rankList" }
-      });
+        name: 'songListDetail',
+        params: { rankList: 'rankList' }
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>

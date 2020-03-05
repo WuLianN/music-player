@@ -32,18 +32,18 @@
 </template>
 
 <script>
-import api from "@/api/index";
-import { searchCat1 } from "@/api/config/search/search";
-import { clearArray } from "@/util/transform";
-import KWapi from "@/api/kuwo/kwIndex";
-import SearchList from "@/components/music/search/SearchList";
+import api from '@/api/index'
+import { searchCat1 } from '@/api/config/search/search'
+import { clearArray } from '@/util/transform'
+import KWapi from '@/api/kuwo/kwIndex'
+import SearchList from '@/components/music/search/SearchList'
 export default {
-  data() {
+  data () {
     return {
-      value: "",
+      value: '',
       purifyResult: [],
-      hackReset: false, // 第一次result是空的
-    };
+      hackReset: false // 第一次result是空的
+    }
   },
 
   components: {
@@ -56,7 +56,7 @@ export default {
   },
 
   methods: {
-    onSearch() {
+    onSearch () {
       if (this.type === 1) {
         // const result = []
         // const r1 = []
@@ -168,41 +168,41 @@ export default {
         //   )
 
         // 清除上个搜索数据
-        clearArray(this.purifyResult);
+        clearArray(this.purifyResult)
 
         this.getWYapi().then(res => {
-          const result = res.data.result.songs;
-          const tempArr = [];
+          const result = res.data.result.songs
+          const tempArr = []
           result.forEach(item => {
             tempArr.push({
               songName: item.name,
               id: item.id,
               artist: item.artists[0].name,
               picUrl: item.artists[0].img1v1Url,
-              api: "WY"
-            });
-          });
+              api: 'WY'
+            })
+          })
 
-          this.purifyResult.push(tempArr);
+          this.purifyResult.push(tempArr)
 
-          this.hackReset = true;
-        });
+          this.hackReset = true
+        })
       }
     },
 
-    getWYapi() {
-      return api.getSearch(this.value, this.type, 20);
+    getWYapi () {
+      return api.getSearch(this.value, this.type, 20)
     },
 
-    getKWapi() {
-      return KWapi.getKWsearch(this.value, this.type, 40);
+    getKWapi () {
+      return KWapi.getKWsearch(this.value, this.type, 40)
     },
 
-    onClickLeft() {
-      this.$router.push({ name: "home" });
+    onClickLeft () {
+      this.$router.push({ name: 'home' })
     }
   }
-};
+}
 </script>
 
 <style scoped>

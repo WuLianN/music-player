@@ -37,7 +37,7 @@ export default {
       const artistID = artist.artistID
       api.getSingerSongList(artistID).then(res => {
         const result = res.data.hotSongs
-      
+
         const obj = {}
         const purifyData = result.reduce((cur, next) => {
           obj[next.al.name] ? '' : (obj[next.al.name] = true && cur.push(next))

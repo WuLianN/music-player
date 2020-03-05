@@ -42,6 +42,6 @@ export default new Vuex.Store({
     player,
     searchList,
     mv,
-    songList,
+    songList
   }
 })

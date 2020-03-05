@@ -32,38 +32,38 @@
 </template>
 
 <script>
-import Header from "@/components/public/Header";
-import SongList from "@/components/home/discover/new/SongList";
+import Header from '@/components/public/Header'
+import SongList from '@/components/home/discover/new/SongList'
 
 export default {
-  data() {
+  data () {
     return {
-      leftTitle: "最新音乐",
-      home: "home",
-      cat0: "推荐",
-      cat1: "华语",
-      cat2: "欧美",
-      cat3: "韩国",
-      cat4: "日本",
+      leftTitle: '最新音乐',
+      home: 'home',
+      cat0: '推荐',
+      cat1: '华语',
+      cat2: '欧美',
+      cat3: '韩国',
+      cat4: '日本',
       active: 0
-    };
+    }
   },
 
-  created() {
-    this.getData();
+  created () {
+    this.getData()
   },
 
   methods: {
-    getData() {},
+    getData () {},
 
-    onClick() {}
+    onClick () {}
   },
 
   components: {
     Header,
     SongList
   }
-};
+}
 </script>
 
 <style scoped>

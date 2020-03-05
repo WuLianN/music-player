@@ -50,200 +50,200 @@
 </template>
 
 <script>
-import api from "@/api/index";
-import { formatSec } from "@/util/transform";
-import Header from "@/components/public/Header";
+import api from '@/api/index'
+import { formatSec } from '@/util/transform'
+import Header from '@/components/public/Header'
 export default {
-  name: "MVplayer",
-  data() {
+  name: 'MVplayer',
+  data () {
     return {
-      mvID: "",
-      currentTime: "",
-      formatCurrentTime: "",
-      duration: "",
-      formatDuration: "",
-      leftTitle: "",
-      progress: "",
-      circle: "",
-      lineLength: "",
-      mv: "mv",
-      playOrPauseImg: require("@/assets/player/MVpause.png"),
-      fullScreenImg: require("@/assets/video/enlarge.png"),
+      mvID: '',
+      currentTime: '',
+      formatCurrentTime: '',
+      duration: '',
+      formatDuration: '',
+      leftTitle: '',
+      progress: '',
+      circle: '',
+      lineLength: '',
+      mv: 'mv',
+      playOrPauseImg: require('@/assets/player/MVpause.png'),
+      fullScreenImg: require('@/assets/video/enlarge.png'),
       isFullScreen: false,
       isShowControls: true,
       isTouchMoving: false
-    };
+    }
   },
 
   methods: {
-    async fullScreen() {
+    async fullScreen () {
       if (document.fullscreenElement) {
-        this.isFullScreen = false;
-        this.fullScreenImg = require("@/assets/video/enlarge.png");
-        await document.exitFullscreen();
-        await screen.orientation.unlock();
+        this.isFullScreen = false
+        this.fullScreenImg = require('@/assets/video/enlarge.png')
+        await document.exitFullscreen()
+        await screen.orientation.unlock()
       } else {
-        this.isFullScreen = true;
-        this.fullScreenImg = require("@/assets/video/narrow.png");
+        this.isFullScreen = true
+        this.fullScreenImg = require('@/assets/video/narrow.png')
 
         // 指定元素
         // await this.$refs.video.requestFullscreen();
 
-        await document.documentElement.requestFullscreen();
-        await screen.orientation.lock("landscape");
+        await document.documentElement.requestFullscreen()
+        await screen.orientation.lock('landscape')
       }
     },
 
     // 获取MV当前的长度
-    getDuration() {
-      this.duration = this.$refs.video.duration;
-      this.formatDuration = formatSec(this.$refs.video.duration);
+    getDuration () {
+      this.duration = this.$refs.video.duration
+      this.formatDuration = formatSec(this.$refs.video.duration)
     },
 
     // 获取MV当前的长度
-    getCurrentTime(e) {
-      this.formatCurrentTime = formatSec(e.target.currentTime);
-      this.currentTime = e.target.currentTime;
+    getCurrentTime (e) {
+      this.formatCurrentTime = formatSec(e.target.currentTime)
+      this.currentTime = e.target.currentTime
 
-      this.lineLength = this.$refs.line1.offsetWidth;
+      this.lineLength = this.$refs.line1.offsetWidth
 
       // 向下取整
-      const TcurrentTime = Math.floor(this.currentTime);
-      const Tduration = Math.floor(this.duration);
-      const TlineLength = Math.floor(this.lineLength);
-      const circleLength = 10;
+      const TcurrentTime = Math.floor(this.currentTime)
+      const Tduration = Math.floor(this.duration)
+      const TlineLength = Math.floor(this.lineLength)
+      const circleLength = 10
 
       // 当前进度
       if (!this.isTouchMoving) {
         this.progress =
-          Math.floor((TcurrentTime / Tduration) * TlineLength) + "px";
+          Math.floor((TcurrentTime / Tduration) * TlineLength) + 'px'
 
         this.circle =
           Math.floor(
             (TcurrentTime / Tduration) * (TlineLength - circleLength)
-          ) + "px";
+          ) + 'px'
       }
     },
 
     // 展示controls控件
-    showControls() {
-      this.isShowControls = true;
+    showControls () {
+      this.isShowControls = true
 
       // 3s
       setTimeout(() => {
-        this.isShowControls = false;
-      }, 3000);
+        this.isShowControls = false
+      }, 3000)
     },
 
     // 首次1s后关闭controls控件
-    setOneSec() {
+    setOneSec () {
       setTimeout(() => {
-        this.isShowControls = false;
-      }, 1000);
+        this.isShowControls = false
+      }, 1000)
     },
 
     // 开始播放状态
-    play() {
-      this.playOrPauseImg = require("@/assets/player/MVpause.png");
+    play () {
+      this.playOrPauseImg = require('@/assets/player/MVpause.png')
     },
 
     // 暂停状态
-    pause() {
-      this.playOrPauseImg = require("@/assets/player/MVplay.png");
+    pause () {
+      this.playOrPauseImg = require('@/assets/player/MVplay.png')
     },
 
-    playOrPause() {
+    playOrPause () {
       if (!this.$refs.video.paused) {
-        this.$refs.video.pause();
-        this.playOrPauseImg = require("@/assets/player/MVplay.png");
+        this.$refs.video.pause()
+        this.playOrPauseImg = require('@/assets/player/MVplay.png')
       } else {
-        this.$refs.video.play();
-        this.playOrPauseImg = require("@/assets/player/MVpause.png");
+        this.$refs.video.play()
+        this.playOrPauseImg = require('@/assets/player/MVpause.png')
       }
     },
 
     // 触摸抬手
-    touchEnd(e) {
+    touchEnd (e) {
       // 触摸点距离左屏幕宽度的距离
       // let touchEnd = e.changedTouches[0].screenX;
-      const touchEnd = e.changedTouches[0].clientX;
+      const touchEnd = e.changedTouches[0].clientX
 
       // 恢复updatetime中计算progress
-      this.isTouchMoving = false;
+      this.isTouchMoving = false
 
-      const TtouchEnd = Math.floor(touchEnd);
-      const Tduration = Math.floor(this.duration);
-      const TlineLength = Math.floor(this.lineLength);
+      const TtouchEnd = Math.floor(touchEnd)
+      const Tduration = Math.floor(this.duration)
+      const TlineLength = Math.floor(this.lineLength)
 
       // 进度条距离左屏幕宽度的距离
-      const otherLength = this.$refs.progressLine.offsetLeft;
+      const otherLength = this.$refs.progressLine.offsetLeft
       // console.log(otherLength);
 
       // style样式
-      const leftLength = TtouchEnd - otherLength + "px";
-      this.progress = leftLength;
+      const leftLength = TtouchEnd - otherLength + 'px'
+      this.progress = leftLength
 
       const currentTime = Math.floor(
         ((TtouchEnd - otherLength) / TlineLength) * Tduration
-      );
+      )
 
       // 更改当前进度
-      this.$refs.video.currentTime = currentTime;
+      this.$refs.video.currentTime = currentTime
     },
 
     // 触摸移动进度条
-    touchMove(e) {
-      const touchMove = e.touches[0].clientX;
-      const TtouchMove = Math.floor(touchMove);
+    touchMove (e) {
+      const touchMove = e.touches[0].clientX
+      const TtouchMove = Math.floor(touchMove)
 
       // 暂停在updatetime中计算progress
-      this.isTouchMoving = true;
+      this.isTouchMoving = true
 
       // 显示控件
-      this.isShowControls = true;
+      this.isShowControls = true
 
       // 进度条距离左屏幕宽度的距离
-      const otherLength = this.$refs.progressLine.offsetLeft;
-      const leftLength = TtouchMove - otherLength;
+      const otherLength = this.$refs.progressLine.offsetLeft
+      const leftLength = TtouchMove - otherLength
 
-      const Tduration = Math.floor(this.duration);
-      const TlineLength = Math.floor(this.lineLength);
-      const TleftLength = Math.floor(leftLength);
+      const Tduration = Math.floor(this.duration)
+      const TlineLength = Math.floor(this.lineLength)
+      const TleftLength = Math.floor(leftLength)
 
       this.formatCurrentTime = formatSec(
         (leftLength / TlineLength) * Tduration
-      );
+      )
 
-      this.progress = leftLength + "px";
+      this.progress = leftLength + 'px'
     },
 
-    getMVurl() {
-      this.mvID = this.$store.getters.getmvID;
+    getMVurl () {
+      this.mvID = this.$store.getters.getmvID
       api.getMVurl(this.mvID).then(res => {
-        this.$refs.video.src = res.data.data.url;
-      });
+        this.$refs.video.src = res.data.data.url
+      })
     },
 
-    goBack() {
-      if (this.$route.params.videos === "videos") {
-        this.mv = "videos";
+    goBack () {
+      if (this.$route.params.videos === 'videos') {
+        this.mv = 'videos'
       } else {
-        this.mv = "mv";
+        this.mv = 'mv'
       }
     }
   },
 
-  created() {
-    this.getMVurl();
-    this.setOneSec();
-    this.goBack();
-    this.leftTitle = this.$route.params.title;
+  created () {
+    this.getMVurl()
+    this.setOneSec()
+    this.goBack()
+    this.leftTitle = this.$route.params.title
   },
 
   components: {
     Header
   }
-};
+}
 </script>
 
 <style scoped>

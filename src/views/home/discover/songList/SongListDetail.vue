@@ -74,23 +74,23 @@
 </template>
 
 <script>
-import api from "@/api/index";
-import QQapi from "@/api/qq/qqIndex";
-import Header from "@/components/public/Header";
-import SearchList from "@/components/music/search/SearchList";
-import { mapGetters } from "vuex";
+import api from '@/api/index'
+import QQapi from '@/api/qq/qqIndex'
+import Header from '@/components/public/Header'
+import SearchList from '@/components/music/search/SearchList'
+import { mapGetters } from 'vuex'
 export default {
   name: 'SongListDetail',
-  data() {
+  data () {
     return {
-      leftTitle: "歌单",
-      songList: "songList",
+      leftTitle: '歌单',
+      songList: 'songList',
       res: [],
       purifyResult: [],
       isActive: false,
       isShowMask: false,
       active: Number
-    };
+    }
   },
 
   components: {
@@ -98,61 +98,61 @@ export default {
     SearchList
   },
 
-  created() {
-    this.getActive();
+  created () {
+    this.getActive()
 
-    this.getData();
+    this.getData()
     // console.log(this.active)
 
     // 若是主页的歌单被点进来，则返回到主页
-    if (this.$route.params.home === "home") {
-      this.songList = this.$route.params.home;
+    if (this.$route.params.home === 'home') {
+      this.songList = this.$route.params.home
 
       if (this.$route.params.leftTitle) {
-        this.leftTitle = "专辑";
+        this.leftTitle = '专辑'
       }
-    } else if (this.$route.params.rankList === "rankList") {
-      this.songList = this.$route.params.rankList;
-    } else if (this.$route.params.user === "user") {
-      this.songList = this.$route.params.user;
-    } else if (this.$route.params.CD === "newCD") {
-      this.songList = this.$route.params.CD;
+    } else if (this.$route.params.rankList === 'rankList') {
+      this.songList = this.$route.params.rankList
+    } else if (this.$route.params.user === 'user') {
+      this.songList = this.$route.params.user
+    } else if (this.$route.params.CD === 'newCD') {
+      this.songList = this.$route.params.CD
       if (this.$route.params.leftTitle) {
-        this.leftTitle = "专辑";
+        this.leftTitle = '专辑'
       }
     }
   },
 
   methods: {
-    getData() {
+    getData () {
       // 获得songList的信息
-      this.res = this.$store.getters.getSongList;
+      this.res = this.$store.getters.getSongList
 
-      const ID = this.res.id; // 歌单/专辑 ID
+      const ID = this.res.id // 歌单/专辑 ID
 
-      const type = this.res.type;
+      const type = this.res.type
 
-      if (type === "songList") {
+      if (type === 'songList') {
         api.getSongList(ID).then(res => {
-          const result = res.data.playlist.tracks;
+          const result = res.data.playlist.tracks
 
-          const purifyRes = [];
+          const purifyRes = []
           result.forEach(item => {
             purifyRes.push({
               id: item.id,
               songName: item.name,
               artist: item.ar[0].name,
               picUrl: item.al.picUrl,
-              api: "WY"
-            });
-          });
+              api: 'WY'
+            })
+          })
 
-          this.purifyResult.push(purifyRes);
-        });
-      } else if (type === "album") {
-        const result = this.res.songs;
+          this.purifyResult.push(purifyRes)
+        })
+      } else if (type === 'album') {
+        const result = this.res.songs
 
-        const purifyRes = [];
+        const purifyRes = []
         result.forEach(item => {
           purifyRes.push({
             id: item.id,
@@ -160,86 +160,86 @@ export default {
             picUrl: item.al.picUrl,
             artist: item.ar[0].name,
             artistID: item.ar[0].id,
-            api: "WY"
-          });
+            api: 'WY'
+          })
 
-          this.purifyResult.push(purifyRes);
-        });
-      } else if (type === "qqSongList") {
+          this.purifyResult.push(purifyRes)
+        })
+      } else if (type === 'qqSongList') {
         QQapi.getSongList(ID, 1).then(res => {
-          const result = res.data.data;
+          const result = res.data.data
 
-          const purifyRes = [];
+          const purifyRes = []
           result.forEach(item => {
             purifyRes.push({
               id: item.id,
               songName: item.name,
               artist: item.singer,
               picUrl: item.pic,
-              api: "QQ"
-            });
-          });
+              api: 'QQ'
+            })
+          })
 
-          this.purifyResult.push(purifyRes);
-        });
+          this.purifyResult.push(purifyRes)
+        })
       }
     },
 
-    getStart(e) {
+    getStart (e) {
       // 第一个触点
-      this.startTouches = e.touches;
+      this.startTouches = e.touches
       // console.log(this.startTouches);
     },
 
-    getEnd(e) {
+    getEnd (e) {
       // 最后一个触点
-      this.endTouches = e.changedTouches;
+      this.endTouches = e.changedTouches
       // onsole.log(this.endTouches);
 
-      this.slide();
+      this.slide()
     },
 
-    touchMove() {
+    touchMove () {
       // this.slide();
     },
 
-    slide() {
+    slide () {
       // 起点
-      const startScreenX = this.startTouches[0].screenX;
-      const startScreenY = this.startTouches[0].screenY;
+      const startScreenX = this.startTouches[0].screenX
+      const startScreenY = this.startTouches[0].screenY
 
       // 终点
-      const endScreenX = this.endTouches[0].screenX;
-      const endScreenY = this.endTouches[0].screenY;
+      const endScreenX = this.endTouches[0].screenX
+      const endScreenY = this.endTouches[0].screenY
 
       if (startScreenY - endScreenY > 0) {
         // 上划
         return (
           (this.isActive = true),
           (this.isShowMask = true),
-          (this.leftTitle = "")
-        );
+          (this.leftTitle = '')
+        )
       } else {
         // 下滑
         return (
           (this.isActive = false),
           (this.isShowMask = false),
-          (this.leftTitle = "歌单")
-        );
+          (this.leftTitle = '歌单')
+        )
       }
     },
 
-    goComment() {
+    goComment () {
       this.$router.push({
-        name: "songListComment"
-      });
+        name: 'songListComment'
+      })
     },
 
-    getActive() {
-      this.active = this.$store.getters.getActive;
+    getActive () {
+      this.active = this.$store.getters.getActive
     }
   }
-};
+}
 </script>
 
 <style scoped>
