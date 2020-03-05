@@ -178,7 +178,9 @@ export default {
 
       await api.getUrl(this.ID).then(res => {
         const url = res.data.data[0].url;
-        this.WYmp3 = url;
+
+        // 检查资源是否可用
+        this.checkResource(url, "WYmp3");
       });
     },
 
@@ -301,6 +303,28 @@ export default {
       // 关闭musicList
       this.isShowMusicList = false;
       this.$store.commit("setIsShowMusicList", this.isShowMusicList);
+    },
+
+    // 检查资源是否可用
+    checkResource(url, api) {
+      if (url === null) {
+        // 存在歌单
+        if (this.searchResult) {
+          // 获取下一首
+          this.getNextSong();
+        } else {
+          throw new Error("资源不存在！");
+        }
+      } else {
+        // 策略模式 -> 可以将platform模块化
+        const platform = {
+          WYmp3: () => {
+            return (this.WYmp3 = url);
+          }
+        };
+
+        platform[api]();
+      }
     }
   }
 };
