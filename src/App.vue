@@ -46,6 +46,7 @@ import PlayerGlobal from '@/components/music/player/PlayerGlobal.vue'
 import Player from '@/components/music/player/Player.vue'
 import SearchList from '@/components/music/search/SearchList.vue'
 import { mapGetters } from 'vuex'
+import { Dialog } from 'vant'
 export default {
   data () {
     return {
@@ -245,7 +246,6 @@ export default {
     // 自动获取下一首
     getNextSong () {
       this.ID = this.searchResult[this.currentIndex + 1].id
-      // console.log(this.ID);
 
       this.api = this.searchResult[this.currentIndex + 1].api
 
@@ -309,11 +309,11 @@ export default {
     checkResource (url, api) {
       if (url === null) {
         // 存在歌单
-        if (this.searchResult) {
+        if (this.searchResult.length > 0) {
           // 获取下一首
           this.getNextSong()
         } else {
-          throw new Error('资源不存在！')
+          Dialog.alert({ message: '资源不存在！' })
         }
       } else {
         // 策略模式 -> 可以将platform模块化

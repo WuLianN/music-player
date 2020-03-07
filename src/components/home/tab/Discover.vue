@@ -8,7 +8,7 @@
 <template>
   <div class="discover-wrap" ref="scroll">
     <div class="discover">
-      <van-swipe :autoplay="3000" class="swipe">
+      <van-swipe :autoplay="3000" class="swipe" :stop-propagation="false">
         <van-swipe-item v-for="(image, index) in bannerResults" :key="index">
           <img v-lazy="image.picUrl" class="swipe-img" @click="getBannerInfo(image)" />
           <div
