@@ -39,10 +39,19 @@ module.exports = {
     proxy: {
       // 配置跨域
 
+      // '/baseUrl': {
+      //   target: 'https://v1.itooi.cn',
+      //   ws: true,
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/baseUrl': ''
+      //   }
+      // },
+
       '/': {
         target: 'http://localhost:3000',
         ws: true,
-        changeOrigin: true
+        changeOrigin: true,
       }
 
     },

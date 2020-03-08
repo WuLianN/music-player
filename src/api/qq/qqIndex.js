@@ -10,7 +10,8 @@ import axios from 'axios'
 import {
   userSongList,
   songList,
-  lrc
+  lrc,
+  url
 } from './qqSource'
 
 export default {
@@ -52,6 +53,19 @@ export default {
 
   getLrc (id) {
     return axios.get(lrc, {
+      params: {
+        id: id
+      }
+    })
+  },
+
+  /**
+  * @description: 音乐播放地址
+  * @param id 音乐ID
+  * @return:
+  */
+  getUrl (id) {
+    return axios.get(url, {
       params: {
         id: id
       }

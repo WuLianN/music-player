@@ -45,6 +45,7 @@ import api from '@/api/index'
 import PlayerGlobal from '@/components/music/player/PlayerGlobal.vue'
 import Player from '@/components/music/player/Player.vue'
 import SearchList from '@/components/music/search/SearchList.vue'
+import platformConf from '@/api/config/platform'
 import { mapGetters } from 'vuex'
 import { Dialog } from 'vant'
 export default {
@@ -99,11 +100,9 @@ export default {
       }
     },
 
-    async getIsUpdate (isChange) {
+    getIsUpdate (isChange) {
       if (isChange === true) {
-        await this.getData()
-
-        await this.getPlay()
+        this.getData()
       }
     },
 
@@ -174,29 +173,31 @@ export default {
 
   methods: {
     // 获取数据
-    async getData () {
+    getData () {
       this.ID = this.$store.getters.getID
 
-      await api.getUrl(this.ID).then(res => {
-        const url = res.data.data[0].url
+      const platform = this.$store.getters.getAPI
+
+      platformConf[platform](this.ID).then(res => {
+        let url
+        if (platform === 'WY') {
+          url = res.data.data[0].url
+        } else if (platform === 'QQ') {
+          url = res
+        } else if (platform === 'KW') {
+          url = res
+        }
+
+        // console.log(url)
 
         // 检查资源是否可用
-        this.checkResource(url, 'WYmp3')
+        this.checkResource(url)
       })
     },
 
-    // 播放哪个平台的音乐
-    getPlay () {
-      // 判断api
-      const api = this.$store.getters.getAPI
-
-      if (api === 'WY') {
-        this.$refs.audio1.src = this.WYmp3
-      } else if (api === 'KW') {
-        this.$refs.audio1.src = this.KWmp3
-      } else if (api === 'QQ') {
-        this.$refs.audio1.src = this.QQmp3
-      }
+    // 播放音乐
+    getPlay (url) {
+      this.$refs.audio1.src = url
 
       this.$refs.audio1.play()
 
@@ -306,7 +307,7 @@ export default {
     },
 
     // 检查资源是否可用
-    checkResource (url, api) {
+    checkResource (url) {
       if (url === null) {
         // 存在歌单
         if (this.searchResult.length > 0) {
@@ -316,14 +317,7 @@ export default {
           Dialog.alert({ message: '资源不存在！' })
         }
       } else {
-        // 策略模式 -> 可以将platform模块化
-        const platform = {
-          WYmp3: () => {
-            return (this.WYmp3 = url)
-          }
-        }
-
-        platform[api]()
+        this.getPlay(url)
       }
     }
   }

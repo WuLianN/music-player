@@ -5,15 +5,14 @@
  * @LastEditTime: 2019-08-30 18:14:23
  * @LastEditors: Please set LastEditors
  */
-
-/** development环境 */
+import { kuwo } from '../config/common'
 
 const api = {
   // 酷我音乐
-  search: 'KWapi/search',
-  url: 'KWapi/url',
-  pic: 'KWapi/pic',
-  lrc: 'KWapi/lrc'
+  search: `${kuwo}/search`,
+  url: `${kuwo}/url`,
+  pic: `${kuwo}/pic`,
+  lrc: `${kuwo}/lrc`
 }
 
 export const search = api.search

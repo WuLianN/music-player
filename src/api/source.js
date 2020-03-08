@@ -6,7 +6,6 @@
  * @LastEditors: Please set LastEditors
  */
 
-/** development环境 */
 const api = {
   // 网易云音乐
   search: '/search', // 搜索
