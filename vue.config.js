@@ -38,22 +38,25 @@ module.exports = {
     hotOnly: false,
     proxy: {
       // 配置跨域
-
-      // '/baseUrl': {
-      //   target: 'https://v1.itooi.cn',
-      //   ws: true,
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     '^/baseUrl': ''
-      //   }
-      // },
-
-      '/': {
+      
+      '/itooi': {
+        target: 'https://v1.itooi.cn',
+        secure: false, // 默认情况下，不接受运行在 HTTPS 上，且使用了无效证书的后端服务器。
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/itooi': ''
+        },
+      },
+      
+      '/Netease': {
         target: 'http://localhost:3000',
         ws: true,
         changeOrigin: true,
+        pathRewrite: {
+          '^/Netease': ''
+        }
       }
-
     },
     before: app => { }
   }

@@ -6,7 +6,8 @@
  * @LastEditors: Please set LastEditors
  */
 
-export const baseUrl = 'https://v1.itooi.cn'
-export const tencent = baseUrl + '/tencent'
-export const kuwo = baseUrl + '/kuwo'
-// export const baseUrl = 'http://119.29.95.141:3000'
+const baseUrl = '/itooi'
+const tencent = `${baseUrl}/tencent`
+const kuwo = `${baseUrl}/kuwo`
+
+export { tencent, kuwo }

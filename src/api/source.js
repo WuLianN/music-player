@@ -6,32 +6,34 @@
  * @LastEditors: Please set LastEditors
  */
 
+const proxyUrl = '/Netease'
+
 const api = {
   // 网易云音乐
-  search: '/search', // 搜索
-  url: '/song/url', // 音乐播放地址
-  lrc: '/lyric', // 音乐歌词
-  banner: '/banner', // 首页轮播图
-  mvTop: '/top/mv', // MV排行榜
-  mvUrl: '/mv/url', // mv 地址
-  recommentList: '/personalized', // 推荐歌单
-  songList: '/playlist/detail', // 音乐歌单
-  album: '/album', // 首页轮播图专辑
-  hotSongList: '/top/playlist', // 热门歌单
-  highQuality: '/top/playlist/highquality', // 精品歌单
-  singerAlbum: '/artist/album', // 歌手专辑
-  singerSongList: '/artists', // 歌手歌曲
-  singerMV: '/artist/mv', // 歌手MV
-  singerInfo: '/artist/desc', // 歌手信息
-  singerRankList: '/toplist/artist', // 歌手排行榜
-  songListComment: '/comment/playlist', // 歌单评论
-  userSongList: '/user/playlist', // 用户歌单信息
-  rankList: '/top/list', // 排行榜
-  rankListDetail: '/toplist/detail', // 所有榜单内容摘要
-  topAlbum: '/top/album', // 新碟上架
-  newSong: '/personalized/newsong', // 推荐新音乐
-  topSong: '/top/song', // 新歌速递
-  topList: '/toplist' // 所有榜单
+  search: `${proxyUrl}/search`, // 搜索
+  url: `${proxyUrl}/song/url`, // 音乐播放地址
+  lrc: `${proxyUrl}/lyric`, // 音乐歌词
+  banner: `${proxyUrl}/banner`, // 首页轮播图
+  mvTop: `${proxyUrl}/top/mv`, // MV排行榜
+  mvUrl: `${proxyUrl}/mv/url`, // mv 地址
+  recommentList: `${proxyUrl}/personalized`, // 推荐歌单
+  songList: `${proxyUrl}/playlist/detail`, // 音乐歌单
+  album: `${proxyUrl}/album`, // 首页轮播图专辑
+  hotSongList: `${proxyUrl}/top/playlist`, // 热门歌单
+  highQuality: `${proxyUrl}/top/playlist/highquality`, // 精品歌单
+  singerAlbum: `${proxyUrl}/artist/album`, // 歌手专辑
+  singerSongList: `${proxyUrl}/artists`, // 歌手歌曲
+  singerMV: `${proxyUrl}/artist/mv`, // 歌手MV
+  singerInfo: `${proxyUrl}/artist/desc`, // 歌手信息
+  singerRankList: `${proxyUrl}/toplist/artist`, // 歌手排行榜
+  songListComment: `${proxyUrl}/comment/playlist`, // 歌单评论
+  userSongList: `${proxyUrl}/user/playlist`, // 用户歌单信息
+  rankList: `${proxyUrl}/top/list`, // 排行榜
+  rankListDetail: `${proxyUrl}/toplist/detail`, // 所有榜单内容摘要
+  topAlbum: `${proxyUrl}/top/album`, // 新碟上架
+  newSong: `${proxyUrl}/personalized/newsong`, // 推荐新音乐
+  topSong: `${proxyUrl}/top/song`, // 新歌速递
+  topList: `${proxyUrl}/toplist` // 所有榜单
 }
 
 export const search = api.search
