@@ -38,7 +38,7 @@ module.exports = {
     hotOnly: false,
     proxy: {
       // 配置跨域
-      
+
       '/itooi': {
         target: 'https://v1.itooi.cn',
         secure: false, // 默认情况下，不接受运行在 HTTPS 上，且使用了无效证书的后端服务器。
@@ -46,9 +46,9 @@ module.exports = {
         changeOrigin: true,
         pathRewrite: {
           '^/itooi': ''
-        },
+        }
       },
-      
+
       '/Netease': {
         target: 'http://localhost:3000',
         ws: true,

@@ -252,8 +252,8 @@ export default {
 
       if (this.api === 'WY') {
         api.getUrl(this.ID).then(res => {
-          this.KWmp3 = res.data.data.url
-          this.$refs.audio1.src = this.KWmp3
+          this.WYmp3 = res.data.data.url
+          this.$refs.audio1.src = this.WYmp3
           this.$refs.audio1.play()
         })
       } else if (this.api === 'KW') {
@@ -277,6 +277,7 @@ export default {
       this.$store.commit('setSongName', songName)
       this.$store.commit('setSongArtist', songArtist)
       this.$store.commit('setPicUrl', picUrl)
+      this.$store.commit('setAPI', this.api)
 
       // 更新PlayerGlobal
       this.$store.commit('setIsUpdate', isUpdate)
@@ -313,6 +314,8 @@ export default {
         if (this.searchResult.length > 0) {
           // 获取下一首
           this.getNextSong()
+
+          // console.log('当前歌曲放不了');
         } else {
           Dialog.alert({ message: '资源不存在！' })
         }

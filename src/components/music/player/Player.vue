@@ -286,7 +286,7 @@ export default {
           .then(res => {
             const result = res.data
             const resultSplit = result.split('\n')
-            // console.log(result_split);
+            // console.log(result)
             resultSplit.forEach(ele => {
               // console.log(ele);
 
@@ -335,7 +335,7 @@ export default {
           .then(res => {
             const result = res.data.lrc.lyric
             const resultSplit = result.split('\n')
-            // console.log(result_split);
+            // console.log(result)
             resultSplit.forEach(ele => {
               // console.log(ele);
 

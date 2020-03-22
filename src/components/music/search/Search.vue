@@ -142,7 +142,7 @@ export default {
     },
 
     getKWapi () {
-      return KWapi.getKWsearch(this.value, "song", 40)
+      return KWapi.getKWsearch(this.value, 'song', 40)
     },
 
     onClickLeft () {
