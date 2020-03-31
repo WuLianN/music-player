@@ -187,7 +187,6 @@ export default {
         } else if (platform === 'KW') {
           url = res
         }
-
         // console.log(url)
 
         // 检查资源是否可用
@@ -309,13 +308,11 @@ export default {
 
     // 检查资源是否可用
     checkResource (url) {
-      if (url === null) {
+      if (url === null || url === undefined) {
         // 存在歌单
         if (this.searchResult.length > 0) {
           // 获取下一首
           this.getNextSong()
-
-          // console.log('当前歌曲放不了');
         } else {
           Dialog.alert({ message: '资源不存在！' })
         }
