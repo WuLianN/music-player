@@ -53,8 +53,6 @@ export default {
     return {
       ID: '',
       api: '',
-      KWmp3: '',
-      WYmp3: '',
       currentIndex: '',
       lyric: '',
       searchResult: [],
@@ -249,39 +247,34 @@ export default {
 
       this.api = this.searchResult[this.currentIndex + 1].api
 
+      // console.log(this.api, this.ID)
+
       if (this.api === 'WY') {
         api.getUrl(this.ID).then(res => {
-          this.WYmp3 = res.data.data.url
-          this.$refs.audio1.src = this.WYmp3
-          this.$refs.audio1.play()
+          // 检测资源是否可用
+          // console.log(res.data) // url会变动 data.url / data[0].url
+          const url = res.data.data[0].url  
+       
+          if (url != undefined){
+            // 更新歌曲状态
+            this.updateSongStatus()
+            this.$refs.audio1.src = url
+            this.$refs.audio1.play()
+          } else {
+            Dialog.alert({ message: '资源不存在！' })
+          }
         })
       } else if (this.api === 'KW') {
-        this.KWmp3 = `https://v1.itooi.cn/kuwo/url?id=${this.ID}&quality=flac`
-        this.$refs.audio1.src = this.KWmp3
+        this.updateSongStatus()
+        const url = `https://v1.itooi.cn/kuwo/url?id=${this.ID}&quality=flac`
+        this.$refs.audio1.src = url
         this.$refs.audio1.play()
       } else if (this.api === 'QQ') {
-        this.QQmp3 = `https://v1.itooi.cn/tencent/url?id=${this.ID}&quality=flac`
-        this.$refs.audio1.src = this.QQmp3
+        this.updateSongStatus()
+        const url = `https://v1.itooi.cn/tencent/url?id=${this.ID}&quality=flac`
+        this.$refs.audio1.src = url
         this.$refs.audio1.play()
       }
-
-      const songName = this.searchResult[this.currentIndex + 1].songName
-      const songArtist = this.searchResult[this.currentIndex + 1].artist
-      const picUrl = this.searchResult[this.currentIndex + 1].picUrl
-      const isUpdate = true
-      const isChangeTitle = true
-
-      // 改变vuex状态
-      this.$store.commit('setID', this.ID)
-      this.$store.commit('setSongName', songName)
-      this.$store.commit('setSongArtist', songArtist)
-      this.$store.commit('setPicUrl', picUrl)
-      this.$store.commit('setAPI', this.api)
-
-      // 更新PlayerGlobal
-      this.$store.commit('setIsUpdate', isUpdate)
-      // 更新Player Title
-      this.$store.commit('setIsChangeTitle', isChangeTitle)
     },
 
     // 歌单
@@ -319,6 +312,27 @@ export default {
       } else {
         this.getPlay(url)
       }
+    },
+
+    // 更新歌曲状态
+    updateSongStatus () {
+      const songName = this.searchResult[this.currentIndex + 1].songName
+      const songArtist = this.searchResult[this.currentIndex + 1].artist
+      const picUrl = this.searchResult[this.currentIndex + 1].picUrl
+      const isUpdate = true
+      const isChangeTitle = true
+
+      // 改变vuex状态
+      this.$store.commit('setID', this.ID)
+      this.$store.commit('setSongName', songName)
+      this.$store.commit('setSongArtist', songArtist)
+      this.$store.commit('setPicUrl', picUrl)
+      this.$store.commit('setAPI', this.api)
+
+      // 更新PlayerGlobal
+      this.$store.commit('setIsUpdate', isUpdate)
+      // 更新Player Title
+      this.$store.commit('setIsChangeTitle', isChangeTitle)
     }
   }
 }
@@ -330,6 +344,7 @@ export default {
   height: 100vh;
   position: relative;
   z-index: 0;
+  overflow: hidden;
 }
 
 .player {

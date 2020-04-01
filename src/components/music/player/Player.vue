@@ -936,8 +936,8 @@ export default {
   flex-flow: row nowrap;
   justify-content: space-around;
   align-items: center;
-  position: relative;
-  top: 62vh;
+  position: fixed;
+  top: 71vh;
 }
 
 .user-function-icon {
