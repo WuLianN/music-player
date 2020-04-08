@@ -53,7 +53,7 @@ export default {
     return {
       ID: '',
       api: '',
-      currentIndex: Number,
+      currentIndex: 0,
       lyric: '',
       searchResult: [],
       purifyResult: [],
