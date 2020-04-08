@@ -16,7 +16,7 @@
 
 <div align=center>
 
-*网易云的歌单 + 腾讯系的音乐*
+*网易云的歌单 + 腾讯系的音乐(没api了)*
 
 </div>
 
@@ -30,10 +30,6 @@
 <br>
 
  :loudspeaker: **本项目长期维护，有bug提交issues**
-
- :loudspeaker: **基于老项目 更换api 升级改造中。。。**
-
- :eyes: [老项目 -- 还能复活吗?](https://github.com/messoer/dual-core-player)
  
 <br>
 

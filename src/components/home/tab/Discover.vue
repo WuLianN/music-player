@@ -438,12 +438,12 @@ export default {
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  margin: 2.5vh auto 1.5vh auto;
+  margin: 2.5vh auto;
 }
 
 .category {
   width: 15vw;
-  height: 10vh;
+  height: auto;
 }
 .category-content {
   width: 40px;
@@ -484,7 +484,6 @@ export default {
   width: 100vw;
   height: 60vh;
   border-top: 1px solid rgba(128, 128, 128, 0.089);
-  /* overflow: auto; */
 }
 
 .recommentList-header {

@@ -251,11 +251,9 @@ export default {
 
       if (this.api === 'WY') {
         api.getUrl(this.ID).then(res => {
-          // 检测资源是否可用
-          // console.log(res.data) // url会变动 data.url / data[0].url
-          const url = res.data.data[0].url  
-       
-          if (url != undefined){
+          // console.log(res.data) // 常见错误 data/data[0]
+          const url = res.data.data[0].url
+          if (url !== undefined || url !== null) {
             // 更新歌曲状态
             this.updateSongStatus()
             this.$refs.audio1.src = url
