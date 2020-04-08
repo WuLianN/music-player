@@ -60,10 +60,10 @@ export default {
      * @return:
      */
 
-  getUrl (id) {
+  getUrl (id, timestamp) {
     return axios.get(url, {
       params: {
-        id
+        id, timestamp
       }
     })
   },

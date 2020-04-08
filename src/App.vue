@@ -53,7 +53,7 @@ export default {
     return {
       ID: '',
       api: '',
-      currentIndex: '',
+      currentIndex: Number,
       lyric: '',
       searchResult: [],
       purifyResult: [],
@@ -192,7 +192,7 @@ export default {
       })
     },
 
-    // 播放音乐
+    // 播放音乐 + 更新索引
     getPlay (url) {
       this.$refs.audio1.src = url
 
@@ -247,27 +247,36 @@ export default {
 
       this.api = this.searchResult[this.currentIndex + 1].api
 
-      // console.log(this.api, this.ID)
+      // console.log(this.api, this.ID);
 
       if (this.api === 'WY') {
-        api.getUrl(this.ID).then(res => {
-          // console.log(res.data) // 常见错误 data/data[0]
+        // 添加时间戳
+        const timestamp = new Date().getTime()
+        api.getUrl(this.ID, timestamp).then(res => {
+          // console.log(res.data); // 常见错误 data/data[0]
+
           const url = res.data.data[0].url
-          if (url !== undefined || url !== null) {
+
+          // console.log(url);
+          if (url) {
             // 更新歌曲状态
             this.updateSongStatus()
-            this.$refs.audio1.src = url
-            this.$refs.audio1.play()
           } else {
-            Dialog.alert({ message: '资源不存在！' })
+            // 更新索引 +1
+            this.currentIndex += 1
+
+            // 递归 获取下一首
+            this.getNextSong()
           }
         })
       } else if (this.api === 'KW') {
+        // 更新歌曲状态
         this.updateSongStatus()
         const url = `https://v1.itooi.cn/kuwo/url?id=${this.ID}&quality=flac`
         this.$refs.audio1.src = url
         this.$refs.audio1.play()
       } else if (this.api === 'QQ') {
+        // 更新歌曲状态
         this.updateSongStatus()
         const url = `https://v1.itooi.cn/tencent/url?id=${this.ID}&quality=flac`
         this.$refs.audio1.src = url
@@ -327,7 +336,7 @@ export default {
       this.$store.commit('setPicUrl', picUrl)
       this.$store.commit('setAPI', this.api)
 
-      // 更新PlayerGlobal
+      // 更新PlayerGlobal -> 播放音乐
       this.$store.commit('setIsUpdate', isUpdate)
       // 更新Player Title
       this.$store.commit('setIsChangeTitle', isChangeTitle)
