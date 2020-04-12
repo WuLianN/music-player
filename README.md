@@ -112,10 +112,6 @@ npm run serve
 ## :mask: 坑
 ```
   better-scroll 无论是chrome，还是firefox，在移动端模式下，无法滚动，需刷新一下，方可滚动；pc模式正常滚动。
-
-  已知bug:
-  1. nextSong()的资源是WY，且url为undefined/null，会暂停播放。
-     原因为NeteaseCloudMusicApi两分钟缓存策略，可以去NeteaseCloudMusicApi设置取消两分钟缓存策略，再改nextSong()中的逻辑。
 ```
 
 ## :pencil: js

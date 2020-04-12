@@ -196,11 +196,11 @@ export default {
       this.endTouches = e.changedTouches
       // onsole.log(this.endTouches);
 
-      this.slide()
+      // this.slide()
     },
 
     touchMove () {
-      // this.slide();
+      this.slide();
     },
 
     slide () {
@@ -359,7 +359,6 @@ export default {
 .footer {
   width: 100vw;
   height: 84vh;
-  overflow: auto;
 }
 
 .footer-header {
