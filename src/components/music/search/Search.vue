@@ -57,84 +57,84 @@ export default {
 
   methods: {
     onSearch () {
-      if (this.type === 1) {
-        const result = []
-        const r1 = []
-        const r2 = []
+      // if (this.type === 1) {
+      //   const result = []
+      //   const r1 = []
+      //   const r2 = []
 
-        // 执行多个并发请求
-        this.$axios.all([this.getKWapi(), this.getWYapi()]).then(
-          this.$axios.spread((KW, WY) => {
-            // console.log(KW.data.data);
-            // console.log(WY.data.result.songs);
+      //   // 执行多个并发请求
+      //   this.$axios.all([this.getKWapi(), this.getWYapi()]).then(
+      //     this.$axios.spread((KW, WY) => {
+      //       // console.log(KW.data.data);
+      //       // console.log(WY.data.result.songs);
 
-            result.push(KW.data.data)
-            result.push(WY.data.result.songs)
+      //       result.push(KW.data.data)
+      //       result.push(WY.data.result.songs)
 
-            // 酷我
-            for (let i = 0; i < result[0].length; i++) {
-              const coarseID = result[0][i].MUSICRID
-              const simplifiedID = coarseID.slice(6)
+      //       // 酷我
+      //       for (let i = 0; i < result[0].length; i++) {
+      //         const coarseID = result[0][i].MUSICRID
+      //         const simplifiedID = coarseID.slice(6)
 
-              r1.push({
-                songName: result[0][i].SONGNAME,
-                id: simplifiedID,
-                artist: result[0][i].ARTIST,
-                picUrl: '',
-                api: 'KW'
-              })
-            }
+      //         r1.push({
+      //           songName: result[0][i].SONGNAME,
+      //           id: simplifiedID,
+      //           artist: result[0][i].ARTIST,
+      //           picUrl: '',
+      //           api: 'KW'
+      //         })
+      //       }
 
-            // 网易云
-            for (let i = 0; i < result[1].length; i++) {
-              r2.push({
-                songName: result[1][i].name,
-                id: result[1][i].id,
-                artist: result[1][i].artists[0].name,
-                picUrl: result[1][i].artists[0].img1v1Url,
-                api: 'WY'
-              })
-            }
+      //       // 网易云
+      //       for (let i = 0; i < result[1].length; i++) {
+      //         r2.push({
+      //           songName: result[1][i].name,
+      //           id: result[1][i].id,
+      //           artist: result[1][i].artists[0].name,
+      //           picUrl: result[1][i].artists[0].img1v1Url,
+      //           api: 'WY'
+      //         })
+      //       }
 
-            // 合并两个数组
-            const r3 = r1.concat(r2)
+      //       // 合并两个数组
+      //       const r3 = r1.concat(r2)
 
-            // 数组中的对象去重
-            const obj = {}
-            const r4 = r3.reduce((cur, next) => {
-              obj[next.songName]
-                ? ''
-                : (obj[next.songName] = true && cur.push(next))
-              return cur
-            }, [])
+      //       // 数组中的对象去重
+      //       const obj = {}
+      //       const r4 = r3.reduce((cur, next) => {
+      //         obj[next.songName]
+      //           ? ''
+      //           : (obj[next.songName] = true && cur.push(next))
+      //         return cur
+      //       }, [])
 
-            this.purifyResult.push(r4)
-            this.hackReset = true
-            this.isChange = true
-          })
-        )
-      }
+      //       this.purifyResult.push(r4)
+      //       this.hackReset = true
+      //       this.isChange = true
+      //     })
+      //   )
+      // }
 
       // 清除上个搜索数据
-      // clearArray(this.purifyResult)
+      clearArray(this.purifyResult)
 
-      // this.getWYapi().then(res => {
-      //   const result = res.data.result.songs
-      //   const tempArr = []
-      //   result.forEach(item => {
-      //     tempArr.push({
-      //       songName: item.name,
-      //       id: item.id,
-      //       artist: item.artists[0].name,
-      //       picUrl: item.artists[0].img1v1Url,
-      //       api: 'WY'
-      //     })
-      //   })
+      this.getWYapi().then(res => {
+        const result = res.data.result.songs
+        const tempArr = []
+        result.forEach(item => {
+          tempArr.push({
+            songName: item.name,
+            id: item.id,
+            artist: item.artists[0].name,
+            picUrl: item.artists[0].img1v1Url,
+            api: 'WY'
+          })
+        })
 
-      //   this.purifyResult.push(tempArr)
+        this.purifyResult.push(tempArr)
 
-      //   this.hackReset = true
-      // })
+        this.hackReset = true
+      })
     },
 
     getWYapi () {

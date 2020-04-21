@@ -200,7 +200,7 @@ export default {
     },
 
     touchMove () {
-      this.slide();
+      this.slide()
     },
 
     slide () {
