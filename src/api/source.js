@@ -18,6 +18,7 @@ const api = {
   mvUrl: `${proxyUrl}/mv/url`, // mv 地址
   recommentList: `${proxyUrl}/personalized`, // 推荐歌单
   songList: `${proxyUrl}/playlist/detail`, // 音乐歌单
+  songDetail: `${proxyUrl}/song/detail`,
   album: `${proxyUrl}/album`, // 首页轮播图专辑
   hotSongList: `${proxyUrl}/top/playlist`, // 热门歌单
   highQuality: `${proxyUrl}/top/playlist/highquality`, // 精品歌单
@@ -47,6 +48,7 @@ export const album = api.album
 export const hotSongList = api.hotSongList
 export const highQualityList = api.highQuality
 export const songList = api.songList
+export const songDetail = api.songDetail
 export const singerAlbum = api.singerAlbum
 export const singerSongList = api.singerSongList
 export const singerMV = api.singerMV
