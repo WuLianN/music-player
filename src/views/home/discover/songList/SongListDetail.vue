@@ -64,7 +64,7 @@
         <div class="toCircle-right"></div>
       </div>
 
-      <div class="footer-list">
+      <div class="footer-list" ref="footList">
         <SearchList :purifyResult="purifyResult" />
       </div>
     </div>
@@ -91,7 +91,8 @@ export default {
       isShowMask: false,
       active: Number,
       startTouches: [],
-      endTouches: []
+      endTouches: [],
+      scrollTop: 0
     };
   },
 
@@ -204,7 +205,7 @@ export default {
     getEnd(e) {
       // 最后一个触点
       this.endTouches = e.changedTouches;
-      // console.log(this.endTouches);
+      this.scrollTop = this.$refs.footList.children[0].scrollTop
 
       this.slide();
     },
@@ -230,7 +231,7 @@ export default {
             (this.isShowMask = true),
             (this.leftTitle = "")
           );
-        } else {
+        } else if(this.scrollTop === 0) {
           // 下滑
           return (
             (this.isActive = false),
