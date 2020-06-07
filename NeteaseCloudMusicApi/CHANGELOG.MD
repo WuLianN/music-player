@@ -1,4 +1,46 @@
 # 更新日志
+### 3.32.2 | 2020.06.05
+- 新增独家放送列表接口 [#808](https://github.com/Binaryify/NeteaseCloudMusicApi/issues/808)
+
+### 3.32.1 | 2020.06.03
+- 新增歌曲排序接口
+
+### 3.32.0 | 2020.06.03
+- 更新排行榜接口,支持传入榜单id
+- 新增榜单顺序调整接口 [#806](https://github.com/Binaryify/NeteaseCloudMusicApi/issues/806)
+- 完善错误提示信息
+
+### 3.31.1 | 2020.05.19
+- 修复`cookie`没返回的问题 [#778](https://github.com/Binaryify/NeteaseCloudMusicApi/issues/778)
+
+### 3.31.0 | 2020.05.18
+- 支持 `Node.js` 调用,参考`module_example` 文件夹下的 `test.js`
+
+### 3.30.0 | 2020.05.17
+- 登录接口返回内容增加`cookie`字段,支持手动传入cookie
+
+### 3.29.1 | 2020.05.13
+- 调整通知接口分页参数 [#761](https://github.com/Binaryify/NeteaseCloudMusicApi/issues/761)
+
+### 3.29.0 | 2020.05.11
+- 支持批量删除歌单 [#760](https://github.com/Binaryify/NeteaseCloudMusicApi/issues/760)
+
+### 3.28.0 | 2020.05.05
+- 新增获取 mv 点赞转发评论数数据接口
+- 新增获取视频点赞转发评论数数据接口
+
+### 3.27.0 | 2020.04.20
+- 新增购买专辑接口 by [TimonPeng](https://github.com/Binaryify/NeteaseCloudMusicApi/pull/740)
+
+### 3.26.0 | 2020.04.08
+#### Breaking change
+- 更新歌手分类列表接口参数,因`cat`参数失效,调整为`type`和`area`参数
+
+### 3.25.4 | 2020.03.18
+- 更新歌词,歌手分类列表接口
+
+- 更新文档
+
 ### 3.25.3 | 2019.11.08
 - 升级依赖,去除多余依赖
 

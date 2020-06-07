@@ -1,11 +1,11 @@
-// MV详情
-
+// 24小时榜
 module.exports = (query, request) => {
   const data = {
-    id: query.mvid
+    limit: query.limit || 100
+    // 不支持 offset
   }
   return request(
-    'POST', `https://music.163.com/api/v1/mv/detail`, data,
+    'POST', `https://music.163.com/api/dj/toplist/hours`, data,
     {crypto: 'weapi', cookie: query.cookie, proxy: query.proxy}
   )
 }

@@ -1,11 +1,11 @@
-// MV详情
-
+// 电台新人榜
 module.exports = (query, request) => {
   const data = {
-    id: query.mvid
+    limit: query.limit || 100,
+    offset: query.offset || 0
   }
   return request(
-    'POST', `https://music.163.com/api/v1/mv/detail`, data,
+    'POST', `https://music.163.com/api/dj/toplist/newcomer`, data,
     {crypto: 'weapi', cookie: query.cookie, proxy: query.proxy}
   )
 }

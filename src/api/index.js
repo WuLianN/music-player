@@ -44,7 +44,7 @@ export default {
      * @return:
      */
 
-  getSearch(keywords, type, limit) {
+  getSearch (keywords, type, limit) {
     return axios.get(search, {
       params: {
         keywords,
@@ -61,7 +61,7 @@ export default {
      * @return:
      */
 
-  getUrl(id, timestamp) {
+  getUrl (id, timestamp) {
     return axios.get(url, {
       params: {
         id, timestamp
@@ -76,7 +76,7 @@ export default {
      * @return:
      */
 
-  getPic(id, imgSize) {
+  getPic (id, imgSize) {
     return axios.get(pic, {
       params: {
         id,
@@ -91,7 +91,7 @@ export default {
      * @return:
      */
 
-  getLrc(id) {
+  getLrc (id) {
     return axios.get(lrc, {
       params: {
         id
@@ -105,7 +105,7 @@ export default {
      * @return:
      */
 
-  getBanner(type) {
+  getBanner (type) {
     return axios.get(banner, {
       params: {
         type
@@ -120,7 +120,7 @@ export default {
    * @return:
    */
 
-  getRecommentList(limit, offset = 0) {
+  getRecommentList (limit, offset = 0) {
     return axios.get(recommentList, {
       params: {
         limit,
@@ -135,7 +135,7 @@ export default {
    * @return:
    */
 
-  getAlbum(id) {
+  getAlbum (id) {
     return axios.get(album, {
       params: {
         id
@@ -152,7 +152,7 @@ export default {
      * @return:
      */
 
-  getHotSongList(cat, limit, offset, order = 'hot') {
+  getHotSongList (cat, limit, offset, order = 'hot') {
     return axios.get(hotSongList, {
       params: {
         cat,
@@ -171,7 +171,7 @@ export default {
      * @return:
      */
 
-  getHighQualityList(cat, limit, before) {
+  getHighQualityList (cat, limit, before) {
     return axios.get(highQualityList, {
       params: {
         cat,
@@ -188,7 +188,7 @@ export default {
      * @return:
      */
 
-  getSongList(id) {
+  getSongList (id) {
     return axios.get(songList, {
       params: {
         id
@@ -198,11 +198,11 @@ export default {
 
   /**
    * @description: 歌曲详情
-   * @param ids 网易云歌单的ID 
+   * @param ids 网易云歌单的ID
    * @return:
    */
 
-  getSongDetail(ids) {
+  getSongDetail (ids) {
     return axios.get(songDetail, {
       params: {
         ids
@@ -216,7 +216,7 @@ export default {
      * @return:
      */
 
-  getSingerAlbum(id, limit, offset) {
+  getSingerAlbum (id, limit, offset) {
     return axios.get(singerAlbum, {
       params: {
         id,
@@ -232,7 +232,7 @@ export default {
     * @return:
     */
 
-  getSingerSongList(id) {
+  getSingerSongList (id) {
     return axios.get(singerSongList, {
       params: {
         id
@@ -246,7 +246,7 @@ export default {
     * @return:
     */
 
-  getSingerMV(id) {
+  getSingerMV (id) {
     return axios.get(singerMV, {
       params: {
         id
@@ -260,7 +260,7 @@ export default {
      * @return:
      */
 
-  getSingerInfo(id) {
+  getSingerInfo (id) {
     return axios.get(singerInfo, {
       params: {
         id
@@ -275,7 +275,7 @@ export default {
      * @return:
      */
 
-  getSingerRankList(pageSize, page) {
+  getSingerRankList (pageSize, page) {
     return axios.get(singerRankList, {
       params: {
         pageSize,
@@ -292,7 +292,7 @@ export default {
      * @return:
      */
 
-  getSongListComment(id, limit, offset) {
+  getSongListComment (id, limit, offset) {
     return axios.get(songListComment, {
       params: {
         id,
@@ -308,7 +308,7 @@ export default {
    * @return:
    */
 
-  getUsetSongList(uid) {
+  getUsetSongList (uid) {
     return axios.get(userSongList, {
       params: {
         uid
@@ -326,7 +326,7 @@ export default {
    * @return:
    */
 
-  getMVtop() {
+  getMVtop () {
     return axios.get(mvTop)
   },
 
@@ -336,7 +336,7 @@ export default {
    * @return:
    */
 
-  getMVurl(id) {
+  getMVurl (id) {
     return axios.get(mvUrl, {
       params: {
         id
@@ -350,7 +350,7 @@ export default {
    * @return:
    */
 
-  getRankList(idx) {
+  getRankList (idx) {
     return axios.get(rankList, {
       params: {
         idx
@@ -364,7 +364,7 @@ export default {
    * @return:
    */
 
-  getRankListDetail() {
+  getRankListDetail () {
     return axios.get(rankListDetail)
   },
 
@@ -375,7 +375,7 @@ export default {
    * @return:
    */
 
-  getTopAlbum(limit, offset) {
+  getTopAlbum (limit, offset) {
     return axios.get(topAlbum, {
       params: {
         limit,
@@ -390,7 +390,7 @@ export default {
    * @return:
    */
 
-  getNewSong() {
+  getNewSong () {
     return axios.get(newSong)
   },
 
@@ -400,7 +400,7 @@ export default {
    * @return:
    */
 
-  getTopSong(type) {
+  getTopSong (type) {
     return axios.get(topSong, {
       params: {
         type
@@ -414,7 +414,7 @@ export default {
    * @return:
    */
 
-  getTopList() {
+  getTopList () {
     return axios.get(topList)
   }
 }

@@ -66,7 +66,7 @@ fs.readdirSync(path.join(__dirname, 'module')).reverse().forEach(file => {
   let question = require(path.join(__dirname, 'module', file))
 
   app.use(route, (req, res) => {
-    let query = Object.assign({}, req.query, req.body, {cookie: req.cookies})
+    let query = Object.assign({}, {cookie: req.cookies}, req.query, req.body )
     question(query, request)
       .then(answer => {
         console.log('[OK]', decodeURIComponent(req.originalUrl))
@@ -74,7 +74,7 @@ fs.readdirSync(path.join(__dirname, 'module')).reverse().forEach(file => {
         res.status(answer.status).send(answer.body)
       })
       .catch(answer => {
-        console.log('[ERR]', decodeURIComponent(req.originalUrl))
+        console.log('[ERR]', decodeURIComponent(req.originalUrl), {status: answer.status, body: answer.body})
         if(answer.body.code == '301') answer.body.msg = '需要登录'
         res.append('Set-Cookie', answer.cookie)
         res.status(answer.status).send(answer.body)
