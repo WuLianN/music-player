@@ -13,7 +13,7 @@
     "better-scroll": "^1.15.2",
     "core-js": "^2.6.5",
     "eslint-utils": "^1.4.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "vant": "^2.1.8",
     "vue": "^2.6.10",
     "vue-router": "^3.1.2",
