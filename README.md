@@ -10,7 +10,7 @@
 
 <div align=center>
 
-:musical_note: **双核音乐播放器(移动端)(继续中。。。)**
+:musical_note: **双核音乐播放器(移动端)**
 
 </div>       
 
@@ -29,7 +29,12 @@
 
 <br>
 
- :loudspeaker: **本项目长期维护，有bug提交issues**
+ :loudspeaker: ~~**本项目长期维护，有bug提交issues**~~
+
+ :punch: 总结一下：经过一年多的时间的项目洗礼，现在看这个项目有点不顺眼了，有冗余代码。
+
+ :dart: 下个目标，Vue3.0 + electron 写个桌面应用的音乐播放器
+          
  
 <br>
 
