@@ -9,7 +9,7 @@
     "backend": "node ./NeteaseCloudMusicApi/app.js"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "better-scroll": "^1.15.2",
     "core-js": "^2.6.5",
     "eslint-utils": "^1.4.2",
